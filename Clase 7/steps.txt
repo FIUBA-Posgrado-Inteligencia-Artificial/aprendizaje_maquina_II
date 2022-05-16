@@ -1,0 +1,46 @@
+1) Escribir el .py
+2) importarlo a la compu
+3) ejecutarlo y guardar el experimento 
+4) poner en producción 
+	- https://www.mlflow.org/docs/latest/models.html#deploy-mlflow-models
+	- mlflow models serve --help (para ver los comandos)
+	- mlflow models serve --model-uri runs:/07a9681756b14d588b4788a0b0ea20b1/model --no-conda -h 0.0.0.0 (acá hay que poner el run_id del modelo que se genero)
+
+5) sacar la ip interna con ifconfig, ahora la mia es 10.128.0.24,
+	- es el campo inet
+	
+6) hacerle un curl al modelo desde otra conección pero desde la misma vm para ver que funciona. acá el campo antes del :5000 tiene que ser la ipinterna
+
+
+	- curl http://10.128.0.24:5000/invocations -H 'Content-Type: application/json; format=pandas-records' -d '[{"a": 1,"b": 2,"c": 3,"d":5},{"a": 4,"b": 5,"c": 6,"d":5}]'
+	- curl http://10.128.0.24:5000/invocations -H 'Content-Type: application/json' -d '{"columns": ["a", "b", "c","d"],"data": [[1, 2, 3,4], [4, 5, 6,5]]}'
+
+7) Cambiar las reglas del firewall para permitir inbound a las vm
+8) Llevar el curl a un request de python
+	- convertir el curl en una llamada de python https://curlconverter.com/
+9) probar el request localmente
+
+import requests
+headers = {'Content-Type': 'application/json; format=pandas-records',}
+
+json_data = [{'a': 1,'b': 2,'c': 3,'d': 5,},{'a': 4,'b': 5,'c': 6,'d': 5,},]
+response = requests.post('http://' + ip + '/invocations', headers=headers, json=json_data)
+response.text
+
+
+10) hacer una cloud function (está en el otro archivo)
+	ip = "ACA HAY QUE PONER LA IP EXTERNA PARA QUE ME PUEDA COMUNICAR CON LA VM"
+11) Cambiarle los permisos para que cualquiera pueda ejecutarla
+	https://stackoverflow.com/questions/47511677/firebase-cloud-function-your-client-does-not-have-permission-to-get-url-200-fr
+	
+11) llamarla desde el test y desde afuera
+	- https://cloud.google.com/functions/docs/calling/http
+
+	(Este curl solo funciona en linux, en windows hay que formatear algo)
+	- curl -X POST "https://us-central1-endless-datum-269518.cloudfunctions.net/function-1" -H "Content-Type:application/json" --data '{"data":[[0,0,0,0]]}'
+
+	(Aca en windows hay que parsear las comillas simples)
+	- curl -X POST "https://us-central1-endless-datum-269518.cloudfunctions.net/function-1" -H "Content-Type:application/json" --data "{\"data\":[[0,0,0,0]]}"
+
+
+
