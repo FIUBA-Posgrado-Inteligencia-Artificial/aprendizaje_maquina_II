@@ -1,23 +1,14 @@
 import requests
 
-def make_inference(data) -> list:
-
-    headers = {
-    # Already added when you pass json= but not when you pass data=
-    # 'Content-Type': 'application/json',
-    }
-
-    json_data = {
-    'data': data
-    }
-
-    response = requests.post('http://127.0.0.1:5000/invocations', headers=headers, json=json_data)
-    return response.json()
+def externalized_model(request) -> list:
 
 
-print(make_inference([[0,0,0,0],[1,1,1,1]]))
+    vm_ip =  #By default the internal one is 127.0.0.1
 
-# Note: json_data will not be serialized by requests
-# exactly as it was in the original request.
-#data = '{  "data": [ [0,0,0,0]]}'
-#response = requests.post('http://127.0.0.1:5000/invocations', headers=headers, data=data)
+    headers = {}
+    json_data = request.get_json()
+
+    response = requests.post(f'http://{vm_ip}:5000/invocations', headers=headers, json=json_data)
+    return str(response.json())
+
+#print(make_inference([[0,0,0,0],[1,1,1,1]]))
