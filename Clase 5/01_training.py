@@ -7,7 +7,7 @@
 import mlflow
 from mlflow.client import MlflowClient
 
-
+import os
 import sklearn
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
@@ -24,13 +24,26 @@ from sklearn.model_selection import GridSearchCV
 import pandas as pd
 
 
-# # Tenemos data
+#This will be used in the next class
+os.chdir('/home/ml2/aprendizaje_maquina_II/Clase 5') 
 
+
+## This db could be an external postgres database
 mlflow.set_tracking_uri('sqlite:///mlruns.db')
 
-# In[2]:
+## This will fail in databricks because the experiment_id is a random hash
+
+new_experiment_id = 0 #Why not put this in an else? Just because I can
+list_mlflow_experiments =  mlflow.search_experiments()
+if len(list_mlflow_experiments):
+    list_experiment_id = list(map(lambda list_mlflow_experiments: int(list_mlflow_experiments.experiment_id), list_mlflow_experiments ))
+    last_experiment_id =  max(list_experiment_id)
+    new_experiment_id  = last_experiment_id + 1
+    
+    mlflow.create_experiment(str(new_experiment_id))
 
 
+# This should be a query from a database
 X = sklearn.datasets.load_iris().data
 y = sklearn.datasets.load_iris().target
 
@@ -80,14 +93,14 @@ def log_model(model,
 
 
 #normal logging
-log_model(DecisionTreeClassifier,'camilo', experiment_id = 0)
-log_model(LogisticRegression    ,'camilo', experiment_id = 0, **{'max_iter':1000})
-log_model(SVC                   ,'camilo', experiment_id = 0, **{'C':0.001,'class_weight':'balanced'})
+log_model(DecisionTreeClassifier,'camilo', experiment_id = new_experiment_id)
+log_model(LogisticRegression    ,'camilo', experiment_id = new_experiment_id, **{'max_iter':1000})
+log_model(SVC                   ,'camilo', experiment_id = new_experiment_id, **{'C':0.001,'class_weight':'balanced'})
 
 #grid logging
 log_model(SVC    ,
           'camilo', 
-          experiment_id = 0, 
+          experiment_id = new_experiment_id, 
           grid = True,
           **{'kernel':('linear', 'rbf'), 'C':[1, 10]}
 )
