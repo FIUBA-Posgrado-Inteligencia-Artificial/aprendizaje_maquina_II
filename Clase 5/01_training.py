@@ -55,8 +55,8 @@ def log_model(model,
               **kwargs):
     
     
-    assert developer is not None, 'You must define a developer first'
-    assert developer is not None, 'You must define a experiment_id first'
+    assert developer     is not None, 'You must define a developer first'
+    assert experiment_id is not None, 'You must define a experiment_id first'
     
     
     with mlflow.start_run(experiment_id = experiment_id):
@@ -82,7 +82,7 @@ def log_model(model,
 #normal logging
 log_model(DecisionTreeClassifier,'camilo', experiment_id = 0)
 log_model(LogisticRegression    ,'camilo', experiment_id = 0, **{'max_iter':1000})
-
+log_model(SVC                   ,'camilo', experiment_id = 0, **{'C':0.001,'class_weight':'balanced'})
 
 #grid logging
 log_model(SVC    ,
