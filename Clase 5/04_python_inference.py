@@ -19,5 +19,5 @@ def externalized_model(request) -> list:
     return str(response.json())
 
 #print(externalized_model(
-#    {'dataframe_split': {'data':[[10,10,10,10],[0,0,0,0]]}}
+#    {"dataframe_split": {"data":[[10,10,10,10],[0,0,0,0]]}}
 #    ))
