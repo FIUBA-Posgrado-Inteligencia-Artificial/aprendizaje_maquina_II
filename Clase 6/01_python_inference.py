@@ -68,7 +68,7 @@ def trigger_events(request):
 
     event_id, request_data = parse_request(request)
 
-    if True:#check_business_logic(request_data):
+    if check_business_logic(request_data):
         prediction = get_predictions(request_data)
     else:
         #This is the default custom amount
