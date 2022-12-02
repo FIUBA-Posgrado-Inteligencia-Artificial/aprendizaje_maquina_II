@@ -2,10 +2,10 @@ import requests
 from sqlalchemy import create_engine
 
 #Initial config
-vm_ip   =  '127.0.0.'#By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
-db_pass = "=Ki=2KvPUM]_]|0t"
-db_ip   = "34.95.209.228"
-db_name = "postgres"
+vm_ip   =  #By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
+db_pass = 
+db_ip   = 
+db_name = 
 
 
 def check_business_logic(request_data):
@@ -52,12 +52,13 @@ def save_predictions(event_id, prediction):
     # check this question to know the connection string works
     # https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url
     engine = create_engine(f'postgresql+psycopg2://postgres:{db_pass}@{db_ip}:5432/{db_name}')
-    with connection = engine.connect() as conn:
+    with  engine.connect() as conn:
 
         # Here the values to be saved depends on the business
         conn.execute(
             f"INSERT INTO public.inference (event_id,predicted_value) VALUES ('{event_id}',{prediction})"
         )
+
 
 
 def trigger_events(request):
@@ -67,7 +68,7 @@ def trigger_events(request):
 
     event_id, request_data = parse_request(request)
 
-    if check_business_logic(request_data):
+    if True:#check_business_logic(request_data):
         prediction = get_predictions(request_data)
     else:
         #This is the default custom amount
@@ -78,21 +79,19 @@ def trigger_events(request):
     return prediction
 
 
-print(trigger_events(
-    {"event_id": "event_id_2", "dataframe_split": {"data":[[0,0,0,0]]}}
-    ))
+#print(trigger_events(
+#   {"event_id": "event_id_2", "dataframe_split": {"data":[[0,0,0,0]]}}
+#    ))
 
 
-print(trigger_events(
-    {"event_id": "event_id_1", "dataframe_split": {"data":[[100,100,100,100]]}}
-    ))
+#print(trigger_events(
+#    {"event_id": "event_id_1", "dataframe_split": {"data":[[10,10,10,10]]}}
+#    ))
 
-print(trigger_events(
-    { "dataframe_split": {"data":[[0,0,0,0]]}}
-    ))
+#print(trigger_events(
+#    { "dataframe_split": {"data":[[0,0,0,0]]}}
+#    ))
 
-print(trigger_events(
-    { "dataframe_split": {"data":[[100,100,100,100]]}}
-    ))
-
-
+#print(trigger_events(
+#    { "dataframe_split": {"data":[[19,10,10,10]]}}
+#    ))
