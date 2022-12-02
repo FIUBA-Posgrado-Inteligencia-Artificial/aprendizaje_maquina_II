@@ -2,10 +2,10 @@ import requests
 from sqlalchemy import create_engine
 
 #Initial config
-vm_ip   =  #By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
-db_pass = 
-db_ip   = 
-db_name = 
+vm_ip   =  '127.0.0.'#By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
+db_pass = "=Ki=2KvPUM]_]|0t"
+db_ip   = "34.95.209.228"
+db_name = "postgres"
 
 
 def check_business_logic(request_data):
@@ -13,9 +13,9 @@ def check_business_logic(request_data):
     the total ammount of a loan por an user, and the first columns is the date,
     so we wan't to reject it always"""
 
-    age = request_data["dataframe_split"]["data"][0]
+    age = request_data["dataframe_split"]["data"][0][0]
 
-    return age > 18:
+    return age > 18
 
 
 
@@ -72,27 +72,27 @@ def trigger_events(request):
     else:
         #This is the default custom amount
         #We could writte any value here that makes business sense
-        0.0
+        prediction = 0.0
     save_predictions(event_id, prediction)
 
     return prediction
 
 
-#print(trigger_events(
-#    {"event_id": "event_id_2", "dataframe_split": {"data":[[0,0,0,0]]}}
-#    ))
+print(trigger_events(
+    {"event_id": "event_id_2", "dataframe_split": {"data":[[0,0,0,0]]}}
+    ))
 
 
-# print(trigger_events(
-#    {"event_id": "event_id_1" "dataframe_split": {"data":[[100,100,100,100]]}}
-#    ))
+print(trigger_events(
+    {"event_id": "event_id_1", "dataframe_split": {"data":[[100,100,100,100]]}}
+    ))
 
-#print(trigger_events(
-#    { "dataframe_split": {"data":[[0,0,0,0]]}}
-#    ))
+print(trigger_events(
+    { "dataframe_split": {"data":[[0,0,0,0]]}}
+    ))
 
-# print(trigger_events(
-#    { "dataframe_split": {"data":[[100,100,100,100]]}}
-#    ))
+print(trigger_events(
+    { "dataframe_split": {"data":[[100,100,100,100]]}}
+    ))
 
 
