@@ -1,23 +1,28 @@
 import requests
+from sqlalchemy import create_engine
 
 #Initial config
 vm_ip   =  #By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
-db_pass =
-db_ip   =
-db_name =
+db_pass = 
+db_ip   = 
+db_name = 
 
 def parse_request(request):
-    request = request.get_json()
-    return request.get('event_id',''), request['dataframe_split']
+
+
+    #This is to be able to check the lambda fn inside the vm
+    if type(request) is not dict:
+        #The request MUST have this format
+        # {'dataframe_split': {'data':[[10,10,10,10],[0,0,0,0]]}}
+        request = request.get_json()
+       
+    event_id = request.pop('event_id') if 'event_id' in request else 'no_event_id' 
+
+    return event_id , request
 
 def get_predictions(request_data):
 
     headers = {}
-    #This is to be able to check the lambda fn inside the vm
-    if type(request_data) is not dict:
-        #The request MUST have this format 
-        # {'dataframe_split': {'data':[[10,10,10,10],[0,0,0,0]]}}
-        request_data = request_data.get_json()
 
 
     response = requests.post(f'http://{vm_ip}:5000/invocations', headers=headers, json=request_data)
@@ -38,7 +43,7 @@ def save_predictions(event_id, prediction):
 
     # Here the values to be saved depends on the business
     connection.execute(
-        f"INSERT INTO public.inference (event_id,predicted_value) VALUES ({event_id},{prediction})"
+        f"INSERT INTO public.inference (event_id,predicted_value) VALUES ('{event_id}',{prediction})"
     )
 
 
@@ -48,11 +53,17 @@ def trigger_events(request):
     #If we want to do more inferences, we need to modify the functions to be able to handle them
 
     event_id, request_data = parse_request(request)
-    prediction = get_predictions(request_data)[0]
+    prediction = get_predictions(request_data)
     save_predictions(event_id, prediction)
 
+    return prediction
 
 
 #print(trigger_events(
-#    {"dataframe_split": {"data":[[10,10,10,10],[0,0,0,0]]}}
+#    {"event_id": "asdadas", "dataframe_split": {"data":[[0,0,0,0]]}}
+#    ))
+
+
+#print(trigger_events(
+#    { "dataframe_split": {"data":[[0,0,0,0]]}}
 #    ))
