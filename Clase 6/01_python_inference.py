@@ -52,12 +52,12 @@ def save_predictions(event_id, prediction):
     # check this question to know the connection string works
     # https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url
     engine = create_engine(f'postgresql+psycopg2://postgres:{db_pass}@{db_ip}:5432/{db_name}')
-    connection = engine.connect()
+    with connection = engine.connect() as conn:
 
-    # Here the values to be saved depends on the business
-    connection.execute(
-        f"INSERT INTO public.inference (event_id,predicted_value) VALUES ('{event_id}',{prediction})"
-    )
+        # Here the values to be saved depends on the business
+        conn.execute(
+            f"INSERT INTO public.inference (event_id,predicted_value) VALUES ('{event_id}',{prediction})"
+        )
 
 
 def trigger_events(request):
