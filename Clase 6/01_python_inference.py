@@ -7,6 +7,19 @@ db_pass =
 db_ip   = 
 db_name = 
 
+
+def check_business_logic(request_data):
+    """We are supposing that we want to predict
+    the total ammount of a loan por an user, and the first columns is the date,
+    so we wan't to reject it always"""
+
+    age = request_data["dataframe_split"]["data"][0]
+
+    return age > 18:
+
+
+
+
 def parse_request(request):
 
 
@@ -53,17 +66,33 @@ def trigger_events(request):
     #If we want to do more inferences, we need to modify the functions to be able to handle them
 
     event_id, request_data = parse_request(request)
-    prediction = get_predictions(request_data)
+
+    if check_business_logic(request_data):
+        prediction = get_predictions(request_data)
+    else:
+        #This is the default custom amount
+        #We could writte any value here that makes business sense
+        0.0
     save_predictions(event_id, prediction)
 
     return prediction
 
 
 #print(trigger_events(
-#    {"event_id": "asdadas", "dataframe_split": {"data":[[0,0,0,0]]}}
+#    {"event_id": "event_id_2", "dataframe_split": {"data":[[0,0,0,0]]}}
 #    ))
 
+
+# print(trigger_events(
+#    {"event_id": "event_id_1" "dataframe_split": {"data":[[100,100,100,100]]}}
+#    ))
 
 #print(trigger_events(
 #    { "dataframe_split": {"data":[[0,0,0,0]]}}
 #    ))
+
+# print(trigger_events(
+#    { "dataframe_split": {"data":[[100,100,100,100]]}}
+#    ))
+
+
