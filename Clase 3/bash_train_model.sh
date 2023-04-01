@@ -1,3 +1,3 @@
-PGPASSWORD=XXXXXX psql -h XXXXX -d postgres -U postgres -c "\copy data.table1 TO 'data.csv' WITH (FORMAT csv)"
+PGPASSWORD=apus psql -h 34.136.96.122 -d postgres -U postgres -c "\copy public.events TO 'data.csv' WITH (FORMAT csv,HEADER)"
 python training_pipeline.py
 rm data.csv
