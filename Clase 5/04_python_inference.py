@@ -15,7 +15,7 @@ def externalized_model(request) -> list:
         request = request.get_json()
 
 
-    response = requests.post(f'http://{vm_ip}:5000/invocations', headers=headers, json=request)
+    response = requests.post(f'http://{vm_ip}:5001/invocations', headers=headers, json=request)
     return str(response.json())
 
 #print(externalized_model(
