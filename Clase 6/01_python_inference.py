@@ -1,11 +1,16 @@
 import requests
 from sqlalchemy import create_engine
+from sqlalchemy import text
 
 #Initial config
 vm_ip   =  #By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
+vm_port = "5001"
+
 db_pass = 
 db_ip   = 
-db_name = 
+db_name =
+db_user =
+db_port =
 
 
 def check_business_logic(request_data):
@@ -17,11 +22,7 @@ def check_business_logic(request_data):
 
     return age > 18
 
-
-
-
 def parse_request(request):
-
 
     #This is to be able to check the lambda fn inside the vm
     if type(request) is not dict:
@@ -33,31 +34,33 @@ def parse_request(request):
 
     return event_id , request
 
-def get_predictions(request_data):
 
-    headers = {}
-
-
-    response = requests.post(f'http://{vm_ip}:5000/invocations', headers=headers, json=request_data)
-    response = response.json()
-    response_prediction = response["predictions"]
-
-    assert len(response_prediction) == 1, 'I want to have just one inference'
-
-    return response_prediction[0]
 
 
 def save_predictions(event_id, prediction):
 
-    # check this question to know the connection string works
-    # https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url
-    engine = create_engine(f'postgresql+psycopg2://postgres:{db_pass}@{db_ip}:5432/{db_name}')
-    with  engine.connect() as conn:
+    # For remote dbs
+    # engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_ip}:{db_port}/{db_name}')
 
-        # Here the values to be saved depends on the business
-        conn.execute(
-            f"INSERT INTO public.inference (event_id,predicted_value) VALUES ('{event_id}',{prediction})"
-        )
+    # For localhost there is no port
+    # engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_ip}/{db_name}')
+
+    sql_insert = f"INSERT INTO public.inference (event_id, predicted_value) VALUES ({event_id},'{prediction}')"
+    with engine.begin() as connection:
+        connection.execute(text(sql_insert))
+
+
+
+def externalized_model(request) -> str:
+
+    headers = {}
+
+    response = requests.post(f'http://{vm_ip}:{vm_port}/invocations', headers=headers, json=request)
+    response = response.json()["predictions"]
+
+    assert len(response_prediction) == 1, 'I want to have just one inference'
+
+    return response[0]
 
 
 
@@ -69,7 +72,7 @@ def trigger_events(request):
     event_id, request_data = parse_request(request)
 
     if check_business_logic(request_data):
-        prediction = get_predictions(request_data)
+        prediction = externalized_model(request_data)
     else:
         #This is the default custom amount
         #We could writte any value here that makes business sense

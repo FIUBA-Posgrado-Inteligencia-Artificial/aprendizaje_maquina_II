@@ -1,6 +1,5 @@
 import requests
-
-def externalized_model(request) -> list:
+def externalized_model(request) -> str:
     vm_ip =   # By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
 
     headers = {}

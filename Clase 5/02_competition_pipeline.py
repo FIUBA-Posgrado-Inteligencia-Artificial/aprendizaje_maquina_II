@@ -1,6 +1,4 @@
-import mlflow 
-from mlflow.client import MlflowClient
-
+import mlflow
 import os
 
 #This will be used in the next class
