@@ -1,4 +1,5 @@
 import requests
+import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy import text
 
@@ -16,13 +17,11 @@ db_port = "5432"
 def parse_request(request):
     # The request MUST have this format
     # {'dataframe_split': {event_id: '5e82b70d-b550-4bee-9d5d-16a2e73029f9', 'data':[[10,10,10,10]]}}
-    request = request.get_json()
+    #request = request.get_json()
 
     event_id = request.pop('event_id') if 'event_id' in request else 'no_event_id'
 
-    features = request["data"][0]
-
-    assert len(request["data"] == 1, "We want to have just one inference at the time")
+    features = request["data"]
     assert len(features) == 4, 'The request must have the correct ammount of columns (At least)'
 
     return event_id, features
@@ -35,15 +34,19 @@ def save_predictions(event_id, prediction):
     # For localhost there is no port
     # engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_ip}/{db_name}')
 
-    sql_insert = f"INSERT INTO public.inference (event_id, predicted_value) VALUES ({event_id},'{prediction}')"
-    with engine.begin() as connection:
-        connection.execute(text(sql_insert))
 
+    conn_string = f"host='{db_ip}' dbname='{db_name}' user='{db_user}' password='{db_pass}'"
+    conn =  psycopg2.connect(conn_string)
+    cursor = conn.cursor()
+    cursor.execute(f"""insert into public.inference(id, value) values('{event_id}',{prediction})""")
+    conn.commit() # <- We MUST commit to reflect the inserted data
+    cursor.close()
+    conn.close()
 
 def externalized_model(features) -> str:
     headers = {}
 
-    json_request =  {'dataframe_split': {'data':[features]}}
+    json_request = {'dataframe_split': {'data':[features]}}
 
     response = requests.post(f'http://{vm_ip}:{vm_port}/invocations', headers=headers, json=json_request)
     response = response.json()["predictions"]
@@ -63,7 +66,7 @@ def check_business_logic(features):
     petal_length_condition = (1.0 <= petal_length) and (petal_length <= 6.9)
     petal_width_condition = (0.1 <= petal_width) and (petal_width <= 2.5)
 
-    return sepal_length_condition and sepal_width_condition and petal_length_condition and petal_width_condition
+    return not (sepal_length_condition and sepal_width_condition and petal_length_condition and petal_width_condition)
 
 
 def get_business_prediction(features):
@@ -88,9 +91,9 @@ def trigger_events(request):
 
     return prediction
 
-#print(trigger_events(
-#   {"event_id": "event_id_2", "dataframe_split": {"data":[[0,0,0,0]]}}
-#    ))
+print(trigger_events(
+   {"event_id": "17cfe7d5-3cdb-4e62-861d-0371b79f16f2", "data":[0,0,0,0]}
+))
 
 
 #print(trigger_events(
