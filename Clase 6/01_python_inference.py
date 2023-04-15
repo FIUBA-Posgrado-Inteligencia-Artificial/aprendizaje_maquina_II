@@ -79,6 +79,8 @@ def trigger_events(request):
     # This pipeline supposes that we are using it to do just one inference at the time
     # If we want to do more inferences, we need to modify the functions to be able to handle them
 
+    #This is to work inside the lambda fn
+    request = request.get_json()
     event_id, features = parse_request(request)
 
     if check_business_logic(features):
@@ -89,7 +91,7 @@ def trigger_events(request):
 
     save_predictions(event_id, prediction)
 
-    return prediction
+    return str(prediction)
 
 print(trigger_events(
    {"event_id": "17cfe7d5-3cdb-4e62-861d-0371b79f16f2", "data":[0,0,0,0]}
