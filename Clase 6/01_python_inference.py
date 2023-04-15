@@ -7,8 +7,8 @@ from sqlalchemy import text
 vm_ip =  "127.0.0.1"# By default the internal ip used by mlflow is 127.0.0.1, but to externalize the model the external  ip of the vm must be written here
 vm_port = "5001"
 
-db_pass = "postgres"
-db_ip = "localhost"
+db_pass = "apu"
+db_ip = "34.123.46.189"
 db_name = "postgres"
 db_user = "postgres"
 db_port = "5432"
@@ -93,6 +93,10 @@ def trigger_events(request):
 
 print(trigger_events(
    {"event_id": "17cfe7d5-3cdb-4e62-861d-0371b79f16f2", "data":[0,0,0,0]}
+))
+
+print(trigger_events(
+   {"event_id": "e1a9d8f8-d553-4b97-83ab-37cd9c73c1fc", "data":[5.1,3.5,1.4,0.2]}
 ))
 
 
