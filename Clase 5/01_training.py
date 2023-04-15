@@ -12,7 +12,7 @@ import pandas as pd
 
 
 #This will be used in the next class
-os.chdir('/home/ml2/aprendizaje_maquina_II/Clase 5') 
+#os.chdir('/home/ml2/aprendizaje_maquina_II/Clase 5')
 
 
 ## This db could be an external postgres database
