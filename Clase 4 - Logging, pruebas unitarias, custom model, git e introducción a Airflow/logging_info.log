@@ -1,0 +1,3 @@
+2023-05-20 11:20:13 - root - INFO - SUCCESS: the model was created successfully
+2023-05-20 11:20:33 - root - INFO - SUCCESS: model.fit was executed successfully
+2023-05-20 11:20:33 - root - INFO - SUCCESS: model.predict was executed successfully

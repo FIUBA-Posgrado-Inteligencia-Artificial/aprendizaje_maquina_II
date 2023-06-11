@@ -1,0 +1,27 @@
+artifact_path: best_estimator
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.8.16
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.2.0
+mlflow_version: 2.3.1
+model_uuid: fb98c854de5946da9043f582fc3a33d1
+run_id: 3cdac6c5e78a40f3a80d798a663faee7
+signature:
+  inputs: '[{"name": "fixed acidity", "type": "double"}, {"name": "volatile acidity",
+    "type": "double"}, {"name": "citric acid", "type": "double"}, {"name": "residual
+    sugar", "type": "double"}, {"name": "chlorides", "type": "double"}, {"name": "free
+    sulfur dioxide", "type": "double"}, {"name": "total sulfur dioxide", "type": "double"},
+    {"name": "density", "type": "double"}, {"name": "pH", "type": "double"}, {"name":
+    "sulphates", "type": "double"}, {"name": "alcohol", "type": "double"}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+utc_time_created: '2023-05-10 03:00:19.230244'

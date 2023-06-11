@@ -1,0 +1,29 @@
+artifact_path: model
+flavors:
+  python_function:
+    artifacts:
+      estimator:
+        path: artifacts/fitted_model.pkl
+        uri: ./fitted_model.pkl
+      preprocessor:
+        path: artifacts/fitted_preprocessor.pkl
+        uri: ./fitted_preprocessor.pkl
+    cloudpickle_version: 2.2.1
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.8.16
+mlflow_version: 2.3.2
+model_uuid: 6b2146bda64b40ff8d516d2c970c7671
+run_id: 2f998f604d4842f08d5456d5ec1b2431
+signature:
+  inputs: '[{"name": "fixed acidity", "type": "double"}, {"name": "volatile acidity",
+    "type": "double"}, {"name": "citric acid", "type": "double"}, {"name": "residual
+    sugar", "type": "double"}, {"name": "chlorides", "type": "double"}, {"name": "free
+    sulfur dioxide", "type": "double"}, {"name": "total sulfur dioxide", "type": "double"},
+    {"name": "density", "type": "double"}, {"name": "pH", "type": "double"}, {"name":
+    "sulphates", "type": "double"}, {"name": "alcohol", "type": "double"}]'
+  outputs: '[{"name": "quality", "type": "long"}]'
+utc_time_created: '2023-05-17 03:36:26.559298'
