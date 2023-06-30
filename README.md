@@ -19,3 +19,5 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 >
 >**[:alembic: Clase 7](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%207%20-%20Databricks%2C%20repaso%20TP)**: práctica con Databricks, versionado de modelos usando mlflow en la nube.
 >
+>**[📈 Clase 7](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%208%20-%20XAI)**: explicabilidad de modelos (XAI).
+>
