@@ -21,3 +21,13 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 >
 >**[📈 Clase 8](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%208%20-%20XAI)**: explicabilidad de modelos (XAI).
 >
+
+### Configuración del ambiente de trabajo
+Para trabajar a lo largo del curso será necesario instalar algunas dependencias para poder ejecutar los notebooks y scripts sin problemas.  
+Para configurar los ambientes de trabajo se deberán instalar las dependencias definidas en los archivos `requirements_amq2.txt` y `requirements_airflow.txt`. Para ello se recomienda crear dos ambientes virtuales diferentes utilizando los siguientes comandos desde la consola de Anaconda:
+
+`conda create --name amq2 --file requirements_amq2.txt`  
+
+`conda create --name airflow --file requirements_airflow.txt`
+
+_(Los comandos deben ser ejecutados desde el directorio en donde se encuentran los archivos .txt)_
