@@ -24,10 +24,23 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 
 ### Configuración del ambiente de trabajo
 Para trabajar a lo largo del curso será necesario instalar algunas dependencias para poder ejecutar los notebooks y scripts sin problemas.  
-Para configurar los ambientes de trabajo se deberán instalar las dependencias definidas en los archivos `requirements_amq2.txt` y `requirements_airflow.txt`. Para ello se recomienda crear dos ambientes virtuales diferentes utilizando los siguientes comandos desde la consola de Anaconda:
+Para configurar los ambientes de trabajo se deberán instalar las dependencias definidas en los archivos `requirements_amq2.txt` y `requirements_mlflow.txt`. Para ello se recomienda crear ambientes virtuales diferentes utilizando los siguientes comandos desde la consola de Anaconda:
+```
+conda create --name mlflow python=3.8
+conda activate mlflow
+pip install -r requirements_mlflow.txt
+```
 
-`conda create --name amq2 --file requirements_amq2.txt`  
+```
+conda create --name amq2 python=3.8.16
+conda activate amq2
+pip install -r requirements_amq2.txt
+```
 
-`conda create --name airflow --file requirements_airflow.txt`
+```
+conda create --name airflow python=3.9.0
+conda activate airflow
+pip install apache-airflow==2.6.0
+```
 
 _(Los comandos deben ser ejecutados desde el directorio en donde se encuentran los archivos .txt)_
