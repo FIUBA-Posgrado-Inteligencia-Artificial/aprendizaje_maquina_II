@@ -1,46 +1,63 @@
-# Aprendizaje de máquina II - AMq2
-En este repositorio se encuentra el material correspondiente a la materia aprendizaje de máquina II 🤖 de la [Carrera de Especialización en Inteligencia Artificial](https://lse.posgrados.fi.uba.ar/posgrados/especializaciones/inteligencia-artificial) de la Universidad de Buenos Aires.  
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+# Aprendizaje de Maquina II
+Este repositorio contiene el material de clases (presentaciones, ejercicios y notebooks) para Aprendizaje de Maquina II (CEIA - FIUBA). 
+
+Para revisar los criterios de aprobación, ver el [documento correspondiente](CriteriosAprobacion.md).
 
 ### Objetivo de la materia
 El objetivo de la materia es acercar a los alumnos los conceptos necesarios para desarrollar productos de software relacionados a Machine Learning y análisis de datos de una manera escalable y siguiendo buenas prácticas de programación. También se trabaja sobre las tareas operativas de Machine Learning (MLOps) con distintas herramientas para disponibilizar los resultados en ambientes productivos 🚀.
 
-### Temario
->**[:jigsaw: Clase 1](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%201%20-%20Ensambles%20y%20HPs)**: repaso sobre métodos de ensamble, ajuste de hiperparámetros: métodos clásicos y enfoque bayesiano.
->
->**[:busts_in_silhouette: Clase 2](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%202%20-%20MLOps%20y%20buenas%20pr%C3%A1cticas)**: conceptos de MLOps, roles dentro del ciclo de vida de un proyecto de ML, entornos de desarrollo vs. producción, pipelines de ML y buenas prácticas de programación.
->
->**[:test_tube: Clase 3](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%203%20-%20Mlflow)**: versionado de modelos de ML utilizando mlflow, implementación local.
->
->**[:memo: Clase 4](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%204%20-%20Logging%2C%20pruebas%20unitarias%2C%20custom%20model%2C%20git%20e%20introducci%C3%B3n%20a%20Airflow)**: logging, pruebas unitarias, consideraciones para códigos en producción, introducción a Airflow.
->
->**[:globe_with_meridians: Clase 5](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%205%20-%20APIs%20Web%20apps)**: despliegue de modelos de ML. Servicio de predicciones on-line mediante APIs y WEB apps. Conceptos sobre orquestadores, Airflow como orquestador. Servicio de predicciones batch utilizando Airflow.
->
->**[:bricks: Clase 6](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%206%20-%20Pr%C3%A1ctica%20Airflow)**: práctica de Airflow. Introducción a Databricks.
->
->**[:alembic: Clase 7](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%207%20-%20Databricks%2C%20repaso%20TP)**: práctica con Databricks, versionado de modelos usando mlflow en la nube.
->
->**[📈 Clase 8](https://github.com/FIUBA-Posgrado-Inteligencia-Artificial/aprendizaje_maquina_II/tree/main/Clase%208%20-%20XAI)**: explicabilidad de modelos (XAI).
->
-
-### Configuración del ambiente de trabajo
-Para trabajar a lo largo del curso será necesario instalar algunas dependencias para poder ejecutar los notebooks y scripts sin problemas.  
-Para configurar los ambientes de trabajo se deberán instalar las dependencias definidas en los archivos `requirements_amq2.txt` y `requirements_mlflow.txt`. Para ello se recomienda crear ambientes virtuales diferentes utilizando los siguientes comandos desde la consola de Anaconda:
-```
-conda create --name mlflow python=3.8
-conda activate mlflow
-pip install -r requirements_mlflow.txt
+### Organización del Repositorio
+``` 
+    clase#
+        teoria
+        ejercicios
+        jupyter_notebooks
+        README.md
 ```
 
-```
-conda create --name amq2 python=3.8.16
-conda activate amq2
-pip install -r requirements_amq2.txt
-```
+### Requerimientos
+* Lenguaje de Programación
+    * Python >=3.8
+    * Pip / Conda para instalar librerías
+* Librerías
+    * MLflow
+    * Librerias de manejo de datos y de modelos de aprendizaje automático.
+    * Jupiter Notebook
+* Herramientas
+    * GitHub para repositorios
+    * Docker
+    * Apache Airflow
+* IDE Recomendados 
+    * Visual Studio Code
+    * PyCharm Community Edition    
 
-```
-conda create --name airflow python=3.9.0
-conda activate airflow
-pip install apache-airflow==2.6.0
-```
+## Contenido
 
-_(Los comandos deben ser ejecutados desde el directorio en donde se encuentran los archivos .txt)_
+### [Clase 1](clase1/README.md) 
+* Introducción a la Materia
+* Ciclo de vida de un proyecto de Aprendizaje Automático
+* Machine Learning Operations (MLOps)
+* Buenas prácticas de programación
+
+
+## Bibliografia
+
+- Designing Machine Learning Systems. An Iterative Process for Production-Ready Applications - Chip Huyen (Ed. O’Reilly)
+- Machine Learning Engineering with Python: Manage the production life cycle of machine learning models using MLOps with practical examplesv - Andrew P. McMahon (Ed. Packt Publishing)
+- Engineering MLOps: Rapidly build, test, and manage production-ready machine learning life cycles at scale - Emmanuel Raj (Ed. Packt Publishing)
+- Introducing MLOps: How to Scale Machine Learning in the Enterprise -  Mark Treveil, Nicolas Omont, Clément Stenac, Kenji Lefevre, Du Phan, Joachim Zentici, Adrien Lavoillotte, Makoto Miyazaki, Lynn Heidmann (Ed. O’Reilly)
+- Practical MLOps: Operationalizing Machine Learning Models -  Noah Gift, Alfredo Deza (Ed. O’Reilly)
+- Machine Learning Engineering - Andriy Burkov (Ed. True Positive Inc.)
+- Machine Learning Engineering in Action - Ben Wilson (Manning)
+
+---
+Esta obra está bajo una
+[Licencia Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
