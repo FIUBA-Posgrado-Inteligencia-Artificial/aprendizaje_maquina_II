@@ -12,6 +12,13 @@ La idea de este trabajo es suponer que trabajamos para **ML Models and something
 
 La tarea es implementar el modelo que desarrollaron en Aprendizaje de Máquina I en este ambiente productivo. Para ello, pueden usar los recursos que consideren apropiado. Los servicios disponibles de base son Apache Airflow, MLflow, PostgresSQL, MinIO, FastAPI. Todo está montado en Docker, por lo que además deben instalado Docker. 
 
+### Repositorio con el material
+
+Las herramientas para poder armar el proyecto se encuentra en: 
+[https://github.com/facundolucianna/amq2-service-ml](https://github.com/facundolucianna/amq2-service-ml).
+
+Recuerda que dejamos un ejemplo de aplicación en el branch [example_implementation](https://github.com/facundolucianna/amq2-service-ml/tree/example_implementation).
+
 ## Criterios de aprobación
 
 Los criterios de aprobación son los siguientes:
@@ -27,4 +34,4 @@ Los criterios de aprobación son los siguientes:
 
 ## Link de formulario de Google para envio del trabajo (13Co2023)
 
-El informe a entregar se debe envia mediante el siguiente formulario: [Proximamente](Proximamente). La fecha de entrega es el XX/XX/2024 a las XX:XX.
+El informe a entregar se debe envia mediante el siguiente formulario: [https://forms.gle/2H1JbQBdjj5FsFtX9](https://forms.gle/2H1JbQBdjj5FsFtX9). La fecha de entrega es el 27/04/2024 a las 23:59.
