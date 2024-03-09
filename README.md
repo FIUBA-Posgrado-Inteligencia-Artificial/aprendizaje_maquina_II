@@ -41,6 +41,13 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * Machine Learning Operations (MLOps)
 * Buenas prácticas de programación
 
+# Clase 2
+
+### [Clase 2](clase2/README.md) 
+
+* Desarrollo de modelos
+* Las 4 fases del desarrollo de modelos
+* Contenedores y Docker
 
 ## Bibliografia
 
