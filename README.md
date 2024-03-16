@@ -49,6 +49,13 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * Las 4 fases del desarrollo de modelos
 * Contenedores y Docker
 
+# Clase 3
+
+### [Clase 3](clase3/README.md)
+* Infraestructura
+* Plataforma de ML
+* MLFlow
+
 ## Bibliografia
 
 - Designing Machine Learning Systems. An Iterative Process for Production-Ready Applications - Chip Huyen (Ed. O’Reilly)
