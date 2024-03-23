@@ -52,6 +52,12 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * Plataforma de ML
 * MLFlow
 
+### [Clase 4](clase4/README.md)
+* Orquestadores y sincronizadores
+* Gestión del flujo de trabajo de ciencia de datos
+* Apache Airflow
+
+
 ## Bibliografia
 
 - Designing Machine Learning Systems. An Iterative Process for Production-Ready Applications - Chip Huyen (Ed. O’Reilly)
