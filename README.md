@@ -57,6 +57,10 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * Gestión del flujo de trabajo de ciencia de datos
 * Apache Airflow
 
+### [Clase 5](clase5/README.md)
+* Despliegue de modelos
+* Sirviendo modelos
+* Predicción en lotes
 
 ## Bibliografia
 
