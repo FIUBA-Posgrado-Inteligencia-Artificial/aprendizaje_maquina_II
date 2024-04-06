@@ -12,8 +12,7 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 ``` 
     clase#
         teoria
-        ejercicios
-        jupyter_notebooks
+        hands-on
         README.md
 ```
 
