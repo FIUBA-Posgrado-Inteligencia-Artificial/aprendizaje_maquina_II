@@ -62,6 +62,12 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * Sirviendo modelos
 * Predicción en lotes
 
+### [Clase 6](clase6/README.md)
+* Desplegado on-line
+* APIs y Microservicios
+* Implementación de REST APIs en Python
+
+
 ## Bibliografia
 
 - Designing Machine Learning Systems. An Iterative Process for Production-Ready Applications - Chip Huyen (Ed. O’Reilly)
