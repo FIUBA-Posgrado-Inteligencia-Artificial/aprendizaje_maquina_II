@@ -14,7 +14,7 @@ docker-compose up -d
 docker compose down 
 ```
 
-3. Si queremos eliminar las imagenes y los volumenes, hacemos
+3. Si queremos eliminar las imágenes y los volúmenes, hacemos
 
 ```Bash
 docker compose down --rmi all --volumes

@@ -1,0 +1,35 @@
+services:
+  postgres:
+    restart: always
+    image: postgres
+    container_name: postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - net
+    env_file:
+      - .env
+    volumes:
+      - ./dataset:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-p", "5432", "-U", "${POSTGRES_USER:-postgres}" ]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+
+  salary:
+    restart: always
+    build: "./dockerfiles/salary_app"
+    image: salary_app
+    container_name: salary_app
+    ports:
+      - "${SALARY_PORT:-8501}:8501"
+    networks:
+      - net
+    env_file:
+      - .env
+
+
+networks:
+  net:
+    driver: bridge
