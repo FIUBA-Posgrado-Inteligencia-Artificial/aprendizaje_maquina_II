@@ -3,7 +3,6 @@ import numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
 
 
 def load_data_from_source(path: str, filename: str) -> pd.DataFrame:
@@ -107,7 +106,7 @@ def standarize_inputs(X_train: pd.DataFrame,
 
 
 # Proceso de Extract, Load and Transform
-dataset = load_data_from_source("./", "heart.csv")
+dataset = load_data_from_source("/", "heart.csv")
 dataset = make_dummie_variables(dataset,
                                 ["cp", "restecg", "slope", "ca", "thal"])
 X_train, X_test, y_train, y_test = split_dataset(dataset, 0.3, 'target', True)
