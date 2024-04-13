@@ -1,8 +1,5 @@
 # Hands-on - Creando imágenes de Docker
 
-El uso de contenedores es una de las formas actuales de desplegado de servicios de Aprendizaje automatico mas utilizadas.
-Esto se debe a que...
-
 El uso de contenedores es una de las formas más populares en la actualidad para implementar servicios de Aprendizaje 
 Automático. Esto se debe a que los contenedores proporcionan un entorno de ejecución aislado y consistente que 
 permite a los desarrolladores encapsular todas las dependencias y configuraciones necesarias para ejecutar sus 
