@@ -1,0 +1,91 @@
+services:
+
+  s3:
+    restart: always
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "${MINIO_PORT:-9000}:9000"
+      - "${MINIO_PORT_UI:-9001}:9001"
+    networks:
+      - net
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_ACCESS_KEY:-minio123}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address :9001
+    healthcheck:
+      test: [ "CMD", "mc", "ready", "local" ]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+
+  create_s3_buckets:
+    image: minio/mc:latest
+    container_name: minio_create_bucket
+    depends_on:
+      - s3
+    networks:
+      - net
+    entrypoint: >
+      /bin/sh -c '
+      sleep 5;
+      /usr/bin/mc config host add s3 http://s3:9000 ${MINIO_ACCESS_KEY:-minio} ${MINIO_SECRET_ACCESS_KEY:-minio123} --api S3v4;
+      [[ ! -z "`/usr/bin/mc ls s3 | grep challenge`" ]] || /usr/bin/mc mb s3/${MLFLOW_BUCKET_NAME:-mlflow};
+      /usr/bin/mc policy download s3/${MLFLOW_BUCKET_NAME:-mlflow};
+      exit 0;
+      '
+
+  mlflow:
+    restart: always
+    build: "./dockerfiles/mlflow"
+    image: mlflow
+    container_name: mlflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${MLFLOW_PORT:-5000}:5000"
+    networks:
+      - net
+    environment:
+      - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-minio}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_ACCESS_KEY:-minio123}
+      - MLFLOW_S3_ENDPOINT_URL=http://s3:9000
+    command: >
+      mlflow server 
+      --backend-store-uri postgresql://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres:5432/${POSTGRES_DB:-mlflow_db}
+      --host 0.0.0.0
+      --default-artifact-root s3://${MLFLOW_BUCKET_NAME:-mlflow}/
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://mlflow:5000 || exit 1
+      interval: 60s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    restart: always
+    image: postgres
+    container_name: postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - net
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-p", "5432", "-U", "${POSTGRES_USER:-postgres}" ]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+
+networks:
+  net:
+    driver: bridge
+
+volumes:
+  db_data:
+  minio_data:
