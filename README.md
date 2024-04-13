@@ -66,6 +66,11 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * APIs y Microservicios
 * Implementación de REST APIs en Python
 
+### [Clase 7](clase7/README.md)
+* Sirviendo modelos en el mundo real
+* Estrategias de implementación
+* Ejemplo de servicios de modelos
+
 
 ## Bibliografia
 
