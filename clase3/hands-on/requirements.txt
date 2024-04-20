@@ -1,5 +1,7 @@
 pandas
 numpy
 matplotlib
+seaborn
 scikit-learn
 mlflow
+boto3

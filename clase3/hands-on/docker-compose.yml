@@ -1,4 +1,25 @@
 services:
+  postgres:
+    restart: always
+    image: postgres
+    container_name: postgres
+    ports:
+      - "${PG_PORT:-5432}:5432"
+    networks:
+      - backend
+    environment:
+      - POSTGRES_USER=${PG_USER:-postgres}
+      - POSTGRES_PASSWORD=${PG_PASSWORD:-postgres}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${PG_DATABASE:-mlflow_db}
+      - POSTGRES_PORT=${PG_PORT:-5432}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-p", "5432", "-U", "${PG_USER:-postgres}"]
+      interval: 60s
+      timeout: 20s
+      retries: 3
 
   s3:
     restart: always
@@ -8,7 +29,7 @@ services:
       - "${MINIO_PORT:-9000}:9000"
       - "${MINIO_PORT_UI:-9001}:9001"
     networks:
-      - net
+      - backend
     environment:
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
       - MINIO_SECRET_KEY=${MINIO_SECRET_ACCESS_KEY:-minio123}
@@ -16,7 +37,7 @@ services:
       - minio_data:/data
     command: server /data --console-address :9001
     healthcheck:
-      test: [ "CMD", "mc", "ready", "local" ]
+      test: ["CMD", "mc", "ready", "local"]
       interval: 60s
       timeout: 20s
       retries: 3
@@ -27,7 +48,7 @@ services:
     depends_on:
       - s3
     networks:
-      - net
+      - backend
     entrypoint: >
       /bin/sh -c '
       sleep 5;
@@ -48,14 +69,14 @@ services:
     ports:
       - "${MLFLOW_PORT:-5000}:5000"
     networks:
-      - net
+      - backend
     environment:
       - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-minio}
       - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_ACCESS_KEY:-minio123}
       - MLFLOW_S3_ENDPOINT_URL=http://s3:9000
     command: >
       mlflow server 
-      --backend-store-uri postgresql://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres:5432/${POSTGRES_DB:-mlflow_db}
+      --backend-store-uri postgresql://${PG_USER:-postgres}:${PG_PASSWORD:-postgres}@postgres:5432/${PG_DATABASE:-mlflow_db}
       --host 0.0.0.0
       --default-artifact-root s3://${MLFLOW_BUCKET_NAME:-mlflow}/
     healthcheck:
@@ -64,26 +85,8 @@ services:
       timeout: 10s
       retries: 3
 
-  postgres:
-    restart: always
-    image: postgres
-    container_name: postgres
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
-    networks:
-      - net
-    env_file:
-      - .env
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-p", "5432", "-U", "${POSTGRES_USER:-postgres}" ]
-      interval: 60s
-      timeout: 20s
-      retries: 3
-
 networks:
-  net:
+  backend:
     driver: bridge
 
 volumes:
