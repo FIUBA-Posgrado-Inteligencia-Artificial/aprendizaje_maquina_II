@@ -9,3 +9,24 @@ Este hands-on de MLFlow tiene como objetivo explorar su utilidad en el día a d�
 Automático y operaciones de modelos (MLOps). Descubriremos cómo MLFlow facilita el seguimiento de experimentos, el 
 registro de modelos y la implementación en producción, brindándonos una plataforma integral para gestionar todo el 
 ciclo de vida de nuestros modelos.
+
+## Ejecución de Docker Compose
+
+Para poder realizar este hands-on, necesitamos tener disponible el servicio de MLFlow tal como está definido 
+en el archivo de Docker Compose. 
+
+Para ejecutar este docker compose:
+
+```Bash
+docker compose up
+```
+
+Para detenerlo:
+```Bash
+docker compose down
+```
+
+Para detenerlo y eliminar todo:
+```Bash
+docker compose down --rmi all --volumes
+```
