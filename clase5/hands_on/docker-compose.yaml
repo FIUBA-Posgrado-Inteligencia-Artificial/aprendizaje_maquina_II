@@ -1,0 +1,76 @@
+services:
+
+  s3:
+    restart: always
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "${MINIO_PORT:-9000}:9000"
+      - "${MINIO_PORT_UI:-9001}:9001"
+    networks:
+      - backend
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_ACCESS_KEY:-minio123}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address :9001
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+
+  create_s3_buckets:
+    image: minio/mc:latest
+    container_name: minio_create_bucket
+    depends_on:
+      - s3
+    networks:
+      - backend
+    entrypoint: >
+      /bin/sh -c '
+      sleep 5;
+      /usr/bin/mc config host add s3 http://s3:9000 ${MINIO_ACCESS_KEY:-minio} ${MINIO_SECRET_ACCESS_KEY:-minio123} --api S3v4;
+      [[ ! -z "`/usr/bin/mc ls s3 | grep challenge`" ]] || /usr/bin/mc mb s3/${DATA_REPO_BUCKET_NAME:-data};
+      /usr/bin/mc policy download s3/${DATA_REPO_BUCKET_NAME:-data};
+      exit 0;
+      '
+
+  copy_data_to_s3:
+    build: "./dockerfiles/minio_copy"
+    container_name: minio_copy_bucket
+    depends_on:
+      create_s3_buckets:
+        condition: service_completed_successfully
+    networks:
+      - backend
+    entrypoint: >
+      /bin/sh -c '
+      sleep 5;
+      /usr/bin/mc config host add s3 http://s3:9000 ${MINIO_ACCESS_KEY:-minio} ${MINIO_SECRET_ACCESS_KEY:-minio123} --api S3v4;
+      /usr/bin/mc cp /iris.csv s3/${DATA_REPO_BUCKET_NAME:-data}/data/iris.csv;
+      /usr/bin/mc cp /iris_y.csv s3/${DATA_REPO_BUCKET_NAME:-data}/data/iris_y.csv;
+      /usr/bin/mc cp /model.json s3/${DATA_REPO_BUCKET_NAME:-data}/artifact/model.json;
+      exit 0;
+      '
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/root/redis
+      - redis_data:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-data}
+      - REDIS_PORT=${REDIS_PORT:-data}
+      - REDIS_DATABASES=${REDIS_DATABASES:-data}
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  minio_data:
+  redis_data:
