@@ -6,6 +6,9 @@ os.environ['AWS_ACCESS_KEY_ID'] = "minio"
 os.environ['AWS_SECRET_ACCESS_KEY'] = "minio123"
 os.environ['AWS_ENDPOINT_URL_S3'] = "http://localhost:9000"
 
+#export AWS_ACCESS_KEY_ID=minio
+#export AWS_SECRET_ACCESS_KEY=minio123
+#export AWS_ENDPOINT_URL_S3=http://localhost:9000
 
 class BatchProcessingModel(FlowSpec):
 
@@ -57,6 +60,7 @@ class BatchProcessingModel(FlowSpec):
 
         print("Obtaining predictions")
 
+        data, model = (None, None)
         # Se recorren las tareas previas para obtener los datos y el modelo.
         for task in previous_tasks:
             if hasattr(task, 'X_batch'):
