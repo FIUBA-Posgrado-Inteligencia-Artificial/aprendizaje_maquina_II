@@ -36,6 +36,7 @@ uvicorn = "^0.30.1"
 requests = "^2.32.3"
 fastapi = "^0.111.0"
 pydantic = "^2.7.4"
+typing-extensions = "^4.12.2"
 
 
 [build-system]
