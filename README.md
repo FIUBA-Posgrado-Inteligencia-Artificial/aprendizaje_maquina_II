@@ -18,8 +18,8 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 
 ### Requerimientos
 * Lenguaje de Programación
-    * Python >=3.8
-    * Pip / Conda para instalar librerías
+    * Python >=3.10
+    * Poetry / Pip / Conda para instalar librerías
 * Librerías
     * MLflow
     * Librerias de manejo de datos y de modelos de aprendizaje automático.
@@ -31,6 +31,10 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
 * IDE Recomendados 
     * Visual Studio Code
     * PyCharm Community Edition    
+
+#### Poetry
+Este repositorio contiene un archivo `pyproject.toml` para instalar las dependencias usando 
+[Poetry](https://python-poetry.org/)
 
 ## Contenido
 

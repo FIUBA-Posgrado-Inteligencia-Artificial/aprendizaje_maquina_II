@@ -241,3 +241,4 @@ fabric.properties
 .DS_Store
 metaflow.s3.*
 .metaflow
+poetry.lock
