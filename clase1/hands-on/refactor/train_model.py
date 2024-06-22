@@ -13,7 +13,7 @@ def load_datasets(path_X_train: str, path_y_train: str) -> tuple:
     :type path_X_train: str
     :param path_y_train: String con el path del csv con la salida de entrenamiento
     :type path_y_train: str
-    :returns: Tupla con las entradas y salida de entreamiento
+    :returns: Tupla con las entradas y salida de entrenamiento
     :rtype: tuple
     """
 
@@ -27,14 +27,14 @@ def load_datasets(path_X_train: str, path_y_train: str) -> tuple:
 def grid_search_best_params(
         X_train: np.array, y_train: np.array, path_best_model: str):
     """
-    Realiza una busqueda de grilla de los mejores hiperparametros para un SVC
-    dado el dataset de entrenamiento. Se elije el mejor modelo y se guarda el binario.
+    Realiza una búsqueda de grilla de los mejores hiper-parámetros para un SVC
+    dado el dataset de entrenamiento. Se elige el mejor modelo y se guarda el binario.
 
     :param X_train: Array de numpy con las entradas de entrenamiento
     :type X_train: np.array
     :param y_train: Array de numpy con la salida de entrenamiento
     :type y_train: np.array
-    :param path_best_model: Ubicacion a guardar el artefacto del modelo
+    :param path_best_model: Ubicación a guardar el artefacto del modelo
     :type path_best_model: str
     """
 

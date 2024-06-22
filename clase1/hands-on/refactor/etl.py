@@ -5,7 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-def load_data_from_source(path: str, filename: str) -> pd.DataFrame:
+def load_data_from_source(path: str,
+                          filename: str) -> pd.DataFrame:
     """
     Carga los datos crudos
 
@@ -21,16 +22,16 @@ def load_data_from_source(path: str, filename: str) -> pd.DataFrame:
     return pd.read_csv(path + filename)
 
 
-def make_dummie_variables(dataset: pd.DataFrame,
-                          categories_list: list) -> pd.DataFrame:
+def make_dummies_variables(dataset: pd.DataFrame,
+                           categories_list: list) -> pd.DataFrame:
     """
-    Convierte a las variables categoricas en one-hot-encoding
+    Convierte a las variables categóricas en one-hot-encoding
 
     :param dataset: Dataframe con el dataset
     :type dataset: pd.DataFrame
-    :param categories_list: Lista con el nombre de las columnas categoricas
+    :param categories_list: Lista con el nombre de las columnas categóricas
     :type categories_list: list
-    :returns: Dataset con las columna convertidas
+    :returns: Dataset con las columnas convertidas
     :rtype: pd.DataFrame
     """
 
@@ -60,7 +61,7 @@ def split_dataset(dataset: pd.DataFrame, test_size: float,
     :type target_column: str
     :param is_stratified: Si es True, se separa el dataset respetando la proporción del target
     :type is_stratified: bool
-    :returns: Tupla con las entradas y salidas de entreamiento y testeo.
+    :returns: Tupla con las entradas y salidas de entrenamiento y testeo.
     :rtype: tuple
     """
 
@@ -83,16 +84,16 @@ def split_dataset(dataset: pd.DataFrame, test_size: float,
     return X_train, X_test, y_train, y_test
 
 
-def standarize_inputs(X_train: pd.DataFrame,
+def standardize_inputs(X_train: pd.DataFrame,
                       X_test: pd.DataFrame) -> tuple:
     """
-    Estandarizador de las columnas numericas
+    Estandarizador de las columnas numéricas
 
     :param X_train: Dataframe con el dataset de entradas de entrenamiento
     :type X_train: pd.DataFrame
     :param X_test: Dataframe con el dataset de entradas de testeo
     :type X_test: pd.DataFrame
-    :returns: Tupla con las entradas de entreamiento y testeo normalizadas.
+    :returns: Tupla con las entradas de entrenamiento y testeo normalizadas.
     :rtype: tuple
     """
 
@@ -106,8 +107,8 @@ def standarize_inputs(X_train: pd.DataFrame,
 
 
 # Proceso de Extract, Load and Transform
-dataset = load_data_from_source("/", "heart.csv")
-dataset = make_dummie_variables(dataset,
-                                ["cp", "restecg", "slope", "ca", "thal"])
+dataset = load_data_from_source("./", "heart.csv")
+dataset = make_dummies_variables(dataset,
+                                 ["cp", "restecg", "slope", "ca", "thal"])
 X_train, X_test, y_train, y_test = split_dataset(dataset, 0.3, 'target', True)
-standarize_inputs(X_train, X_test)
+standardize_inputs(X_train, X_test)
