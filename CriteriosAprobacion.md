@@ -26,7 +26,7 @@ Ofrecemos tres tipos de evaluaciones:
 Las herramientas para poder armar el proyecto se encuentra en: 
 [https://github.com/facundolucianna/amq2-service-ml](https://github.com/facundolucianna/amq2-service-ml).
 
-Además dejamos un ejemplo de aplicación en el branch [example_implementation](https://github.com/facundolucianna/amq2-service-ml/tree/example_implementation).
+Además, dejamos un ejemplo de aplicación en el branch [example_implementation](https://github.com/facundolucianna/amq2-service-ml/tree/example_implementation).
 
 ## Criterios de aprobación
 
@@ -37,7 +37,3 @@ Los criterios de aprobación son los siguientes:
 3. El trabajo es obligatorio ser grupal para evaluar la dinámica de trabajo en un equipo de trabajo tipico.
 4. La implementación debe de estar de acuerdo al nivel elegido. Si es importante además de la implementación, hacer una buena documentación.
 5. Son libres de incorporar o cambiar de tecnologías, pero es importante que lo implementado tenga un servicio de orquestación y algun servicio de ciclo de vida de modelos.   
-
-## Link de formulario de Google para envio del trabajo (15Co2024)
-
-El informe a entregar se debe envia mediante el siguiente formulario: [https://forms.gle/8RXB2zxJCTebRPPg6](https://forms.gle/8RXB2zxJCTebRPPg6). La fecha de entrega es el 25/08/2024 a las 23:59.
