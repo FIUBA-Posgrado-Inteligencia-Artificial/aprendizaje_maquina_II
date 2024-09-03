@@ -35,5 +35,6 @@ Los criterios de aprobación son los siguientes:
 1. La entrega consiste en un repositorio en Github o Gitlab con la implementación y documentación. Salvo el nivel fácil que es un link al video.
 2. La fecha de entrega máxima es 7 días después de la última clase.
 3. El trabajo es obligatorio ser grupal para evaluar la dinámica de trabajo en un equipo de trabajo tipico.
-4. La implementación debe de estar de acuerdo al nivel elegido. Si es importante además de la implementación, hacer una buena documentación.
-5. Son libres de incorporar o cambiar de tecnologías, pero es importante que lo implementado tenga un servicio de orquestación y algun servicio de ciclo de vida de modelos.   
+4. La implementación debe de estar de acuerdo al nivel elegido. Sí es importante además de la implementación, hacer una buena documentación.
+5. Son libres de incorporar o cambiar de tecnologías, pero es importante que lo implementado tenga un servicio de orquestación y algún servicio de ciclo de vida de modelos.   
+6. La entrega es por medio del aula virtual de la asignatura y solo debe enviarse el link al repositorio.
