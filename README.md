@@ -1,7 +1,7 @@
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
-# Aprendizaje de Maquina II
-Este repositorio contiene el material de clases (presentaciones, ejercicios y notebooks) para Aprendizaje de Maquina II (CEIA - FIUBA). 
+# Operaciones de aprendizaje automático I
+Este repositorio contiene el material de clases (presentaciones, ejercicios y notebooks) para Operaciones de aprendizaje automático I (CEIA - FIUBA). 
 
 Para revisar los criterios de aprobación, ver el [documento correspondiente](CriteriosAprobacion.md).
 

@@ -2,7 +2,7 @@
 
 ## Objetivos de la materia:
 
-El objetivo está centrado en disponibilizar las herramientas de machine learning en un entorno productivo, utilizando herramientas de MLOPS.
+El objetivo está centrado en disponibilizar las herramientas de machine learning en un entorno productivo, utilizando herramientas de MLOps.
 
 ## Evaluación
 
