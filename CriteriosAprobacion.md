@@ -12,7 +12,7 @@ La idea de este trabajo es suponer que trabajamos para **ML Models and something
 
 Ofrecemos dos tipos de evaluaciones:
 
- * **Nivel medio** (nota entre 6 y 8): Implementar en local un ciclo de desarrollo del modelo que desarrollaron en Aprendizaje de Máquina hasta la generación final del artefacto del modelo entrenado. Deben usar un orquestador y buenas prácticas de desarrollo con buena documentación.
+ * **Nivel local** (nota entre 6 y 8): Implementar en local un ciclo de desarrollo del modelo que desarrollaron en Aprendizaje de Máquina hasta la generación final del artefacto del modelo entrenado. Deben usar un orquestador y buenas prácticas de desarrollo con buena documentación.
  * **Nivel en contenedores** (nota entre 8 y 10): Implementar el modelo que desarrollaron en Aprendizaje de Máquina en el ambiente productivo. Para ello, pueden usar los recursos que consideren apropiado. Los servicios disponibles de base son Apache Airflow, MLflow, PostgresSQL, MinIO, FastAPI. Todo está montado en Docker, por lo que además deben instalado Docker.
 
 ### Repositorio con el material
