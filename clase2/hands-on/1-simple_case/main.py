@@ -1,3 +1,3 @@
-import this
+#import this
 
-print(this)
+print("Hola mundo")

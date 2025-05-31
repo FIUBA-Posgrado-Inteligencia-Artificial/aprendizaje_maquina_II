@@ -22,7 +22,7 @@ services:
       retries: 3
 
   create_s3_buckets:
-    image: minio/mc:latest
+    image: minio/mc:RELEASE.2025-02-21T16-00-46Z
     container_name: minio_create_bucket
     depends_on:
       - s3
