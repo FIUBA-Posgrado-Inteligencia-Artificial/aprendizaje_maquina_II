@@ -32,9 +32,9 @@ El objetivo de la materia es acercar a los alumnos los conceptos necesarios para
     * Visual Studio Code
     * PyCharm Community Edition    
 
-#### Poetry
+#### UV
 Este repositorio contiene un archivo `pyproject.toml` para instalar las dependencias usando 
-[Poetry](https://python-poetry.org/)
+[uv](https://docs.astral.sh/uv/)
 
 ## Contenido
 
