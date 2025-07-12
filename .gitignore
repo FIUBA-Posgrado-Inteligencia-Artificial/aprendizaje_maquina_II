@@ -237,7 +237,8 @@ fabric.properties
 ~*.*
 
 *.db
-*/mlruns/
+mlruns
+mlartifacts
 .DS_Store
 metaflow.s3.*
 .metaflow
