@@ -1,3 +1,0 @@
-airflow
-awswrangler
-ucimlrepo
