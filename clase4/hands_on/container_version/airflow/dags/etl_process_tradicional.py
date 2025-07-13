@@ -3,8 +3,9 @@ import datetime
 import pandas as pd
 
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator # It will be deprecated soon
+from pendulum import today
+
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from ucimlrepo import fetch_ucirepo
@@ -22,8 +23,7 @@ dag = DAG(
     'etl_without_taskflow',
     default_args=default_args,
     description='Proceso ETL de ejemplo sin TaskFlow',
-    schedule_interval=None,
-    start_date=days_ago(2),
+    start_date=today("UTC").subtract(days=2),
     tags=['ETL']
 )
 
@@ -146,14 +146,12 @@ obtain_original_data_operator = PythonOperator(
 
 make_dummies_variables_operator = PythonOperator(
     task_id='make_dummies_variables',
-    provide_context=True,
     python_callable=make_dummies_variables,
     dag=dag
 )
 
 split_dataset_operator = PythonOperator(
     task_id='split_dataset',
-    provide_context=True,
     python_callable=split_dataset,
     dag=dag
 )

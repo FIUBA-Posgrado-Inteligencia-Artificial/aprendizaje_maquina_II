@@ -90,7 +90,7 @@ def process_etl_taskflow():
 
     @task.virtualenv(
         task_id="split_dataset",
-        requirements=["pandas~=1.5",
+        requirements=["pandas>=1.5",
                       "scikit-learn==1.3.2"],
     )
     def split_dataset(obs, col):
@@ -117,7 +117,7 @@ def process_etl_taskflow():
 
     @task.virtualenv(
         task_id="normalize_numerical_features",
-        requirements=["pandas~=2.0",
+        requirements=["pandas==2.3",
                       "scikit-learn==1.3.2"]
     )
     def normalize_data():
@@ -142,7 +142,7 @@ def process_etl_taskflow():
 
     @task.virtualenv(
         task_id="read_train_data",
-        requirements=["pandas~=2.0",
+        requirements=["pandas==2.3",
                       "scikit-learn==1.3.2"]
     )
     def read_train_data():
@@ -158,7 +158,7 @@ def process_etl_taskflow():
 
     @task.virtualenv(
         task_id="read_test_data",
-        requirements=["pandas~=2.0",
+        requirements=["pandas==2.3",
                       "scikit-learn==1.3.2"]
     )
     def read_test_data():
