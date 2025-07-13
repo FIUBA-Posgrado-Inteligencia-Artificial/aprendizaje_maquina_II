@@ -7,6 +7,7 @@ requires-python = ">=3.11"
 dependencies = [
     "apache-airflow>=3.0.1",
     "autopep8>=2.3.2",
+    "awswrangler>=3.12.1",
     "boto3>=1.38.32",
     "fastapi>=0.115.12",
     "flask>=3.1.1",

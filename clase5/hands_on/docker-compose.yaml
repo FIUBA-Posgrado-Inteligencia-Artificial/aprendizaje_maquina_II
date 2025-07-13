@@ -10,8 +10,8 @@ services:
     networks:
       - backend
     environment:
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_ACCESS_KEY:-minio123}
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY:-minio}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_ACCESS_KEY:-minio123}
     volumes:
       - minio_data:/data
     command: server /data --console-address :9001
@@ -53,18 +53,15 @@ services:
       /usr/bin/mc cp /model.json s3/${DATA_REPO_BUCKET_NAME:-data}/artifact/model.json;
       exit 0;
       '
-  redis:
-    image: redis:latest
+  valkey:
+    image: valkey/valkey:latest
     restart: always
     ports:
-      - "6379:6379"
+      - "${VALKEY_PORT:-6379}:6379"
     volumes:
-      - redis_data:/root/redis
-      - redis_data:/usr/local/etc/redis/redis.conf
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD:-data}
-      - REDIS_PORT=${REDIS_PORT:-data}
-      - REDIS_DATABASES=${REDIS_DATABASES:-data}
+      - valkey_data:/data
+    command: valkey-server --requirepass ${VALKEY_PASSWORD:-data} --port 6379
+
 
 networks:
   backend:
@@ -72,4 +69,4 @@ networks:
 
 volumes:
   minio_data:
-  redis_data:
+  valkey_data:
