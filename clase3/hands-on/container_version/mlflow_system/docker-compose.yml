@@ -52,9 +52,8 @@ services:
     entrypoint: >
       /bin/sh -c '
       sleep 5;
-      /usr/bin/mc config host add s3 http://s3:9000 ${MINIO_ACCESS_KEY:-minio} ${MINIO_SECRET_ACCESS_KEY:-minio123} --api S3v4;
-      [[ ! -z "`/usr/bin/mc ls s3 | grep challenge`" ]] || /usr/bin/mc mb s3/${MLFLOW_BUCKET_NAME:-mlflow};
-      /usr/bin/mc policy download s3/${MLFLOW_BUCKET_NAME:-mlflow};
+      /usr/bin/mc alias set s3 http://s3:9000 ${MINIO_ACCESS_KEY:-minio} ${MINIO_SECRET_ACCESS_KEY:-minio123};
+      /usr/bin/mc mb s3/${MLFLOW_BUCKET_NAME:-mlflow};
       exit 0;
       '
 

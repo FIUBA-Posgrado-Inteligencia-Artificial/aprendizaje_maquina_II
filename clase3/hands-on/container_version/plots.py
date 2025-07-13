@@ -39,7 +39,7 @@ def plot_roc_curve(y_real, y_pred, num_class=3, save_path=None):
     for i in range(num_class):
 
         y_real_temp = (y_real == i).astype(int)
-        y_pred_temp = (y_pred == i).astype(int)
+        y_pred_temp = y_pred[:, i].flatten()
 
         fpr, tpr, _ = roc_curve(y_real_temp, y_pred_temp)
 

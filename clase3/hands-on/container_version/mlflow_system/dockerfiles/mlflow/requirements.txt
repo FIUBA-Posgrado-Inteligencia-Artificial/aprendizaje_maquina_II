@@ -1,0 +1,9 @@
+psycopg2-binary
+boto3
+cryptography
+pymysql
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn

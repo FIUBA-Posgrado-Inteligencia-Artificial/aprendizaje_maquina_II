@@ -1,32 +1,18 @@
 # Hands-on - Gestión de Modelos con MLFlow
 
-En el mundo del Aprendizaje Automático, crear modelos es solo el primer paso. A medida que desplegamos más modelos en 
-producción, gestionarlos de manera efectiva se vuelve crucial. Este proceso, conocido como MLOps, se encarga de 
-garantizar que los modelos se desplieguen, supervisen y actualicen de manera eficiente y confiable. En este sentido, 
-MLFlow surge como una herramienta que ayuda en este proceso.
+En el mundo del Aprendizaje Automático, crear modelos es solo el primer paso. A medida que desplegamos más modelos en producción, gestionarlos de manera efectiva se vuelve crucial. Este proceso, conocido como MLOps, se encarga de garantizar que los modelos se desplieguen, supervisen y actualicen de forma eficiente y confiable. En este sentido, MLFlow surge como una herramienta clave para facilitar este proceso.
 
-Este hands-on de MLFlow tiene como objetivo explorar su utilidad en el día a día del desarrollo de Aprendizaje 
-Automático y operaciones de modelos (MLOps). Descubriremos cómo MLFlow facilita el seguimiento de experimentos, el 
-registro de modelos y la implementación en producción, brindándonos una plataforma integral para gestionar todo el 
-ciclo de vida de nuestros modelos.
+Este *hands-on* tiene como objetivo explorar el uso de MLFlow en el desarrollo y operación de modelos de aprendizaje automático. Descubriremos cómo MLFlow permite realizar seguimiento de experimentos, registrar modelos e implementarlos en producción, brindándonos una plataforma integral para gestionar todo el ciclo de vida de los modelos.
 
-## Ejecución de Docker Compose
+Vamos a dividir este *hands-on* en dos formas de ejecutar MLFlow:
 
-Para poder realizar este hands-on, necesitamos tener disponible el servicio de MLFlow tal como está definido 
-en el archivo de Docker Compose. 
+- Gestión de modelos con MLFlow en ejecución local — carpeta `local_version`
+- Gestión de modelos con MLFlow en contenedor Docker — carpeta `container_version`
 
-Para ejecutar este docker compose:
+Ambas formas son muy similares en funcionalidad, pero difieren en la forma en que se instalan y gestionan los servicios:
 
-```Bash
-docker compose up
-```
+- La versión local es ideal para desarrollos rápidos, pruebas individuales o uso en notebooks, ya que MLFlow se ejecuta directamente en tu entorno virtual o sistema. Es fácil de instalar y ejecutar, pero depende del entorno de cada usuario (lo cual puede generar inconsistencias entre equipos).
 
-Para detenerlo:
-```Bash
-docker compose down
-```
+- La versión dockerizada encapsula toda la infraestructura de MLFlow (servidor, base de datos y almacenamiento de artefactos) en contenedores, lo cual facilita la portabilidad, escalabilidad y reproducibilidad del entorno. Es más cercana a un entorno de producción real y permite que múltiples personas accedan a un servicio centralizado.
 
-Para detenerlo y eliminar todo:
-```Bash
-docker compose down --rmi all --volumes
-```
+Se recomienda comenzar por la versión local para familiarizarse con los conceptos, y luego avanzar a la versión con Docker para entender cómo escalar y mantener MLFlow en un entorno más robusto.
