@@ -33,6 +33,7 @@ dependencies = [
     "torch>=2.7.1",
     "torchvision>=0.22.1",
     "typing-extensions>=4.14.0",
+    "ucimlrepo>=0.0.7",
     "uvicorn>=0.34.3",
     "xgboost>=3.0.2",
 ]
