@@ -78,7 +78,7 @@ class BatchProcessingModel(FlowSpec):
         labels = np.array([label_map[idx] for idx in out])
 
         # Se genera un hash para cada fila de datos.
-        data['key'] = data.apply(lambda row: ' '.join(map(str, row)), axis=1)
+        data['key'] = data.apply(lambda row: ' '.join(map(str, [round(x, 2) for x in row])), axis=1)
         data['hashed'] = data['key'].apply(lambda x: hashlib.sha256(x.encode()).hexdigest())
 
         # Preparamos los datos para ser enviados a Redis

@@ -28,6 +28,7 @@ dependencies = [
     "scikit-learn>=1.7.0",
     "scipy>=1.15.3",
     "seaborn>=0.13.2",
+    "sodapy>=2.2.0",
     "sqlalchemy>=1.4.54",
     "streamlit>=1.45.1",
     "torch>=2.7.1",
