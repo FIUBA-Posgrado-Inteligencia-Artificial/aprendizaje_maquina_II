@@ -14,6 +14,8 @@ La idea central es que cada alumno **llegue con un notebook crudo** producido en
 
 Se mantiene Docker como tecnología transversal del curso, reposicionado desde "envoltura del modelo en producción" hacia "garantía de reproducibilidad del entrenamiento". Se preserva el formato de 7 clases y se incorporan tres ejes nuevos que el programa actual no cubre con profundidad: **refactor de notebook a paquete**, **testing y validación de datos/modelos**, y **versionado y CI/CD**.
 
+El dictado adopta un modelo **flipped classroom**: cada clase combina videos teóricos pregrabados (para consumo asincrónico) con una clase sincrónica online de ~1.5 horas dedicada a hands-on guiado y evacuación de dudas. Esto permite usar el tiempo sincrónico de forma intensiva en la práctica sobre el proyecto de cada grupo.
+
 ---
 
 ## 1. Justificación del cambio
@@ -44,6 +46,15 @@ Cada materia recibe un artefacto bien definido de la anterior y entrega uno bien
 
 Docker se mantiene como tecnología fundamental del curso, pero se reposiciona conceptualmente. En el programa actual aparece principalmente como envoltura del modelo de inferencia. En la propuesta nueva se utiliza desde la clase 3 como **garantía de reproducibilidad del entorno de entrenamiento**, y como infraestructura para levantar localmente el stack completo de MLOps (MLflow, Postgres, MinIO, Jupyter) vía Docker Compose. Es la herramienta que asegura que el pipeline corre igual en la máquina del alumno, en CI y en producción.
 
+### Formato de dictado — flipped classroom
+
+Cada clase se divide en dos componentes complementarios:
+
+- **Videos teóricos pregrabados (asincrónico):** segmentos cortos de 8 a 15 minutos cada uno que cubren los conceptos de la clase. El alumno los consume a su propio ritmo antes de la clase sincrónica. Se complementan con material textual (guías paso a paso, ejemplos de código) que el alumno puede revisar en paralelo.
+- **Clase sincrónica online (~1.5 horas):** dedicada íntegramente a hands-on guiado sobre el proyecto de cada grupo, resolución de dudas sobre los videos y trabajo práctico acompañado. El docente está disponible para desbloquear problemas en tiempo real.
+
+Este formato permite usar el tiempo sincrónico de forma intensiva: los alumnos llegan con la teoría ya vista y aprovechan la clase para aplicar los conceptos sobre su propio modelo, con el docente acompañando.
+
 ---
 
 ## 2. Programa nuevo — 7 clases
@@ -52,45 +63,126 @@ El hilo conductor del curso es **"de notebook a pipeline reproducible de entrena
 
 ### Clase 1 — Introducción a MLOps y ciclo de vida de un proyecto de ML
 
-Introducción al rol de MLOps en el ciclo de vida de un sistema de ML. Diferencias entre experimentación, desarrollo y operación. Niveles de madurez de MLOps. Buenas prácticas de programación aplicadas a proyectos de ML: control de versiones, ambientes virtuales, gestión de dependencias con `uv` o `poetry`, semver. Setup del entorno de trabajo del curso.
+Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup del entorno de trabajo del curso.
 
-**Hands-on:** los alumnos crean su repo a partir del template de la cátedra y configuran su entorno local.
+**Videos teóricos:**
+
+- Ciclo de vida de un proyecto de ML y roles (Data Engineer, Data Scientist, Data Analyst, ML Engineer)
+- Pipelines de ML: componentes y artifacts
+- MLOps: definición, niveles 0/1/2 de madurez y ventajas de cada nivel
+- Entorno de desarrollo vs entorno productivo: propiedades y diferencias
+- Contrato de interfaz entre AMq1 → AMq2 → Serving (el flujo del posgrado)
+- Gestión moderna de dependencias: `uv` / `poetry`, lock files, semver
+- Buenas prácticas de programación aplicadas a ML (introducción)
+
+**Hands-on (clase sincrónica):** los alumnos crean su repo a partir del template de la cátedra vía GitHub Classroom y configuran su entorno local.
 
 ### Clase 2 — De notebook a paquete Python
 
-Refactorización sistemática de un notebook experimental hacia un paquete Python testeable y mantenible. Estructura de proyecto (*src layout*, separación clara entre I/O, features, training y evaluación). Manejo de configuración con Hydra u OmegaConf. Logging estructurado. Type hints y docstrings. Pre-commit hooks, linting con `ruff`, formateo automático. Introducción a CI/CD: primer workflow de GitHub Actions que corre lint y tests en cada push.
+Refactorización sistemática de un notebook experimental hacia un paquete Python testeable y mantenible.
 
-**Hands-on:** los alumnos toman su notebook real de la materia anterior y lo refactorizan a un paquete con la estructura del template.
+**Videos teóricos:**
+
+- Estructura de proyecto Python (*src layout*, separación I/O / features / training / evaluación)
+- Selección del tipo de modelo: 8 consejos (breve, como contexto del refactor)
+- Las 4 fases del desarrollo de modelos
+- Depuración de modelos: causas típicas de fallas y estrategias
+- Manejo de configuración con Hydra u OmegaConf
+- Logging estructurado, type hints y docstrings
+- Pre-commit hooks, linting con `ruff`, formateo automático
+- Introducción a CI/CD: primer workflow de GitHub Actions (lint + tests en cada push)
+
+**Hands-on (clase sincrónica):** los alumnos toman su notebook real de la materia anterior y lo refactorizan a un paquete con la estructura del template.
 
 ### Clase 3 — Docker para reproducibilidad de entrenamiento
 
-Conceptos fundamentales de contenedores. Dockerfile multi-stage para imágenes de training. Diferencia entre imagen para desarrollo, training y producción. Docker Compose para levantar el stack local de MLOps (MLflow + Postgres + MinIO + Jupyter). El contenedor como contrato entre la máquina del alumno, la pipeline de CI y el entorno de producción. CI extendida: build automático de la imagen de training en cada push.
+Conceptos fundamentales de contenedores reposicionados como garantía de reproducibilidad del entorno de entrenamiento.
 
-**Hands-on:** dockerización del paquete refactorizado de la clase 2 y ejecución del entrenamiento dentro del contenedor.
+**Videos teóricos:**
+
+- Contenedores vs máquinas virtuales: conceptos fundamentales
+- Docker: Dockerfile, imágenes, contenedores, Docker Hub
+- Dockerfile multi-stage para imágenes de training
+- Diferencia entre imagen de desarrollo, training y producción
+- Docker Compose y stack local de MLOps (MLflow + Postgres + MinIO + Jupyter)
+- El contenedor como contrato entre la máquina del alumno, CI y producción
+- Capa de almacenamiento (breve): formatos de datos (CSV vs Parquet, row vs column), ETL/ELT
+- Capa de cómputo (breve): escalamiento vertical y horizontal, clusters
+
+**Hands-on (clase sincrónica):** dockerización del paquete refactorizado de la clase 2 y ejecución del entrenamiento dentro del contenedor. CI extendida: build automático de la imagen de training en cada push.
+
+### Video transversal — Consideraciones para modelos grandes
+
+Video complementario de 15 a 20 minutos, referenciado desde las clases 3, 4 y 7. El objetivo es que los alumnos tengan el mapa mental armado para cuando encuentren cargas intensivas de cómputo en otras materias del posgrado (deep learning, visión, NLP) o en su práctica profesional.
+
+**Contenidos:**
+
+- Cuándo aparece el problema (datos o modelo no entran en memoria, entrenamientos largos)
+- Paralelismo de datos: SGD sincrónico vs asincrónico
+- Paralelismo de modelo y de pipeline (conceptual)
+- GPUs en contenedores: `nvidia-docker`, runtime de GPU, implicancias para imágenes
+- Checkpointing y resuming de entrenamientos largos
+- Implicancias para MLOps: tracking riguroso, orquestación asíncrona, reproducibilidad estricta
+
+Formato conceptual, sin hands-on. Apunta a conectar estos conceptos con el resto del curso: tracking de runs caros con MLflow (clase 4), orquestación asíncrona con Airflow (clase 7), reproducibilidad estricta con DVC (clase 6).
 
 ### Clase 4 — Tracking de experimentos y Model Registry con MLflow
 
-Tracking de experimentos: parámetros, métricas, artifacts. Comparación de runs. Reproducibilidad de experimentos vía tracking riguroso. Model Registry: versionado de modelos, etapas (Staging, Production), aliases. Empaquetado de modelos en formato MLflow. Servidor de tracking en docker-compose conectado a Postgres y MinIO/R2.
+Tracking de experimentos y versionado de modelos como pilares de reproducibilidad.
 
-**Hands-on:** los alumnos integran MLflow en su paquete de training y registran sus experimentos.
+**Videos teóricos:**
+
+- MLflow: panorama de componentes (Tracking, Models, Registry, Projects)
+- Tracking en profundidad: parámetros, métricas, artifacts
+- Comparación de runs y reproducibilidad vía tracking riguroso
+- Model Registry: versionado de modelos, stages (Staging / Production), aliases
+- Empaquetado de modelos en formato MLflow
+- Servidor de tracking en docker-compose conectado a Postgres y MinIO / R2
+
+**Hands-on (clase sincrónica):** los alumnos integran MLflow en su paquete de training y registran sus experimentos.
 
 ### Clase 5 — Testing y validación de datos y modelos
 
-Pytest aplicado a código de ML: organización de tests, fixtures, parametrización. Validación de datos con Great Expectations o Pandera: schemas, expectativas, contratos de datos entre etapas. Tests de regresión de modelo. *Behavioral testing* de modelos: tests de invarianza, direccionales y de capacidad mínima. CI extendida: ejecución de tests y validación de datos en cada PR.
+Testing formal aplicado al pipeline completo.
 
-**Hands-on:** los alumnos escriben tests de código, schemas de datos y al menos un test de comportamiento sobre su propio modelo.
+**Videos teóricos:**
+
+- Pytest aplicado a código de ML: organización de tests, fixtures, parametrización
+- Validación de datos con Great Expectations o Pandera: schemas, expectativas, contratos entre etapas
+- Tests de regresión de modelo
+- ***Behavioral testing*** de modelos: tests de perturbación, invarianza, expectativa direccional, calibración, confianza y rangos
+- CI extendida: ejecución de tests y validación de datos en cada PR
+
+**Hands-on (clase sincrónica):** los alumnos escriben tests de código, schemas de datos y al menos un test de comportamiento sobre su propio modelo.
 
 ### Clase 6 — Versionado de datos y modelos, reproducibilidad
 
-DVC para versionado de datos y pipelines declarativos. `dvc.yaml`, `dvc repro`, lineage de datos. Integración de DVC con MLflow Model Registry. Reproducibilidad estricta: lock de dependencias, fijación de semillas, hash de datos. Object storage para datos: MinIO local y Cloudflare R2 como opción cloud. CI extendida: validación de que `dvc repro` corre limpio.
+DVC y reproducibilidad estricta.
 
-**Hands-on:** los alumnos versionan los datos de su modelo con DVC y declaran su pipeline en `dvc.yaml`.
+**Videos teóricos:**
+
+- DVC: versionado de datos y pipelines declarativos
+- `dvc.yaml`, `dvc repro`, lineage de datos
+- Integración de DVC con MLflow Model Registry
+- Reproducibilidad estricta: lock de dependencias, fijación de semillas, hash de datos
+- Object storage para datos: MinIO local y Cloudflare R2 como opción cloud (API S3 común)
+
+**Hands-on (clase sincrónica):** los alumnos versionan los datos de su modelo con DVC y declaran su pipeline en `dvc.yaml`. CI extendida: validación de que `dvc repro` corre limpio.
 
 ### Clase 7 — Orquestación con Airflow y predicción en lote
 
-Apache Airflow como orquestador de pipelines de ML. DAGs, operators, schedules, sensors, XComs. Diseño de un pipeline end-to-end: ingesta → validación → features → training → registro en MLflow → scoring en lote sobre datos nuevos → persistencia de predicciones. La predicción en lote como cierre integrador del curso. CI completa: build de imagen final, push al registry, deploy del DAG.
+Cierre integrador: orquestación de todo el pipeline y predicción en lote como patrón de despliegue.
 
-**Hands-on:** los alumnos integran su pipeline en un DAG de Airflow que ejecuta entrenamiento y batch scoring de forma orquestada.
+**Videos teóricos:**
+
+- Administración de recursos: orquestadores vs sincronizadores
+- DAGs como representación de flujos de trabajo
+- Panorama de herramientas de workflow (Airflow, Argo, Prefect, Kubeflow, Metaflow)
+- Apache Airflow en profundidad: arquitectura, DAGs, operators, schedules, sensors, XComs
+- Patrón de predicción en lote: casos de uso, dimensiones de escalado
+- Propiedades del entorno de ejecución: seguridad, validez, recuperación, feedback loops
+
+**Hands-on (clase sincrónica):** los alumnos integran su pipeline en un DAG de Airflow que ejecuta entrenamiento y batch scoring de forma orquestada. CI completa: build de imagen final, push al registry, deploy del DAG.
 
 ---
 
@@ -190,3 +282,4 @@ Bajo la configuración propuesta (repos públicos en una org de GitHub + R2 dent
 4. Aplicación a GitHub Education como respaldo.
 5. Reescritura de `CriteriosAprobacion.md` y del `README.md` del repo principal acorde al nuevo programa.
 6. Comunicación con la cátedra de la materia siguiente para acordar el contrato de interfaz (qué artefacto recibe del modelo entregado por esta materia).
+7. Grabación de los videos teóricos y preparación del material textual que acompaña cada hands-on.
