@@ -38,3 +38,9 @@ dependencies = [
     "uvicorn>=0.34.3",
     "xgboost>=3.0.2",
 ]
+
+[dependency-groups]
+dev = [
+    "pymupdf>=1.27.2.2",
+    "python-pptx>=1.0.2",
+]
