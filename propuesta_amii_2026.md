@@ -261,9 +261,9 @@ El artefacto final del TP es un **modelo versionado en el Model Registry** acomp
 
 ### Niveles de aprobación
 
-**Nivel local (nota 6 a 8):** el grupo entrega un pipeline reproducible que corre en local con docker-compose, con MLflow tracking, tests automatizados, validación de datos, versionado con DVC y un job de Dagster ejecutando training y batch prediction. Documentación clara y workflow de CI verde.
+**Nivel local (nota 6 a 8):** el grupo entrega un pipeline reproducible que corre enteramente en local **sin Docker**. Incluye: paquete Python refactorizado con estructura `src`, MLflow tracking con backend local (SQLite + filesystem), tests automatizados, validación de datos con Pandera, DVC versionando datos con remote local, y un job de Dagster ejecutando training y batch prediction. CI verde con lint y tests en cada push. Documentación clara.
 
-**Nivel container completo (nota 8 a 10):** además de lo anterior, el grupo demuestra que el sistema corre con servicios containerizados de forma equivalente a un entorno productivo (Dagster + MLflow + Postgres + MinIO o R2), con secrets gestionados correctamente, modelos promovidos a `Production` en el registry vía pull request y CI/CD que valida la integridad del pipeline en cada cambio.
+**Nivel container completo (nota 8 a 10):** además de lo anterior, el grupo dockeriza el pipeline completo y levanta el stack productivo con Docker Compose (Dagster + MLflow + Postgres + MinIO o R2). Secrets gestionados correctamente, modelos promovidos a `Production` en el registry vía pull request, CI/CD que valida la integridad del pipeline en cada cambio, y un step de monitoreo integrado al job de Dagster que genera un reporte de drift automático y dispara una alerta configurable cuando se supera el umbral.
 
 ### Entregables
 
@@ -276,9 +276,19 @@ Cada grupo entrega:
 
 ### Cronograma
 
-- **Entrega 1 (Clase 3):** repo creado a partir del template, paquete refactorizado con estructura `src`, entorno configurado con `uv`, Dockerfile de training funcionando y workflow de CI corriendo (lint + build de imagen). La entrega se realiza como pull request. **Otro grupo asignado hace el review del PR** y determina si aprueba o solicita cambios; el grupo no puede avanzar a la Entrega 2 sin PR aprobado.
-- **Entrega 2 (Clase 5):** MLflow integrado con experimentos registrados, tests de código y schemas de datos implementados, CI extendida con ejecución de tests en cada PR. **El profesor revisa y da el ok** para continuar.
-- **Entrega final (7 días después de Clase 8):** pipeline completo: DVC versionando datos, job de Dagster ejecutando training y batch prediction, reporte de monitoreo generado automáticamente, CI/CD verde end-to-end y demo preparada. **El profesor asigna la nota final.**
+Los grupos declaran al inicio del curso qué nivel apuntan. Las entregas intermedias se evalúan según el track declarado.
+
+**Track nivel local:**
+
+- **Entrega 1 (Clase 3):** repo creado a partir del template, paquete refactorizado con estructura `src`, entorno configurado con `uv`, CI corriendo (lint + tests). La entrega se realiza como pull request. **Otro grupo asignado hace el review del PR** y determina si aprueba o solicita cambios; el grupo no puede avanzar a la Entrega 2 sin PR aprobado.
+- **Entrega 2 (Clase 5):** MLflow tracking con backend local integrado, tests de código y schemas de datos con Pandera implementados, CI extendida con ejecución de tests en cada PR. **El profesor revisa y da el ok** para continuar.
+- **Entrega final (7 días después de Clase 8):** DVC versionando datos con remote local, job de Dagster ejecutando training y batch prediction localmente, CI verde y demo preparada. **El profesor asigna la nota final.**
+
+**Track nivel container completo:**
+
+- **Entrega 1 (Clase 3):** repo creado a partir del template, paquete refactorizado con estructura `src`, entorno configurado con `uv`, Dockerfile de training funcionando y CI corriendo (lint + build de imagen). La entrega se realiza como pull request. **Otro grupo asignado hace el review del PR** y determina si aprueba o solicita cambios; el grupo no puede avanzar a la Entrega 2 sin PR aprobado.
+- **Entrega 2 (Clase 5):** MLflow tracking levantado con Docker Compose (Postgres + MinIO/R2), tests de código y schemas de datos con Pandera implementados, CI extendida con ejecución de tests en cada PR. **El profesor revisa y da el ok** para continuar.
+- **Entrega final (7 días después de Clase 8):** stack completo containerizado (Dagster + MLflow + Postgres + MinIO o R2), DVC versionando datos, job de Dagster con training, batch prediction y step de monitoreo, secrets gestionados, modelos promovidos a `Production` vía PR, CI/CD verde end-to-end y demo preparada. **El profesor asigna la nota final.**
 
 ### Criterios de evaluación
 
