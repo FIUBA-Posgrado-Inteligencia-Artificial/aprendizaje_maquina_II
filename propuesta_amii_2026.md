@@ -28,7 +28,7 @@ El programa vigente dedica las clases 5, 6 y 7 a contenidos de deployment y serv
 
 Los relevamientos de la industria y la práctica docente muestran que el principal cuello de botella para llevar modelos a producción no está en el serving sino **antes**: en la falta de procesos reproducibles para entrenar, validar y versionar modelos. El refactor de notebooks experimentales a paquetes mantenibles, el testing de datos y modelos, y la integración continua de proyectos de ML son competencias menos enseñadas y de altísimo valor profesional.
 
-Liberar el espacio de serving online permite tratar estos temas con la profundidad que merecen, sin sacrificar Docker (que se mantiene central) ni la orquestación con Airflow (que pasa a ser el cierre integrador del curso a través de la predicción en lote).
+Liberar el espacio de serving online permite tratar estos temas con la profundidad que merecen, sin sacrificar Docker (que se mantiene central) ni la orquestación con Dagster (que pasa a ser el cierre integrador del curso a través de la predicción en lote).
 
 ### Conexión con las materias adyacentes
 
@@ -72,10 +72,17 @@ Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup de
 - MLOps: definición, niveles 0/1/2 de madurez y ventajas de cada nivel
 - Entorno de desarrollo vs entorno productivo: propiedades y diferencias
 - Contrato de interfaz entre AMq1 → AMq2 → Serving (el flujo del posgrado)
-- Gestión moderna de dependencias: `uv` / `poetry`, lock files, semver
-- Buenas prácticas de programación aplicadas a ML (introducción)
 
-**Hands-on (clase sincrónica):** los alumnos crean su repo a partir del template de la cátedra vía GitHub Classroom y configuran su entorno local.
+**Materiales de lectura (Moodle):**
+
+- Gestión moderna de dependencias con `uv`: instalación, entornos virtuales, lock files, semver *(se elige `uv` por ser la herramienta actual del stack; el concepto de lock file y semver se cubre en el video de pipelines)*
+- Buenas prácticas de programación aplicadas a ML: guía de referencia con ejemplos de código *(introducción práctica; se profundiza en Clase 2)*
+
+**Evaluativo (Moodle):** 10 preguntas de opción múltiple sobre los conceptos de la clase (ciclo de vida, niveles de madurez MLOps, diferencias entre entornos). Intentos ilimitados. Se requiere >8/10 para la aprobación de la materia.
+
+**Foro de dudas (Moodle):** espacio para preguntas sobre los videos y lecturas antes de la clase sincrónica.
+
+**Hands-on (clase sincrónica):** los alumnos crean su repo a partir del template de la cátedra vía GitHub Classroom y configuran su entorno local con `uv`.
 
 ### Clase 2 — De notebook a paquete Python
 
@@ -124,7 +131,7 @@ Video complementario de 15 a 20 minutos, referenciado desde las clases 3, 4 y 7.
 - Checkpointing y resuming de entrenamientos largos
 - Implicancias para MLOps: tracking riguroso, orquestación asíncrona, reproducibilidad estricta
 
-Formato conceptual, sin hands-on. Apunta a conectar estos conceptos con el resto del curso: tracking de runs caros con MLflow (clase 4), orquestación asíncrona con Airflow (clase 7), reproducibilidad estricta con DVC (clase 6).
+Formato conceptual, sin hands-on. Apunta a conectar estos conceptos con el resto del curso: tracking de runs caros con MLflow (clase 4), orquestación asíncrona con Dagster (clase 7), reproducibilidad estricta con DVC (clase 6).
 
 ### Clase 4 — Tracking de experimentos y Model Registry con MLflow
 
@@ -169,20 +176,20 @@ DVC y reproducibilidad estricta.
 
 **Hands-on (clase sincrónica):** los alumnos versionan los datos de su modelo con DVC y declaran su pipeline en `dvc.yaml`. CI extendida: validación de que `dvc repro` corre limpio.
 
-### Clase 7 — Orquestación con Airflow y predicción en lote
+### Clase 7 — Orquestación con Dagster y predicción en lote
 
 Cierre integrador: orquestación de todo el pipeline y predicción en lote como patrón de despliegue.
 
 **Videos teóricos:**
 
 - Administración de recursos: orquestadores vs sincronizadores
-- DAGs como representación de flujos de trabajo
-- Panorama de herramientas de workflow (Airflow, Argo, Prefect, Kubeflow, Metaflow)
-- Apache Airflow en profundidad: arquitectura, DAGs, operators, schedules, sensors, XComs
+- Grafos de activos como representación de flujos de trabajo
+- Panorama de herramientas de workflow (Airflow, Dagster, Prefect, Kubeflow, Metaflow)
+- Dagster en profundidad: arquitectura, assets/jobs, ops, schedules, sensors, IO managers
 - Patrón de predicción en lote: casos de uso, dimensiones de escalado
 - Propiedades del entorno de ejecución: seguridad, validez, recuperación, feedback loops
 
-**Hands-on (clase sincrónica):** los alumnos integran su pipeline en un DAG de Airflow que ejecuta entrenamiento y batch scoring de forma orquestada. CI completa: build de imagen final, push al registry, deploy del DAG.
+**Hands-on (clase sincrónica):** los alumnos integran su pipeline en un job de Dagster que ejecuta entrenamiento y batch scoring de forma orquestada. CI completa: build de imagen final, push al registry, deploy del job.
 
 ---
 
@@ -196,9 +203,9 @@ El artefacto final del TP es un **modelo versionado en el Model Registry** acomp
 
 ### Niveles de aprobación
 
-**Nivel local (nota 6 a 8):** el grupo entrega un pipeline reproducible que corre en local con docker-compose, con MLflow tracking, tests automatizados, validación de datos, versionado con DVC y un DAG de Airflow ejecutando training y batch prediction. Documentación clara y workflow de CI verde.
+**Nivel local (nota 6 a 8):** el grupo entrega un pipeline reproducible que corre en local con docker-compose, con MLflow tracking, tests automatizados, validación de datos, versionado con DVC y un job de Dagster ejecutando training y batch prediction. Documentación clara y workflow de CI verde.
 
-**Nivel container completo (nota 8 a 10):** además de lo anterior, el grupo demuestra que el sistema corre con servicios containerizados de forma equivalente a un entorno productivo (Airflow + MLflow + Postgres + MinIO o R2), con secrets gestionados correctamente, modelos promovidos a `Production` en el registry vía pull request y CI/CD que valida la integridad del pipeline en cada cambio.
+**Nivel container completo (nota 8 a 10):** además de lo anterior, el grupo demuestra que el sistema corre con servicios containerizados de forma equivalente a un entorno productivo (Dagster + MLflow + Postgres + MinIO o R2), con secrets gestionados correctamente, modelos promovidos a `Production` en el registry vía pull request y CI/CD que valida la integridad del pipeline en cada cambio.
 
 ### Entregables
 
@@ -207,7 +214,7 @@ Cada grupo entrega:
 1. **Link al repositorio público** de GitHub creado mediante GitHub Classroom.
 2. **Link al último run exitoso** del workflow de GitHub Actions.
 3. **README** con descripción del problema heredado de Aprendizaje de Máquina I, decisiones de diseño tomadas al adaptar el template, e instrucciones de uso.
-4. **Demo en vivo** durante la última clase: levantar el stack, mostrar un run de Airflow ejecutando el pipeline end-to-end y exhibir las predicciones generadas.
+4. **Demo en vivo** durante la última clase: levantar el stack, mostrar un run de Dagster ejecutando el pipeline end-to-end y exhibir las predicciones generadas.
 
 ### Cronograma
 
@@ -216,7 +223,7 @@ Cada grupo entrega:
 
 ### Criterios de evaluación
 
-La evaluación se centra en el **proceso, no en la performance del modelo**. Se evalúa: estructura y calidad del código (refactor), cobertura y pertinencia de tests, robustez de la validación de datos, correctitud del versionado de datos y modelos, integridad del pipeline reproducible, calidad del DAG de Airflow, calidad de la CI/CD, y claridad de la documentación.
+La evaluación se centra en el **proceso, no en la performance del modelo**. Se evalúa: estructura y calidad del código (refactor), cobertura y pertinencia de tests, robustez de la validación de datos, correctitud del versionado de datos y modelos, integridad del pipeline reproducible, calidad del job de Dagster, calidad de la CI/CD, y claridad de la documentación.
 
 > **Nota explícita en el enunciado:** "No se evalúa cuán bueno es el modelo en términos de métricas predictivas. Eso fue evaluado en Aprendizaje de Máquina I. Se evalúa cómo se lo puso a producción de forma reproducible, testeable y operable."
 
@@ -238,8 +245,8 @@ La evaluación se centra en el **proceso, no en la performance del modelo**. Se 
 | Versionado de datos | DVC | |
 | Testing | pytest, Great Expectations o Pandera | |
 | CI/CD | GitHub Actions | |
-| Orquestación | Apache Airflow | |
-| Base de datos | PostgreSQL | metadata de Airflow y MLflow |
+| Orquestación | Dagster | |
+| Base de datos | PostgreSQL | metadata de Dagster y MLflow |
 
 ### Gestión de repositorios — GitHub Classroom
 
