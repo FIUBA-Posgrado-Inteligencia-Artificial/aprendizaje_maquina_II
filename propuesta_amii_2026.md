@@ -123,10 +123,13 @@ Conceptos fundamentales de contenedores reposicionados como garantía de reprodu
 - Docker: Dockerfile, imágenes, contenedores, Docker Hub
 - Dockerfile multi-stage para imágenes de training
 - Diferencia entre imagen de desarrollo, training y producción
-- Docker Compose y stack local de MLOps (MLflow + Postgres + MinIO + Jupyter)
 - El contenedor como contrato entre la máquina del alumno, CI y producción
 - Capa de almacenamiento (breve): formatos de datos (CSV vs Parquet, row vs column), ETL/ELT
 - Capa de cómputo (breve): escalamiento vertical y horizontal, clusters
+
+**Materiales de lectura (Moodle):**
+
+- Levantar el stack local de MLOps con Docker Compose (MLflow + Postgres + MinIO + Jupyter): guía paso a paso *(configuración concreta del stack del curso; los servicios y versiones pueden cambiar entre ediciones)*
 
 **Hands-on (clase sincrónica):** dockerización del paquete refactorizado de la clase 2 y ejecución del entrenamiento dentro del contenedor. CI extendida: build automático de la imagen de training en cada push.
 
@@ -151,14 +154,18 @@ Tracking de experimentos y versionado de modelos como pilares de reproducibilida
 
 **Videos teóricos:**
 
+- Por qué trackear experimentos: reproducibilidad, comparación y auditoría de modelos
 - MLflow: panorama de componentes (Tracking, Models, Registry, Projects)
 - Tracking en profundidad: parámetros, métricas, artifacts
 - Comparación de runs y reproducibilidad vía tracking riguroso
 - Model Registry: versionado de modelos, stages (Staging / Production), aliases
 - Empaquetado de modelos en formato MLflow
-- Servidor de tracking en docker-compose conectado a Postgres y MinIO / R2
 
-**Hands-on (clase sincrónica):** los alumnos integran MLflow en su paquete de training y registran sus experimentos.
+**Materiales de lectura (Moodle):**
+
+- Configurar el servidor de MLflow Tracking con Docker Compose, Postgres y MinIO/R2: guía paso a paso *(configuración concreta del stack; las versiones y parámetros de MLflow cambian entre releases)*
+
+**Hands-on (clase sincrónica):** los alumnos integran MLflow en su paquete de training y registran sus experimentos contra el servidor levantado con Docker Compose.
 
 ### Clase 5 — Testing y validación de datos y modelos
 
@@ -166,11 +173,17 @@ Testing formal aplicado al pipeline completo.
 
 **Videos teóricos:**
 
-- Pytest aplicado a código de ML: organización de tests, fixtures, parametrización
-- Validación de datos con Great Expectations o Pandera: schemas, expectativas, contratos entre etapas
+- Por qué testear en ML: qué puede fallar y qué no alcanza con métricas
+- Tests de código en proyectos de ML: organización, fixtures, parametrización
+- Validación de datos: schemas, expectativas y contratos entre etapas del pipeline
 - Tests de regresión de modelo
 - ***Behavioral testing*** de modelos: tests de perturbación, invarianza, expectativa direccional, calibración, confianza y rangos
-- CI extendida: ejecución de tests y validación de datos en cada PR
+
+**Materiales de lectura (Moodle):**
+
+- Pytest en proyectos de ML: guía de configuración y ejemplos de fixtures *(sintaxis y convenciones específicas de pytest, que evoluciona entre versiones)*
+- Validación de datos con Pandera: guía práctica de schemas y contratos *(herramienta específica del stack; Great Expectations es la alternativa más pesada — se justifica la elección de Pandera)*
+- CI extendida: correr tests y validación de datos en cada PR con GitHub Actions *(implementación concreta; el concepto de CI se cubrió en Clase 2)*
 
 **Hands-on (clase sincrónica):** los alumnos escriben tests de código, schemas de datos y al menos un test de comportamiento sobre su propio modelo.
 
@@ -180,11 +193,18 @@ DVC y reproducibilidad estricta.
 
 **Videos teóricos:**
 
-- DVC: versionado de datos y pipelines declarativos
-- `dvc.yaml`, `dvc repro`, lineage de datos
-- Integración de DVC con MLflow Model Registry
+- Por qué versionar datos: el problema de reproducibilidad que no resuelve Git
+- Versionado de datos y pipelines declarativos: conceptos y patrones
+- Lineage de datos: trazabilidad de extremo a extremo
+- Integración entre versionado de datos y Model Registry
 - Reproducibilidad estricta: lock de dependencias, fijación de semillas, hash de datos
-- Object storage para datos: MinIO local y Cloudflare R2 como opción cloud (API S3 común)
+- Object storage como backend para datos: API S3 y la separación código/datos
+
+**Materiales de lectura (Moodle):**
+
+- DVC: instalación, `dvc init`, `dvc add`, `dvc.yaml` y `dvc repro` — guía paso a paso *(comandos y sintaxis específicos de DVC, que cambian entre versiones)*
+- Configurar MinIO local y Cloudflare R2 como remote de DVC: guía práctica *(configuración concreta de infraestructura; justifica por qué R2 en lugar de S3 para el curso)*
+- CI extendida: validar que `dvc repro` corre limpio en cada push *(implementación concreta de la capa de CI para datos)*
 
 **Hands-on (clase sincrónica):** los alumnos versionan los datos de su modelo con DVC y declaran su pipeline en `dvc.yaml`. CI extendida: validación de que `dvc repro` corre limpio.
 
@@ -194,12 +214,18 @@ Cierre integrador: orquestación de todo el pipeline y predicción en lote como 
 
 **Videos teóricos:**
 
-- Administración de recursos: orquestadores vs sincronizadores
+- Orquestación en ML: por qué no alcanza con un script y un cron
+- Orquestadores vs sincronizadores: cuándo usar cada uno
 - Grafos de activos como representación de flujos de trabajo
-- Panorama de herramientas de workflow (Airflow, Dagster, Prefect, Kubeflow, Metaflow)
-- Dagster en profundidad: arquitectura, assets/jobs, ops, schedules, sensors, IO managers
+- Panorama de herramientas de orquestación (Airflow, Dagster, Prefect, Kubeflow, Metaflow)
 - Patrón de predicción en lote: casos de uso, dimensiones de escalado
 - Propiedades del entorno de ejecución: seguridad, validez, recuperación, feedback loops
+
+**Materiales de lectura (Moodle):**
+
+- Dagster: conceptos de assets, jobs, ops, schedules, sensors e IO managers — guía de referencia *(API y terminología específica de Dagster, que evoluciona activamente entre versiones)*
+- Levantar Dagster con Docker Compose integrado al stack del curso: guía paso a paso *(configuración concreta; el stack puede cambiar entre ediciones)*
+- CI/CD completa: build de imagen final, push al registry y deploy del job en cada merge *(implementación concreta del cierre de la pipeline de CI)*
 
 **Hands-on (clase sincrónica):** los alumnos integran su pipeline en un job de Dagster que ejecuta entrenamiento y batch scoring de forma orquestada. CI completa: build de imagen final, push al registry, deploy del job.
 
