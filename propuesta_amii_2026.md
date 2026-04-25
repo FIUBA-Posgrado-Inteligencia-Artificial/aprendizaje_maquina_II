@@ -292,7 +292,21 @@ Los grupos declaran al inicio del curso qué nivel apuntan. Las entregas interme
 
 ### Criterios de evaluación
 
-La evaluación se centra en el **proceso, no en la performance del modelo**. Se evalúa: estructura y calidad del código (refactor), cobertura y pertinencia de tests, robustez de la validación de datos, correctitud del versionado de datos y modelos, integridad del pipeline reproducible, calidad del job de Dagster, calidad de la CI/CD, y claridad de la documentación.
+La evaluación se centra en el **proceso, no en la performance del modelo**. La tabla siguiente es orientativa: indica qué componentes tienen más peso en la nota final, pero el profesor pondera el conjunto con criterio holístico.
+
+| Componente | Track | Peso orientativo |
+|---|---|---|
+| Refactor: estructura del paquete y calidad del código | Ambos | Alto |
+| Testing de código y validación de datos (Pandera) | Ambos | Alto |
+| Orquestación: job de Dagster (training + batch prediction) | Ambos | Alto |
+| Versionado de datos con DVC | Ambos | Medio |
+| Tracking de experimentos con MLflow | Ambos | Medio |
+| CI/CD: workflows de GitHub Actions | Ambos | Medio |
+| Dockerización y stack productivo completo | Container completo | Alto |
+| Monitoreo y detección de drift con Evidently | Container completo | Medio |
+| Gestión de secrets y promoción de modelos vía PR | Container completo | Medio |
+| Documentación (README e instrucciones de uso) | Ambos | Bajo |
+| Participación en peer review (Entrega 1) | Ambos | Bajo |
 
 > **Nota explícita en el enunciado:** "No se evalúa cuán bueno es el modelo en términos de métricas predictivas. Eso fue evaluado en Aprendizaje de Maquina. Se evalúa cómo se lo puso a producción de forma reproducible, testeable y operable."
 
