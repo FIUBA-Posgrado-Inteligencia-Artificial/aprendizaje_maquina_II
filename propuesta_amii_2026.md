@@ -53,7 +53,7 @@ Cada clase se divide en cuatro componentes complementarios:
 - **Videos teóricos pregrabados (asincrónico):** segmentos cortos de 8 a 15 minutos cada uno que cubren los conceptos estables de la clase. El alumno los consume a su propio ritmo antes de la clase sincrónica.
 - **Materiales de lectura (Moodle, asincrónico):** guías prácticas sobre tooling específico del stack. Se separan de los videos porque son contenidos que cambian con el tiempo (herramientas, versiones, configuraciones concretas) y pueden actualizarse sin regrabar.
 - **Actividades transversales (Moodle):** un evaluativo de 10 preguntas de opción múltiple por módulo (intentos ilimitados, requiere >8/10 para aprobar la materia), un foro de dudas previo a cada clase sincrónica, y un glosario colaborativo que los alumnos construyen a lo largo del curso.
-- **Clase sincrónica online (~1.5 horas):** dedicada íntegramente a hands-on guiado sobre el proyecto de cada grupo. El docente llega habiendo revisado el foro y aprovecha el tiempo para desbloquear problemas en tiempo real.
+- **Clase sincrónica online (~1.5 horas):** abre con un Kahoot sobre el contenido teórico y del aula (ver actividades transversales) y luego se dedica íntegramente a hands-on guiado sobre el proyecto de cada grupo. El docente llega habiendo revisado el foro y aprovecha el tiempo para desbloquear problemas en tiempo real.
 
 Este formato permite usar el tiempo sincrónico de forma intensiva: los alumnos llegan con la teoría ya vista y aprovechan la clase para aplicar los conceptos sobre su propio modelo.
 
@@ -69,7 +69,9 @@ Cada clase/módulo incluye las siguientes actividades fijas en Moodle:
 
 **Foro de dudas:** un foro por clase donde los alumnos publican preguntas sobre los videos y lecturas antes de la sesión sincrónica. El docente llega a la clase sabiendo qué desbloquear.
 
-**Evaluativo:** 10 preguntas de opción múltiple sobre los conceptos del módulo. Intentos ilimitados. Se requiere >8/10 en todos los evaluativos para aprobar la materia.
+**Evaluativo:** 10 preguntas de opción múltiple sobre los conceptos del módulo. Intentos ilimitados. Se requiere >8/10 en todos los evaluativos para aprobar la materia. Los alumnos que queden entre los primeros puestos del Kahoot de la clase sincrónica quedan eximidos del evaluativo de esa semana: los 5 primeros si la cohorte es de ~45 alumnos, los 3 primeros si es de ~30.
+
+**Kahoot (clase sincrónica):** al inicio de cada sesión sincrónica se realiza un Kahoot con preguntas sobre los videos, las lecturas y el contenido del aula. Funciona como repaso rápido y como mecanismo de exención del evaluativo semanal.
 
 **Glosario colaborativo del curso:** actividad única compartida entre todas las clases. Los alumnos van incorporando y definiendo términos MLOps a medida que avanzan en el programa. Contribuir al glosario es parte de la cursada.
 
