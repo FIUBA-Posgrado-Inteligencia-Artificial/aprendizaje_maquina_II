@@ -276,9 +276,9 @@ Cada grupo entrega:
 
 ### Cronograma
 
-- **Entrega 1 (Clase 3):** repo creado a partir del template, paquete refactorizado con estructura `src`, entorno configurado con `uv`, Dockerfile de training funcionando y workflow de CI corriendo (lint + build de imagen).
-- **Entrega 2 (Clase 5):** MLflow integrado con experimentos registrados, tests de código y schemas de datos implementados, CI extendida con ejecución de tests en cada PR.
-- **Entrega final (7 días después de Clase 8):** pipeline completo: DVC versionando datos, job de Dagster ejecutando training y batch prediction, reporte de monitoreo generado automáticamente, CI/CD verde end-to-end y demo preparada.
+- **Entrega 1 (Clase 3):** repo creado a partir del template, paquete refactorizado con estructura `src`, entorno configurado con `uv`, Dockerfile de training funcionando y workflow de CI corriendo (lint + build de imagen). La entrega se realiza como pull request. **Otro grupo asignado hace el review del PR** y determina si aprueba o solicita cambios; el grupo no puede avanzar a la Entrega 2 sin PR aprobado.
+- **Entrega 2 (Clase 5):** MLflow integrado con experimentos registrados, tests de código y schemas de datos implementados, CI extendida con ejecución de tests en cada PR. **El profesor revisa y da el ok** para continuar.
+- **Entrega final (7 días después de Clase 8):** pipeline completo: DVC versionando datos, job de Dagster ejecutando training y batch prediction, reporte de monitoreo generado automáticamente, CI/CD verde end-to-end y demo preparada. **El profesor asigna la nota final.**
 
 ### Criterios de evaluación
 
