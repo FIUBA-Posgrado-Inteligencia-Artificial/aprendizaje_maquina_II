@@ -40,7 +40,7 @@ La reestructuración define un **flujo claro de tres etapas** dentro del posgrad
 
 Cada materia recibe un artefacto bien definido de la anterior y entrega uno bien definido a la siguiente. La frase que sintetiza el aporte de Operaciones de Aprendizaje Automático I queda:
 
-> *"Los alumnos llegan con un notebook que entrena un modelo y se van con un proceso reproducible que entrena, versiona, testea y predice en lote ese modelo en producción."*
+> *"Los alumnos llegan con un notebook que entrena un modelo y se van con un proceso reproducible que entrena, versiona, testea, predice en lote y monitorea ese modelo en producción."*
 
 ### Conservación de Docker
 
@@ -48,12 +48,14 @@ Docker se mantiene como tecnología fundamental del curso, pero se reposiciona c
 
 ### Formato de dictado — flipped classroom
 
-Cada clase se divide en dos componentes complementarios:
+Cada clase se divide en cuatro componentes complementarios:
 
-- **Videos teóricos pregrabados (asincrónico):** segmentos cortos de 8 a 15 minutos cada uno que cubren los conceptos de la clase. El alumno los consume a su propio ritmo antes de la clase sincrónica. Se complementan con material textual (guías paso a paso, ejemplos de código) que el alumno puede revisar en paralelo.
-- **Clase sincrónica online (~1.5 horas):** dedicada íntegramente a hands-on guiado sobre el proyecto de cada grupo, resolución de dudas sobre los videos y trabajo práctico acompañado. El docente está disponible para desbloquear problemas en tiempo real.
+- **Videos teóricos pregrabados (asincrónico):** segmentos cortos de 8 a 15 minutos cada uno que cubren los conceptos estables de la clase. El alumno los consume a su propio ritmo antes de la clase sincrónica.
+- **Materiales de lectura (Moodle, asincrónico):** guías prácticas sobre tooling específico del stack. Se separan de los videos porque son contenidos que cambian con el tiempo (herramientas, versiones, configuraciones concretas) y pueden actualizarse sin regrabar.
+- **Actividades transversales (Moodle):** un evaluativo de 10 preguntas de opción múltiple por módulo (intentos ilimitados, requiere >8/10 para aprobar la materia), un foro de dudas previo a cada clase sincrónica, y un glosario colaborativo que los alumnos construyen a lo largo del curso.
+- **Clase sincrónica online (~1.5 horas):** dedicada íntegramente a hands-on guiado sobre el proyecto de cada grupo. El docente llega habiendo revisado el foro y aprovecha el tiempo para desbloquear problemas en tiempo real.
 
-Este formato permite usar el tiempo sincrónico de forma intensiva: los alumnos llegan con la teoría ya vista y aprovechan la clase para aplicar los conceptos sobre su propio modelo, con el docente acompañando.
+Este formato permite usar el tiempo sincrónico de forma intensiva: los alumnos llegan con la teoría ya vista y aprovechan la clase para aplicar los conceptos sobre su propio modelo.
 
 ---
 
@@ -326,7 +328,8 @@ La evaluación se centra en el **proceso, no en la performance del modelo**. La 
 | Tracking + Registry | MLflow | |
 | Storage de artifacts | MinIO (local) / Cloudflare R2 (cloud) | API S3-compatible |
 | Versionado de datos | DVC | |
-| Testing | pytest, Great Expectations o Pandera | |
+| Testing | pytest, Pandera | |
+| Monitoreo | Evidently AI | |
 | CI/CD | GitHub Actions | |
 | Orquestación | Dagster | |
 | Base de datos | PostgreSQL | metadata de Dagster y MLflow |
@@ -372,4 +375,4 @@ Bajo la configuración propuesta (repos públicos en una org de GitHub + R2 dent
 4. Aplicación a GitHub Education como respaldo.
 5. Reescritura de `CriteriosAprobacion.md` y del `README.md` del repo principal acorde al nuevo programa.
 6. Comunicación con la cátedra de la materia siguiente para acordar el contrato de interfaz (qué artefacto recibe del modelo entregado por esta materia).
-7. Grabación de los videos teóricos y preparación del material textual que acompaña cada hands-on.
+7. Producción del material asincrónico por clase: grabación de los videos teóricos, redacción de las guías de lectura Moodle, elaboración de los evaluativos (10 preguntas por módulo), y configuración de los foros y el glosario colaborativo en la plataforma.
