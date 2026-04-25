@@ -61,6 +61,18 @@ Este formato permite usar el tiempo sincrónico de forma intensiva: los alumnos 
 
 El hilo conductor del curso es **"de notebook a pipeline reproducible de entrenamiento y predicción en lote"**. Cada clase agrega una capa al pipeline que el alumno construye sobre su propio modelo de la materia anterior. La integración continua (CI/CD con GitHub Actions) atraviesa todas las clases en lugar de ser una clase aparte: cada nuevo concepto incorporado se traduce en un step adicional del workflow.
 
+### Actividades transversales (todos los módulos)
+
+Cada clase/módulo incluye las siguientes actividades fijas en Moodle:
+
+**Foro de dudas:** un foro por clase donde los alumnos publican preguntas sobre los videos y lecturas antes de la sesión sincrónica. El docente llega a la clase sabiendo qué desbloquear.
+
+**Evaluativo:** 10 preguntas de opción múltiple sobre los conceptos del módulo. Intentos ilimitados. Se requiere >8/10 en todos los evaluativos para aprobar la materia.
+
+**Glosario colaborativo del curso:** actividad única compartida entre todas las clases. Los alumnos van incorporando y definiendo términos MLOps a medida que avanzan en el programa. Contribuir al glosario es parte de la cursada.
+
+---
+
 ### Clase 1 — Introducción a MLOps y ciclo de vida de un proyecto de ML
 
 Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup del entorno de trabajo del curso.
@@ -78,10 +90,6 @@ Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup de
 - Gestión moderna de dependencias con `uv`: instalación, entornos virtuales, lock files, semver *(se elige `uv` por ser la herramienta actual del stack; el concepto de lock file y semver se cubre en el video de pipelines)*
 - Buenas prácticas de programación aplicadas a ML: guía de referencia con ejemplos de código *(introducción práctica; se profundiza en Clase 2)*
 
-**Evaluativo (Moodle):** 10 preguntas de opción múltiple sobre los conceptos de la clase (ciclo de vida, niveles de madurez MLOps, diferencias entre entornos). Intentos ilimitados. Se requiere >8/10 para la aprobación de la materia.
-
-**Foro de dudas (Moodle):** espacio para preguntas sobre los videos y lecturas antes de la clase sincrónica.
-
 **Hands-on (clase sincrónica):** los alumnos crean su repo a partir del template de la cátedra vía GitHub Classroom y configuran su entorno local con `uv`.
 
 ### Clase 2 — De notebook a paquete Python
@@ -94,10 +102,14 @@ Refactorización sistemática de un notebook experimental hacia un paquete Pytho
 - Selección del tipo de modelo: 8 consejos (breve, como contexto del refactor)
 - Las 4 fases del desarrollo de modelos
 - Depuración de modelos: causas típicas de fallas y estrategias
-- Manejo de configuración con Hydra u OmegaConf
-- Logging estructurado, type hints y docstrings
-- Pre-commit hooks, linting con `ruff`, formateo automático
-- Introducción a CI/CD: primer workflow de GitHub Actions (lint + tests en cada push)
+- Introducción a CI/CD: qué es integración continua y por qué importa en ML
+
+**Materiales de lectura (Moodle):**
+
+- Manejo de configuración con Hydra/OmegaConf: guía de instalación y uso básico *(herramienta específica del stack; el concepto de configuración externalizada se cubre en el video de estructura de proyecto)*
+- Logging estructurado, type hints y docstrings en Python: guía de referencia con ejemplos *(convenciones que cambian con versiones del lenguaje y herramientas)*
+- Pre-commit hooks y linting con `ruff`: configuración paso a paso *(tooling que evoluciona; `ruff` reemplazó a `flake8`/`black`/`isort` pero el concepto de linting es estable)*
+- Primer workflow de GitHub Actions: lint + tests en cada push *(implementación concreta de CI; el concepto se cubre en el video)*
 
 **Hands-on (clase sincrónica):** los alumnos toman su notebook real de la materia anterior y lo refactorizan a un paquete con la estructura del template.
 
