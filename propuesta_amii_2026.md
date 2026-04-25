@@ -276,8 +276,9 @@ Cada grupo entrega:
 
 ### Cronograma
 
-- **Pre-entrega (Clase 5):** repo iniciado con paquete refactorizado, primeros tests y workflow de CI corriendo.
-- **Entrega final:** 7 días después de la última clase.
+- **Entrega 1 (Clase 3):** repo creado a partir del template, paquete refactorizado con estructura `src`, entorno configurado con `uv`, Dockerfile de training funcionando y workflow de CI corriendo (lint + build de imagen).
+- **Entrega 2 (Clase 5):** MLflow integrado con experimentos registrados, tests de código y schemas de datos implementados, CI extendida con ejecución de tests en cada PR.
+- **Entrega final (7 días después de Clase 8):** pipeline completo: DVC versionando datos, job de Dagster ejecutando training y batch prediction, reporte de monitoreo generado automáticamente, CI/CD verde end-to-end y demo preparada.
 
 ### Criterios de evaluación
 
