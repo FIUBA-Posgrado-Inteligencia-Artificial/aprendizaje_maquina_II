@@ -12,7 +12,7 @@ Esta propuesta reestructura la materia **Aprendizaje de Máquina II** para enfoc
 
 La idea central es que cada alumno **llegue con un notebook crudo** producido en la materia anterior (donde aprendieron modelos *shallow*) y **se vaya con un proceso reproducible** que entrena, versiona, testea y predice en lote ese mismo modelo, listo para ser consumido por el equipo que se encargue del serving.
 
-Se mantiene Docker como tecnología transversal del curso, reposicionado desde "envoltura del modelo en producción" hacia "garantía de reproducibilidad del entrenamiento". Se preserva el formato de 7 clases y se incorporan tres ejes nuevos que el programa actual no cubre con profundidad: **refactor de notebook a paquete**, **testing y validación de datos/modelos**, y **versionado y CI/CD**.
+Se mantiene Docker como tecnología transversal del curso, reposicionado desde "envoltura del modelo en producción" hacia "garantía de reproducibilidad del entrenamiento". El programa pasa a 8 clases e incorpora cuatro ejes nuevos que el programa actual no cubre con profundidad: **refactor de notebook a paquete**, **testing y validación de datos/modelos**, **versionado y CI/CD**, y **monitoreo de modelos y detección de drift**.
 
 El dictado adopta un modelo **flipped classroom**: cada clase combina videos teóricos pregrabados (para consumo asincrónico) con una clase sincrónica online de ~1.5 horas dedicada a hands-on guiado y evacuación de dudas. Esto permite usar el tiempo sincrónico de forma intensiva en la práctica sobre el proyecto de cada grupo.
 
@@ -57,7 +57,7 @@ Este formato permite usar el tiempo sincrónico de forma intensiva: los alumnos 
 
 ---
 
-## 2. Programa nuevo — 7 clases
+## 2. Programa nuevo — 8 clases
 
 El hilo conductor del curso es **"de notebook a pipeline reproducible de entrenamiento y predicción en lote"**. Cada clase agrega una capa al pipeline que el alumno construye sobre su propio modelo de la materia anterior. La integración continua (CI/CD con GitHub Actions) atraviesa todas las clases en lugar de ser una clase aparte: cada nuevo concepto incorporado se traduce en un step adicional del workflow.
 
@@ -228,6 +228,26 @@ Cierre integrador: orquestación de todo el pipeline y predicción en lote como 
 - CI/CD completa: build de imagen final, push al registry y deploy del job en cada merge *(implementación concreta del cierre de la pipeline de CI)*
 
 **Hands-on (clase sincrónica):** los alumnos integran su pipeline en un job de Dagster que ejecuta entrenamiento y batch scoring de forma orquestada. CI completa: build de imagen final, push al registry, deploy del job.
+
+### Clase 8 — Monitoreo de modelos y detección de drift
+
+Cierre del loop MLOps: una vez que el pipeline genera predicciones en lote, hay que saber cuándo el modelo dejó de ser confiable.
+
+**Videos teóricos:**
+
+- El loop de feedback en MLOps: por qué entrenar una vez no alcanza
+- Tipos de drift: drift de datos (covariable), drift de concepto y degradación de performance
+- Estrategias de detección: tests estadísticos, ventanas temporales, comparación de distribuciones
+- Monitoreo de datos vs monitoreo de modelo: qué medir y cuándo reentrenar
+- Integración del monitoreo en el pipeline de batch prediction: dónde y cómo insertar el chequeo
+- Feedback loops y gobierno del ciclo de reentrenamiento
+
+**Materiales de lectura (Moodle):**
+
+- Evidently AI: generación de reportes de drift y dashboards de monitoreo — guía práctica *(herramienta específica del stack; el ecosistema de monitoreo ML evoluciona rápido)*
+- Integrar Evidently en un job de Dagster: monitoreo automatizado post-predicción *(implementación concreta sobre el stack del curso)*
+
+**Hands-on (clase sincrónica):** los alumnos agregan un step de monitoreo a su job de Dagster que genera un reporte de drift sobre las predicciones producidas en la Clase 7 y dispara una alerta si se supera un umbral configurable.
 
 ---
 
