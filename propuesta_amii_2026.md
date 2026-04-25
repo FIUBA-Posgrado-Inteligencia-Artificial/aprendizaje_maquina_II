@@ -1,6 +1,6 @@
-# Propuesta de reestructuración — Aprendizaje de Máquina II
+# Propuesta de reestructuración — Operaciones de Aprendizaje Automático I
 
-**Cátedra:** Aprendizaje de Máquina II — FIUBA, Especialización en Inteligencia Artificial
+**Cátedra:** Operaciones de Aprendizaje Automático I — FIUBA, Especialización en Inteligencia Artificial
 **Versión:** Borrador para coordinación
 **Autor:** Facundo Lucianna
 
@@ -8,7 +8,7 @@
 
 ## Resumen ejecutivo
 
-Esta propuesta reestructura la materia **Aprendizaje de Máquina II** para enfocarla en el ciclo completo de **entrenamiento reproducible y operacionalización** de modelos de Machine Learning bajo principios de MLOps, retirando los contenidos de **serving online** que pasan a ser cubiertos por una materia subsiguiente.
+Esta propuesta reestructura la materia **Operaciones de Aprendizaje Automático I** para enfocarla en el ciclo completo de **entrenamiento reproducible y operacionalización** de modelos de Machine Learning bajo principios de MLOps, retirando los contenidos de **serving online** que pasan a ser cubiertos por una materia subsiguiente.
 
 La idea central es que cada alumno **llegue con un notebook crudo** producido en la materia anterior (donde aprendieron modelos *shallow*) y **se vaya con un proceso reproducible** que entrena, versiona, testea y predice en lote ese mismo modelo, listo para ser consumido por el equipo que se encargue del serving.
 
@@ -34,11 +34,11 @@ Liberar el espacio de serving online permite tratar estos temas con la profundid
 
 La reestructuración define un **flujo claro de tres etapas** dentro del posgrado:
 
-- **Materia anterior (Aprendizaje de Máquina I):** los alumnos producen un notebook que entrena un modelo *shallow* sobre un dataset propio.
-- **Aprendizaje de Máquina II (esta materia):** los alumnos transforman ese notebook en un proceso productivo reproducible, versionado, testeado y orquestado, capaz de generar predicciones en lote de forma automatizada.
+- **Materia anterior (Aprendizaje de Maquina):** los alumnos producen un notebook que entrena un modelo *shallow* sobre un dataset propio.
+- **Operaciones de Aprendizaje Automático I (esta materia):** los alumnos transforman ese notebook en un proceso productivo reproducible, versionado, testeado y orquestado, capaz de generar predicciones en lote de forma automatizada.
 - **Materia siguiente (Serving):** los alumnos toman el modelo versionado producido en esta materia y aprenden a servirlo online.
 
-Cada materia recibe un artefacto bien definido de la anterior y entrega uno bien definido a la siguiente. La frase que sintetiza el aporte de Aprendizaje de Máquina II queda:
+Cada materia recibe un artefacto bien definido de la anterior y entrega uno bien definido a la siguiente. La frase que sintetiza el aporte de Operaciones de Aprendizaje Automático I queda:
 
 > *"Los alumnos llegan con un notebook que entrena un modelo y se van con un proceso reproducible que entrena, versiona, testea y predice en lote ese modelo en producción."*
 
@@ -83,7 +83,7 @@ Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup de
 - Pipelines de ML: componentes y artifacts
 - MLOps: definición, niveles 0/1/2 de madurez y ventajas de cada nivel
 - Entorno de desarrollo vs entorno productivo: propiedades y diferencias
-- Contrato de interfaz entre AMq1 → AMq2 → Serving (el flujo del posgrado)
+- Contrato de interfaz entre AMq → MLOps1 → Serving (el flujo del posgrado)
 
 **Materiales de lectura (Moodle):**
 
@@ -255,7 +255,7 @@ Cierre del loop MLOps: una vez que el pipeline genera predicciones en lote, hay 
 
 ### Enunciado
 
-Cada grupo (de 2 a 6 alumnos) debe entregar un repositorio que implemente un **pipeline reproducible de entrenamiento y predicción en lote** para un modelo de su propiedad (típicamente el modelo desarrollado en Aprendizaje de Máquina I). El pipeline debe estar versionado, testeado, dockerizado, integrado a un sistema de tracking y registry de modelos, y orquestado para ejecutarse de forma autónoma sobre datos nuevos.
+Cada grupo (de 2 a 6 alumnos) debe entregar un repositorio que implemente un **pipeline reproducible de entrenamiento y predicción en lote** para un modelo de su propiedad (típicamente el modelo desarrollado en Aprendizaje de Maquina). El pipeline debe estar versionado, testeado, dockerizado, integrado a un sistema de tracking y registry de modelos, y orquestado para ejecutarse de forma autónoma sobre datos nuevos.
 
 El artefacto final del TP es un **modelo versionado en el Model Registry** acompañado de **predicciones en lote reproducibles**, listo para ser consumido por un equipo de serving (la materia subsiguiente).
 
@@ -271,7 +271,7 @@ Cada grupo entrega:
 
 1. **Link al repositorio público** de GitHub creado mediante GitHub Classroom.
 2. **Link al último run exitoso** del workflow de GitHub Actions.
-3. **README** con descripción del problema heredado de Aprendizaje de Máquina I, decisiones de diseño tomadas al adaptar el template, e instrucciones de uso.
+3. **README** con descripción del problema heredado de Aprendizaje de Maquina, decisiones de diseño tomadas al adaptar el template, e instrucciones de uso.
 4. **Demo en vivo** durante la última clase: levantar el stack, mostrar un run de Dagster ejecutando el pipeline end-to-end y exhibir las predicciones generadas.
 
 ### Cronograma
@@ -283,7 +283,7 @@ Cada grupo entrega:
 
 La evaluación se centra en el **proceso, no en la performance del modelo**. Se evalúa: estructura y calidad del código (refactor), cobertura y pertinencia de tests, robustez de la validación de datos, correctitud del versionado de datos y modelos, integridad del pipeline reproducible, calidad del job de Dagster, calidad de la CI/CD, y claridad de la documentación.
 
-> **Nota explícita en el enunciado:** "No se evalúa cuán bueno es el modelo en términos de métricas predictivas. Eso fue evaluado en Aprendizaje de Máquina I. Se evalúa cómo se lo puso a producción de forma reproducible, testeable y operable."
+> **Nota explícita en el enunciado:** "No se evalúa cuán bueno es el modelo en términos de métricas predictivas. Eso fue evaluado en Aprendizaje de Maquina. Se evalúa cómo se lo puso a producción de forma reproducible, testeable y operable."
 
 ---
 
