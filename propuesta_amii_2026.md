@@ -369,6 +369,118 @@ Bajo la configuración propuesta (repos públicos en una org de GitHub + R2 dent
 
 ---
 
+## 5. Estructura del repositorio del curso
+
+### Repositorio del curso (este repo)
+
+Todo el material se desarrolla y versiona aquí primero. Una vez consolidado, se exporta/copia a Moodle. Mantener el repo como fuente de verdad permite iterar rápido, hacer revisiones vía PR y reutilizar material entre ediciones.
+
+```
+aprendizaje_maquina_II/
+│
+├── clases/
+│   ├── clase_01_intro_mlops/
+│   ├── clase_02_notebook_a_paquete/
+│   ├── clase_03_docker_reproducibilidad/
+│   ├── clase_04_mlflow_tracking/
+│   ├── clase_05_testing_validacion/
+│   ├── clase_06_versionado_datos/
+│   ├── clase_07_dagster_batch_prediction/
+│   ├── clase_08_monitoreo_drift/
+│   └── video_transversal_modelos_grandes/
+│
+├── tp_final/
+│   ├── enunciado.md
+│   └── rubrica.md
+│
+└── recursos/
+    └── glosario_inicial.md
+```
+
+### Estructura interna de cada clase
+
+Todas las clases siguen la misma estructura de subcarpetas. Esto facilita la navegación, la revisión entre compañeros de cátedra y la exportación sistemática a Moodle.
+
+```
+clase_NN_nombre/
+│
+├── README.md                        ← índice de la clase: objetivos, checklist de producción
+│
+├── videos/                          ← un archivo .md por video (guión + notas de grabación)
+│   ├── v01_nombre_del_video.md
+│   ├── v02_nombre_del_video.md
+│   └── ...
+│
+├── lecturas/                        ← guías de lectura (se copian a Moodle como páginas)
+│   ├── lectura_01_nombre.md
+│   └── lectura_02_nombre.md
+│
+├── evaluativo/
+│   └── preguntas.yaml               ← 10 preguntas con opciones y respuesta correcta
+│
+├── kahoot/
+│   └── preguntas.yaml               ← preguntas para el Kahoot de apertura
+│
+└── clase_sincrónica/
+    └── guia.md                      ← guía del docente: secuencia, tiempos, ejercicios
+```
+
+El video transversal sobre modelos grandes solo tiene `README.md` y `videos/` (no tiene evaluativo propio ni clase sincrónica).
+
+### Convenciones de nomenclatura
+
+| Elemento | Convención | Ejemplo |
+|---|---|---|
+| Carpetas de clase | `clase_NN_descripcion` | `clase_03_docker_reproducibilidad` |
+| Archivos de video | `vNN_descripcion.md` | `v02_pipelines_artifacts.md` |
+| Archivos de lectura | `lectura_NN_descripcion.md` | `lectura_01_uv_dependencias.md` |
+| Separador de palabras | underscore `_` (nunca guión `-`) | — |
+| Números | zero-padded a 2 dígitos | `01`, `02`, ..., `08` |
+
+### Formato de archivos
+
+**Guiones de video (`videos/vNN_*.md`):** cada archivo contiene la estructura del video (introducción, desarrollo por puntos, cierre), el guión completo o en bullets densos, y notas de producción (qué mostrar en pantalla, animaciones necesarias, duración estimada).
+
+**Guías de lectura (`lecturas/lectura_NN_*.md`):** contenido completo listo para publicar. Son los archivos que se copian directamente como páginas de Moodle. Incluyen comandos, configuraciones y ejemplos de código. Se actualizan entre ediciones sin regrabar videos.
+
+**Preguntas (`evaluativo/preguntas.yaml` y `kahoot/preguntas.yaml`):** formato YAML estructurado que permite revisar y editar las preguntas con control de versiones, y eventualmente importarlas a Moodle o Kahoot vía scripts.
+
+```yaml
+modulo: 1
+titulo: "Introducción a MLOps y ciclo de vida de un proyecto de ML"
+preguntas:
+  - id: 1
+    enunciado: "¿Cuál es la diferencia principal entre MLOps nivel 0 y nivel 1?"
+    opciones:
+      - texto: "En nivel 1 el modelo se re-entrena automáticamente con pipelines"
+        correcta: true
+      - texto: "En nivel 1 se usa un lenguaje de programación diferente"
+        correcta: false
+      - texto: "En nivel 1 los experimentos son manuales en notebooks"
+        correcta: false
+      - texto: "No hay diferencia práctica entre niveles"
+        correcta: false
+    explicacion: "MLOps nivel 1 automatiza el pipeline de entrenamiento; nivel 0 es manual."
+```
+
+**Guía de clase sincrónica (`clase_sincrónica/guia.md`):** secuencia de la clase con tiempos, descripción del hands-on, recursos necesarios y puntos clave a desbloquear (derivados del foro de dudas).
+
+### Relación con Moodle
+
+El flujo de trabajo previsto es:
+
+1. **Desarrollar en el repo** como único lugar de edición (control de versiones, revisión por PR, diff legible).
+2. **Exportar a Moodle** cuando el material esté listo: copiar el contenido de `lecturas/` como páginas de Moodle, subir los videos a la plataforma de video del posgrado y enlazarlos desde Moodle, importar o cargar manualmente las preguntas del evaluativo desde `evaluativo/preguntas.yaml`.
+3. **No editar en Moodle** sin reflejar el cambio en el repo. Moodle es destino de publicación, no fuente.
+
+El `README.md` de cada clase incluye un checklist de estado de producción (`[ ] guiones`, `[ ] grabado`, `[ ] editado`, `[ ] subido`, `[ ] lecturas en Moodle`, `[ ] evaluativo cargado`) para saber en qué estado está cada módulo.
+
+### Repositorio template de alumnos
+
+El template que reciben los alumnos vía GitHub Classroom es un **repositorio separado** (no un subdirectorio de este repo). Se mantiene en la misma GitHub Organization de la cátedra. Su estructura interna (scaffold de `src/`, `tests/`, `Dockerfile`, `docker-compose.yml`, `dvc.yaml`, `.github/workflows/`) se documenta en el README de ese repo.
+
+---
+
 ## Próximos pasos
 
 1. Validación de la propuesta con coordinación.

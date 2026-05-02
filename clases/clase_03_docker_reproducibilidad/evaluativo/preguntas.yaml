@@ -1,0 +1,126 @@
+# Evaluativo — Clase 03: Docker para reproducibilidad de entrenamiento
+# 10 preguntas, se requiere >8/10 para aprobar la materia
+
+modulo: 3
+titulo: "Docker para reproducibilidad de entrenamiento"
+preguntas:
+  - id: 1
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 2
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 3
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 4
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 5
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 6
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 7
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 8
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 9
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
+  - id: 10
+    enunciado: ""
+    opciones:
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+      - texto: ""
+        correcta: false
+    explicacion: ""
