@@ -7,11 +7,11 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_estructura_proyecto_python.md`
-- [ ] `videos/v02_seleccion_tipo_modelo.md`
-- [ ] `videos/v03_fases_desarrollo_modelos.md`
-- [ ] `videos/v04_depuracion_modelos.md`
-- [ ] `videos/v05_intro_ci_cd.md`
+- [ ] `videos/v01_estructura_proyecto_python/guion.md`
+- [ ] `videos/v02_seleccion_tipo_modelo/guion.md`
+- [ ] `videos/v03_fases_desarrollo_modelos/guion.md`
+- [ ] `videos/v04_depuracion_modelos/guion.md`
+- [ ] `videos/v05_intro_ci_cd/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_hydra_omegaconf.md`

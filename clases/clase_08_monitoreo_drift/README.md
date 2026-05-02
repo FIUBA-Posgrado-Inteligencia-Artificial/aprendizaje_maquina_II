@@ -7,12 +7,12 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_feedback_loop_mlops.md`
-- [ ] `videos/v02_tipos_drift.md`
-- [ ] `videos/v03_estrategias_deteccion.md`
-- [ ] `videos/v04_monitoreo_datos_vs_modelo.md`
-- [ ] `videos/v05_integracion_batch_prediction.md`
-- [ ] `videos/v06_feedback_loops_reentrenamiento.md`
+- [ ] `videos/v01_feedback_loop_mlops/guion.md`
+- [ ] `videos/v02_tipos_drift/guion.md`
+- [ ] `videos/v03_estrategias_deteccion/guion.md`
+- [ ] `videos/v04_monitoreo_datos_vs_modelo/guion.md`
+- [ ] `videos/v05_integracion_batch_prediction/guion.md`
+- [ ] `videos/v06_feedback_loops_reentrenamiento/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_evidently_reportes.md`

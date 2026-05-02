@@ -9,6 +9,6 @@ en otras materias del posgrado (deep learning, visión, NLP) o en su práctica p
 
 ## Checklist de producción
 
-- [ ] `videos/vt01_modelos_grandes.md` — guión completo
+- [ ] `videos/vt01_modelos_grandes/guion.md` — guión completo
 - [ ] Video grabado y editado
 - [ ] Video subido y enlazado desde clases 3, 4 y 7 en Moodle

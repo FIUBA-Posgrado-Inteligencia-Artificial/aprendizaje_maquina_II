@@ -7,12 +7,12 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_orquestacion_ml.md`
-- [ ] `videos/v02_orquestadores_vs_sincronizadores.md`
-- [ ] `videos/v03_grafos_activos.md`
-- [ ] `videos/v04_panorama_herramientas.md`
-- [ ] `videos/v05_patron_batch_prediction.md`
-- [ ] `videos/v06_entorno_ejecucion.md`
+- [ ] `videos/v01_orquestacion_ml/guion.md`
+- [ ] `videos/v02_orquestadores_vs_sincronizadores/guion.md`
+- [ ] `videos/v03_grafos_activos/guion.md`
+- [ ] `videos/v04_panorama_herramientas/guion.md`
+- [ ] `videos/v05_patron_batch_prediction/guion.md`
+- [ ] `videos/v06_entorno_ejecucion/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_dagster_conceptos.md`

@@ -7,12 +7,12 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_por_que_versionar_datos.md`
-- [ ] `videos/v02_versionado_pipelines_declarativos.md`
-- [ ] `videos/v03_lineage_datos.md`
-- [ ] `videos/v04_integracion_versionado_registry.md`
-- [ ] `videos/v05_reproducibilidad_estricta.md`
-- [ ] `videos/v06_object_storage_s3.md`
+- [ ] `videos/v01_por_que_versionar_datos/guion.md`
+- [ ] `videos/v02_versionado_pipelines_declarativos/guion.md`
+- [ ] `videos/v03_lineage_datos/guion.md`
+- [ ] `videos/v04_integracion_versionado_registry/guion.md`
+- [ ] `videos/v05_reproducibilidad_estricta/guion.md`
+- [ ] `videos/v06_object_storage_s3/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_dvc_guia.md`

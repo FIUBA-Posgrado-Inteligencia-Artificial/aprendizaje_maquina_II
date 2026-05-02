@@ -7,12 +7,12 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_por_que_trackear.md`
-- [ ] `videos/v02_mlflow_panorama.md`
-- [ ] `videos/v03_tracking_parametros_metricas.md`
-- [ ] `videos/v04_comparacion_runs.md`
-- [ ] `videos/v05_model_registry.md`
-- [ ] `videos/v06_empaquetado_modelos.md`
+- [ ] `videos/v01_por_que_trackear/guion.md`
+- [ ] `videos/v02_mlflow_panorama/guion.md`
+- [ ] `videos/v03_tracking_parametros_metricas/guion.md`
+- [ ] `videos/v04_comparacion_runs/guion.md`
+- [ ] `videos/v05_model_registry/guion.md`
+- [ ] `videos/v06_empaquetado_modelos/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_mlflow_server_docker_compose.md`

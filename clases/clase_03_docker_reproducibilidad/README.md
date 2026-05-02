@@ -7,13 +7,13 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_contenedores_vs_vms.md`
-- [ ] `videos/v02_docker_dockerfile_imagenes.md`
-- [ ] `videos/v03_dockerfile_multistage.md`
-- [ ] `videos/v04_imagenes_dev_training_prod.md`
-- [ ] `videos/v05_contenedor_como_contrato.md`
-- [ ] `videos/v06_almacenamiento_formatos_datos.md`
-- [ ] `videos/v07_computo_escalamiento.md`
+- [ ] `videos/v01_contenedores_vs_vms/guion.md`
+- [ ] `videos/v02_docker_dockerfile_imagenes/guion.md`
+- [ ] `videos/v03_dockerfile_multistage/guion.md`
+- [ ] `videos/v04_imagenes_dev_training_prod/guion.md`
+- [ ] `videos/v05_contenedor_como_contrato/guion.md`
+- [ ] `videos/v06_almacenamiento_formatos_datos/guion.md`
+- [ ] `videos/v07_computo_escalamiento/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_stack_mlops_docker_compose.md`

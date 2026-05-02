@@ -7,11 +7,11 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_por_que_testear_ml.md`
-- [ ] `videos/v02_tests_codigo_ml.md`
-- [ ] `videos/v03_validacion_datos.md`
-- [ ] `videos/v04_tests_regresion_modelo.md`
-- [ ] `videos/v05_behavioral_testing.md`
+- [ ] `videos/v01_por_que_testear_ml/guion.md`
+- [ ] `videos/v02_tests_codigo_ml/guion.md`
+- [ ] `videos/v03_validacion_datos/guion.md`
+- [ ] `videos/v04_tests_regresion_modelo/guion.md`
+- [ ] `videos/v05_behavioral_testing/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_pytest_ml.md`

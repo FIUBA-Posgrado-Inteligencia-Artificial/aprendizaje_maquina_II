@@ -7,11 +7,11 @@
 ## Checklist de producción
 
 ### Videos
-- [ ] `videos/v01_ciclo_vida_ml.md`
-- [ ] `videos/v02_pipelines_artifacts.md`
-- [ ] `videos/v03_mlops_niveles.md`
-- [ ] `videos/v04_entornos.md`
-- [ ] `videos/v05_contrato_interfaz.md`
+- [ ] `videos/v01_ciclo_vida_ml/guion.md`
+- [ ] `videos/v02_pipelines_artifacts/guion.md`
+- [ ] `videos/v03_mlops_niveles/guion.md`
+- [ ] `videos/v04_entornos/guion.md`
+- [ ] `videos/v05_contrato_interfaz/guion.md`
 
 ### Lecturas (Moodle)
 - [ ] `lecturas/lectura_01_uv_dependencias.md`

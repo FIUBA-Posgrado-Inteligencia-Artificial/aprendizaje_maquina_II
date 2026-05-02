@@ -406,9 +406,13 @@ clase_NN_nombre/
 │
 ├── README.md                        ← índice de la clase: objetivos, checklist de producción
 │
-├── videos/                          ← un archivo .md por video (guión + notas de grabación)
-│   ├── v01_nombre_del_video.md
-│   ├── v02_nombre_del_video.md
+├── videos/                          ← una carpeta por video
+│   ├── v01_nombre_del_video/
+│   │   ├── guion.md                 ← script del video + notas de grabación
+│   │   └── slides/                  ← diapositivas y material del video (pptx, pdf, imágenes)
+│   ├── v02_nombre_del_video/
+│   │   ├── guion.md
+│   │   └── slides/
 │   └── ...
 │
 ├── lecturas/                        ← guías de lectura (se copian a Moodle como páginas)
@@ -439,7 +443,7 @@ El video transversal sobre modelos grandes solo tiene `README.md` y `videos/` (n
 
 ### Formato de archivos
 
-**Guiones de video (`videos/vNN_*.md`):** cada archivo contiene la estructura del video (introducción, desarrollo por puntos, cierre), el guión completo o en bullets densos, y notas de producción (qué mostrar en pantalla, animaciones necesarias, duración estimada).
+**Carpetas de video (`videos/vNN_nombre/`):** cada video tiene su propia carpeta con dos elementos fijos. `guion.md` contiene la estructura del video (introducción, desarrollo por puntos, cierre), el guión completo o en bullets densos, y notas de producción (qué mostrar en pantalla, animaciones, duración estimada). `slides/` es la carpeta donde se sube el material del video: diapositivas (`.pptx`, `.key`, `.pdf`), imágenes de referencia, diagramas fuente u otros assets. Se versiona lo que sea texto o binario pequeño; archivos grandes van a object storage y se enlaza desde el `guion.md`.
 
 **Guías de lectura (`lecturas/lectura_NN_*.md`):** contenido completo listo para publicar. Son los archivos que se copian directamente como páginas de Moodle. Incluyen comandos, configuraciones y ejemplos de código. Se actualizan entre ediciones sin regrabar videos.
 
