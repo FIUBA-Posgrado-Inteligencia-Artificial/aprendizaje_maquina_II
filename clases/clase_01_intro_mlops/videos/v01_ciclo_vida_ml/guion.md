@@ -1,7 +1,7 @@
 # Ciclo de Vida de un Proyecto de ML y Roles
 
 **Clase 01 — Introducción a MLOps y ciclo de vida de un proyecto de ML**
-**Duración estimada:** 10–12 min
+**Duración estimada:** 8–10 min
 
 ---
 
@@ -73,45 +73,20 @@ No existe una frontera perfecta. En equipos pequeños una sola persona cubre var
 
 ---
 
-### Punto 3: El contrato entre materias — dónde encaja esta materia (2 min)
-
-Con ese mapa claro, ubiquemos esta materia dentro del programa del posgrado.
-
-**[Slide: diagrama del flujo completo de materias]**
-
-Ya cursaron varias materias que les dieron las bases para llegar hasta acá:
-
-- **Probabilidad y Estadística:** les dio el lenguaje matemático para entender qué está haciendo un modelo por debajo — distribuciones, estimación, inferencia.
-
-- **Análisis de Datos:** les enseñó a explorar y entender datasets, detectar patrones, visualizar. El trabajo del Data Analyst.
-
-- **Aprendizaje de Máquina:** trabajaron como Data Scientists. Tomaron datos, entrenaron modelos, midieron métricas. El artefacto que entregaron es un notebook con un modelo entrenado.
-
-Ahora, en **Operaciones de Aprendizaje Automático I (esta materia):** van a trabajar como ML Engineers. Van a tomar ese notebook y convertirlo en un proceso reproducible: empaquetado, testeado, versionado, orquestado, con monitoreo. El artefacto que van a entregar es un modelo versionado en un registry y un pipeline de predicción en lote que corre de forma automatizada.
-
-Y en el futuro, hay una etapa más del ciclo que todavía no vieron:
-
-- **Aprendizaje Profundo:** van a aprender a construir modelos de redes neuronales. Todo lo que aprendan en esta materia sobre reproducibilidad y operacionalización aplica también ahí — los pipelines que construyan acá van a poder recibir esos modelos más adelante.
-
-- **La materia siguiente (Serving):** para quienes continúen en la maestría, van a tomar el modelo versionado que entregamos en esta materia y aprenderán a servirlo online, en tiempo real, con APIs y estrategias de despliegue en producción. Es el eslabón que cierra el ciclo hacia el usuario final.
-
-La frase que resume lo que van a hacer en estos dos meses: _llegaron con un notebook que entrena un modelo, y se van con un proceso reproducible que entrena, versiona, testea, predice en lote y monitorea ese modelo en producción._
-
----
-
 ## Cierre (1 min)
 
 En este video vieron el mapa completo: las etapas del ciclo de vida de un proyecto de ML y los roles que intervienen en cada parte.
 
 Las ideas clave para llevarse:
-- El ciclo es cíclico — el monitoreo retro-alimenta el entrenamiento.
-- Un modelo en producción vale más que un modelo perfecto que no llega a usarse.
-- Esta materia los posiciona en el rol de ML Engineer: toman el trabajo del Data Scientist y lo convierten en algo productivo.
+1. El ciclo de vida de un proyecto de ML tiene 10 etapas — y es cíclico.
+2. Cada etapa tiene roles responsables: Data Engineer, Data Scientist, Data Analyst, ML Engineer.
+3. Un modelo en producción vale más que un modelo perfecto que no llega a usarse.
+4. Esta materia los posiciona como ML Engineers: toman el trabajo del Data Scientist y lo convierten en algo productivo.
 
 ---
 
 ## Notas de producción
 
-- **Pantalla:** slides con diagrama animado del ciclo de vida (construir etapa a etapa), diagrama de roles con sus zonas de responsabilidad, y diagrama del flujo de materias del posgrado (PyE + Análisis de Datos + AMq → MLOps I → Aprendizaje Profundo / Serving).
+- **Pantalla:** slides con diagrama animado del ciclo de vida (construir etapa a etapa) y diagrama de roles con sus zonas de responsabilidad.
 - **Animaciones:** el ciclo de vida se construye paso a paso; al llegar al monitoreo, mostrar la flecha de retroalimentación hacia recolección/entrenamiento. El diagrama de roles aparece con las etapas del ciclo de fondo para mostrar solapamiento.
 - **Referencias:** Chip Huyen, _Designing Machine Learning Systems_ (O'Reilly) — cap. 1 y 2 para el ciclo de vida y los roles; Google MLOps whitepaper para la definición de etapas.

@@ -280,82 +280,6 @@ Responsable de llevar el modelo a **producción** y mantenerlo ahí.
 
 ---
 
-## Diapositiva 22 — Sección: El contrato entre materias
-
-**¿Dónde encaja esta materia?**
-
-[Layout: diapositiva de sección, fondo de color, texto centrado]
-
----
-
-## Diapositiva 23 — Flujo de materias: lo que ya vieron
-
-**El camino recorrido**
-
-| Materia | Qué aprendieron | Rol |
-|---|---|---|
-| Probabilidad y Estadística | Distribuciones, estimación, inferencia | Base matemática |
-| Análisis de Datos | Exploración, visualización, patrones | Data Analyst |
-| Aprendizaje de Máquina | Entrenar modelos, medir métricas | Data Scientist |
-
-**Artefacto que entregan:** un notebook con un modelo entrenado.
-
-[Layout: tabla o diagrama lineal de izquierda a derecha mostrando las tres materias ya cursadas, con sus artefactos de salida. La flecha apunta hacia esta materia]
-
----
-
-## Diapositiva 24 — Flujo de materias: esta materia
-
-**Operaciones de Aprendizaje Automático I**
-
-Rol: **ML Engineer**
-
-- Toman el notebook de AMq
-- Lo convierten en un proceso reproducible:
-  - Empaquetado como módulo Python
-  - Testeado y validado
-  - Versionado con DVC + MLflow
-  - Orquestado con Dagster
-  - Con monitoreo de drift
-
-**Artefacto que entregan:** modelo versionado en un registry + pipeline de predicción en lote automatizado.
-
-[Layout: caja central destacada con lista de transformaciones. Flecha de entrada desde AMq, flecha de salida hacia el futuro]
-
----
-
-## Diapositiva 25 — Flujo de materias: lo que viene
-
-**Lo que viene después**
-
-- **Aprendizaje Profundo:** modelos de redes neuronales. Todo lo que aprendan acá sobre reproducibilidad aplica también ahí.
-
-- **Serving _(maestría)_:** toman el modelo versionado de esta materia y aprenden a servirlo online, en tiempo real. Es el eslabón que cierra el ciclo hacia el usuario final.
-
-[Layout: continuación del diagrama lineal, con las dos materias futuras a la derecha. "Serving" puede mostrarse con una nota "maestría" o con una línea punteada para indicar que es futuro/opcional según el recorrido del alumno]
-
----
-
-## Diapositiva 26 — El flujo completo del posgrado
-
-**El flujo completo**
-
-```
-PyE + Análisis de Datos
-        ↓
-Aprendizaje de Máquina  →  [notebook con modelo]
-        ↓
-MLOps I (esta materia)  →  [pipeline reproducible + modelo en registry]
-        ↓                          ↓
-   Aprendizaje Profundo       Serving (maestría)
-```
-
-> _Llegaron con un notebook que entrena un modelo. Se van con un proceso reproducible que entrena, versiona, testea, predice en lote y monitorea ese modelo en producción._
-
-[Layout: diagrama de flujo vertical con flechas. La cita en itálica al pie, tipografía grande]
-
----
-
 ## Diapositiva 27 — Cierre
 
 **Ideas clave de este video**
@@ -365,6 +289,4 @@ MLOps I (esta materia)  →  [pipeline reproducible + modelo en registry]
 3. Un modelo en producción vale más que un modelo perfecto que no llega a usarse.
 4. Esta materia los posiciona como **ML Engineers**: toman el trabajo del Data Scientist y lo convierten en algo productivo.
 
-**Próximo video →** Pipelines de ML: componentes y artefactos.
-
-[Layout: lista numerada, cada punto aparece de a uno. Al final aparece el "próximo video" como call to action]
+[Layout: lista numerada, cada punto aparece de a uno.]
