@@ -17,7 +17,19 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 2 — Hook
+## Diapositiva 2 — De qué trata este video
+
+**¿De qué trata este video?**
+
+- **El ciclo de vida:** Las etapas desde que nace la idea hasta que el modelo está en producción.
+- **Los roles clave:** Quién hace qué (Data Engineer, Data Scientist, Data Analyst y ML Engineer).
+- **El objetivo de MLOps:** Por qué la puesta en producción es nuestra meta real.
+
+[Layout: tres bloques con iconos o colores representativos que aparecen de a uno]
+
+---
+
+## Diapositiva 3 — Hook
 
 **¿Y después qué?**
 
@@ -31,7 +43,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 3 — Sección: El ciclo de vida
+## Diapositiva 4 — Sección: El ciclo de vida
 
 **El ciclo de vida de un proyecto de ML**
 
@@ -39,7 +51,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 4 — Ciclo de vida: inicio vacío
+## Diapositiva 5 — Ciclo de vida: inicio vacío
 
 **Las etapas de un proyecto de ML**
 
@@ -47,7 +59,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 5 — Ciclo: Problema de negocio
+## Diapositiva 6 — Ciclo: Problema de negocio
 
 **1. Problema de negocio**
 
@@ -61,7 +73,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 6 — Ciclo: Definición de objetivos
+## Diapositiva 7 — Ciclo: Definición de objetivos
 
 **2. Definición de objetivos**
 
@@ -74,7 +86,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 7 — Ciclo: Recolección y preparación de datos
+## Diapositiva 8 — Ciclo: Recolección y preparación de datos
 
 **3. Recolección de datos y preparación**
 
@@ -88,7 +100,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 8 — Ciclo: Feature engineering
+## Diapositiva 9 — Ciclo: Feature engineering
 
 **4. Feature engineering**
 
@@ -101,7 +113,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 9 — Ciclo: Entrenamiento
+## Diapositiva 10 — Ciclo: Entrenamiento
 
 **5. Entrenamiento del modelo**
 
@@ -115,7 +127,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 10 — Ciclo: Evaluación
+## Diapositiva 11 — Ciclo: Evaluación
 
 **6. Evaluación del modelo**
 
@@ -124,11 +136,11 @@ Ciclo de vida de un proyecto de ML y roles
 - No solo métricas globales
 - Validar en los segmentos críticos para el negocio
 
-[Layout: diagrama del ciclo con nodos 1–6 resaltados]
+[Layout: diagrama del ciclo con nodos 1–6 HTTP/HTTPS o diagramas resaltados]
 
 ---
 
-## Diapositiva 11 — Ciclo: Despliegue
+## Diapositiva 12 — Ciclo: Despliegue
 
 **7. Despliegue del modelo**
 
@@ -141,7 +153,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 12 — Ciclo: Servicio
+## Diapositiva 13 — Ciclo: Servicio
 
 **8. Servicio del modelo**
 
@@ -155,7 +167,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 13 — Ciclo: Monitoreo
+## Diapositiva 14 — Ciclo: Monitoreo
 
 **9. Monitoreo del modelo**
 
@@ -170,7 +182,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 14 — Ciclo: Mantenimiento
+## Diapositiva 15 — Ciclo: Mantenimiento
 
 **10. Mantenimiento del modelo**
 
@@ -184,7 +196,7 @@ Ciclo de vida de un proyecto de ML y roles
 
 ---
 
-## Diapositiva 15 — Insight clave: el ciclo es cíclico
+## Diapositiva 16 — Insight clave: el ciclo es cíclico
 
 **Este ciclo es cíclico, no lineal**
 
@@ -198,7 +210,7 @@ La puesta en producción no es un detalle: **es el objetivo.**
 
 ---
 
-## Diapositiva 16 — Sección: Los roles
+## Diapositiva 17 — Sección: Los roles
 
 **Los roles en el ciclo de vida**
 
@@ -206,7 +218,7 @@ La puesta en producción no es un detalle: **es el objetivo.**
 
 ---
 
-## Diapositiva 17 — Rol: Data Engineer
+## Diapositiva 18 — Rol: Data Engineer
 
 **Data Engineer**
 
@@ -222,7 +234,7 @@ Responsable de los **datos**.
 
 ---
 
-## Diapositiva 18 — Rol: Data Scientist
+## Diapositiva 19 — Rol: Data Scientist
 
 **Data Scientist**
 
@@ -232,13 +244,13 @@ Responsable del **modelo**.
 - Optimiza métricas
 - Explora datos en busca de señales
 
-> Es el rol que ejercieron en la materia anterior.
+> Es el rol que ejercieron previamente durante la carrera.
 
 [Layout: mismo estilo. Etapas resaltadas: feature engineering, entrenamiento, evaluación]
 
 ---
 
-## Diapositiva 19 — Rol: Data Analyst
+## Diapositiva 20 — Rol: Data Analyst
 
 **Data Analyst**
 
@@ -253,7 +265,7 @@ Responsable de que los datos sean **interpretables** para el negocio.
 
 ---
 
-## Diapositiva 20 — Rol: ML Engineer
+## Diapositiva 21 — Rol: ML Engineer
 
 **ML Engineer**
 
@@ -270,7 +282,7 @@ Responsable de llevar el modelo a **producción** y mantenerlo ahí.
 
 ---
 
-## Diapositiva 21 — Roles mapeados al ciclo
+## Diapositiva 22 — Roles mapeados al ciclo
 
 **¿Quién hace qué?**
 
@@ -280,7 +292,7 @@ Responsable de llevar el modelo a **producción** y mantenerlo ahí.
 
 ---
 
-## Diapositiva 27 — Cierre
+## Diapositiva 23 — Cierre e Ideas Clave
 
 **Ideas clave de este video**
 
@@ -290,3 +302,13 @@ Responsable de llevar el modelo a **producción** y mantenerlo ahí.
 4. Esta materia los posiciona como **ML Engineers**: toman el trabajo del Data Scientist y lo convierten en algo productivo.
 
 [Layout: lista numerada, cada punto aparece de a uno.]
+
+---
+
+## Diapositiva 24 — Despedida
+
+**¡Muchas gracias!**
+
+Nos vemos en el próximo video.
+
+[Layout: fondo oscuro, logo de la universidad o de la materia en el centro, texto centrado]

@@ -3,6 +3,15 @@
 **Clase 01 — Introducción a MLOps y ciclo de vida de un proyecto de ML**
 **Duración estimada:** 8–10 min
 
+## De qué trata este video / Agenda (1 min)
+
+En este video, vamos a presentar el mapa de ruta de la materia:
+- **El ciclo de vida:** Las 10 etapas desde que nace la idea de negocio hasta el mantenimiento continuo en producción.
+- **Los roles clave:** Quién hace qué (Data Engineer, Data Scientist, Data Analyst y ML Engineer).
+- **El objetivo de MLOps:** Por qué la puesta en producción es nuestra meta real.
+
+**[Slide: De qué trata este video]**
+
 ---
 
 ## Introducción (1–2 min)
