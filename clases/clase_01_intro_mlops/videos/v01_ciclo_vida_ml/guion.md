@@ -68,7 +68,7 @@ A lo largo de ese ciclo intervienen distintos perfiles. En la práctica los lím
 Responsable de los datos. Construye y mantiene los pipelines que mueven los datos desde las fuentes hasta donde pueden ser usados. Diseña la infraestructura de almacenamiento. Se encarga de que los datos lleguen limpios, completos y a tiempo. Sin un Data Engineer, el Data Scientist trabaja sobre arena.
 
 **Data Scientist**
-Responsable del modelo. Toma los datos preparados y los convierte en predicciones útiles. Selecciona algoritmos, entrena modelos, optimiza métricas, explora los datos en busca de señales. Es el rol que ejercieron en la materia anterior.
+Responsable del modelo. Toma los datos preparados y los convierte en predicciones útiles. Selecciona algoritmos, entrena modelos, optimiza métricas, explora los datos en busca de señales. Es el rol que vinieron ejerciendo a lo largo de la carrera.
 
 **Data Analyst**
 Responsable de que los datos sean interpretables para quienes toman decisiones de negocio. Traduce los números en insights, construye dashboards, detecta tendencias. Trabaja muy cerca del negocio.
@@ -76,9 +76,15 @@ Responsable de que los datos sean interpretables para quienes toman decisiones d
 **ML Engineer**
 Responsable de llevar el modelo a producción y mantenerlo ahí. Toma el modelo que entregó el Data Scientist y lo convierte en un proceso reproducible, versionado, testeado, monitoreable. Diseña la infraestructura de despliegue e integra el modelo con el resto de los sistemas.
 
+No existe una frontera perfecta. En equipos pequeños una sola persona cubre varios roles. Pero entender estas responsabilidades ayuda a saber qué está esperando quien recibe tu trabajo.
+
 **[Slide: dónde cae cada rol en el ciclo de vida]**
 
-No existe una frontera perfecta. En equipos pequeños una sola persona cubre varios roles. Pero entender estas responsabilidades ayuda a saber qué está esperando quien recibe tu trabajo.
+A grandes rasgos, cada rol tiene su zona de mayor protagonismo en el ciclo:
+- **Data Engineer:** sobre todo al principio — diseñando la recolección de datos, su procesamiento y preparando el terreno con el feature engineering.
+- **Data Scientist:** traduce el negocio a objetivos concretos, entrena el modelo y valida a fondo su evaluación.
+- **Data Analyst:** clave al definir los objetivos iniciales, y reaparece con fuerza en la evaluación para aportar la mirada del negocio.
+- **ML Engineer:** toma la posta sobre el final del ciclo — liderando el despliegue, el servicio activo y el mantenimiento a largo plazo.
 
 ---
 
