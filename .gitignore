@@ -245,3 +245,4 @@ metaflow.s3.*
 poetry.lock
 .conductor
 alumnos
+.claude
