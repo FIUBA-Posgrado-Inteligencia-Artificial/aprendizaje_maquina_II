@@ -40,6 +40,7 @@ dependencies = [
 ]
 
 [tool.ty.environment]
+python = ".venv"
 extra-paths = [
     "clase1/hands-on/refactor",
     "clase2/hands-on/1-simple_case",
@@ -82,3 +83,8 @@ ignore = []
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.20",
+]
