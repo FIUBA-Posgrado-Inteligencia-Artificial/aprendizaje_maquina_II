@@ -246,3 +246,4 @@ poetry.lock
 .conductor
 alumnos
 .claude
+.vscode

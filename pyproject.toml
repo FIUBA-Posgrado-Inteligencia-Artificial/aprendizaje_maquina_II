@@ -3,7 +3,7 @@ name = "aprendizaje-maquina-ii"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "apache-airflow>=3.0.1",
     "autopep8>=2.3.2",
@@ -38,3 +38,47 @@ dependencies = [
     "uvicorn>=0.34.3",
     "xgboost>=3.0.2",
 ]
+
+[tool.ty.environment]
+extra-paths = [
+    "clase1/hands-on/refactor",
+    "clase2/hands-on/1-simple_case",
+    "clase2/hands-on/2-simple_server",
+    "clase2/hands-on/4-mini-model-service/dockerfiles/salary_app/app",
+    "clase3/hands-on/container_version",
+    "clase3/hands-on/local_version",
+    "clase4/hands_on/local_metaflow",
+    "clase4/hands_on/container_version/airflow/dags",
+    "clase4/hands_on/local_version/dags",
+    "clase5/hands_on/metaflow",
+    "clase6/hands-on/API_example",
+    "clase6/hands-on/API_example/DockerImage",
+]
+
+[tool.pyright]
+extraPaths = [
+    "clase1/hands-on/refactor",
+    "clase2/hands-on/1-simple_case",
+    "clase2/hands-on/2-simple_server",
+    "clase2/hands-on/4-mini-model-service/dockerfiles/salary_app/app",
+    "clase3/hands-on/container_version",
+    "clase3/hands-on/local_version",
+    "clase4/hands_on/local_metaflow",
+    "clase4/hands_on/container_version/airflow/dags",
+    "clase4/hands_on/local_version/dags",
+    "clase5/hands_on/metaflow",
+    "clase6/hands-on/API_example",
+    "clase6/hands-on/API_example/DockerImage",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "PL"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
