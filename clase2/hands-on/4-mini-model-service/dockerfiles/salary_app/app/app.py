@@ -1,8 +1,7 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
 import joblib
-
+import numpy as np
+import pandas as pd
+import streamlit as st
 from sqlalchemy import create_engine
 
 
@@ -13,16 +12,18 @@ def connect_to_db():
         Objeto Engine de SQLAlchemy para la conexión a la base de datos.
     """
 
-    # Advertencia: Evite codificar en duro las credenciales de la base de datos. Considere usar variables de entorno o
-    # archivos de configuración en su lugar.
+    # Advertencia: Evite codificar en duro las credenciales de la base de datos.
+    # Considere usar variables de entorno o archivos de configuración en su lugar.
     db_dict = {
         "host": "postgres",
         "database": "salaries",
         "user": "postgres",
         "port": "5432",
-        "password": "postgres"
+        "password": "postgres",
     }
-    engine = create_engine(f'postgresql://{db_dict["user"]}:{db_dict["password"]}@{db_dict["host"]}:{db_dict["port"]}/{db_dict["database"]}')
+    engine = create_engine(
+        f"postgresql://{db_dict['user']}:{db_dict['password']}@{db_dict['host']}:{db_dict['port']}/{db_dict['database']}"
+    )
     return engine
 
 
@@ -43,7 +44,8 @@ def fetch_names(engine):
 
 def fetch_employee_data(engine, name):
     """
-    Función para obtener los datos de un empleado desde la base de datos según su nombre.
+    Función para obtener los datos de un empleado desde la base de datos según su
+        nombre.
     Args:
         engine: Objeto Engine de SQLAlchemy para la conexión a la base de datos.
         name: Nombre del empleado.
@@ -54,7 +56,8 @@ def fetch_employee_data(engine, name):
     query = f"""
             SELECT *
             FROM salary_data
-            WHERE first_name = '{name_splitted[0]}' AND last_name = '{name_splitted[-1]}'
+            WHERE first_name = '{name_splitted[0]}' 
+            AND last_name = '{name_splitted[-1]}'
             """
     df = pd.read_sql(query, engine)
 
@@ -67,7 +70,7 @@ def load_model():
     Returns:
         Modelo de aprendizaje automático cargado.
     """
-    return joblib.load('./salary_model.pkl')
+    return joblib.load("./salary_model.pkl")
 
 
 def format_currency(value):
@@ -79,7 +82,7 @@ def format_currency(value):
         Cadena de moneda formateada.
     """
     # Formatea el valor como cadena con separadores de miles y dos decimales
-    formatted_value = "{:,.2f}".format(value)
+    formatted_value = f"{value:,.2f}"
     # Agrega el símbolo de la moneda al principio
     formatted_currency = "$" + formatted_value
     return formatted_currency
@@ -94,7 +97,7 @@ def currency_to_float(currency_string):
         Valor float.
     """
     # Elimina el símbolo de la moneda y los separadores de miles
-    numeric_string = currency_string.replace('$', '').replace(',', '')
+    numeric_string = currency_string.replace("$", "").replace(",", "")
     # Convierte la cadena a float
     float_value = float(numeric_string)
     return float_value
@@ -117,7 +120,8 @@ def main():
         # Con los nombres, arma un desplegable
         name = st.selectbox("Nombre del empleado", names_list)
 
-        # Con el nombre seleccionado, se recupera de la base de datos el resto de los datos
+        # Con el nombre seleccionado, se recupera de la base de datos el resto de los
+        # datos
         df = fetch_employee_data(engine, name)
 
         # Si los datos no están vacíos
@@ -125,9 +129,10 @@ def main():
             # Se muestran los datos
             st.subheader("Dato del empleado")
 
-            # Obtenemos los datos del puesto en que trabaja el empleado y que seniority tiene. Esto es para el modelo
-            position = df['job'].values[0]
-            seniority = df['experience'].values[0]
+            # Obtenemos los datos del puesto en que trabaja el empleado y que seniority
+            # tiene. Esto es para el modelo
+            position = df["job"].values[0]
+            seniority = df["experience"].values[0]
 
             # Esta lista es para seleccionar inputs del modelo
             seniority_list = ["Semi-senior", "Senior"]
@@ -142,7 +147,8 @@ def main():
                 st.markdown(f":red[Email:] {df['email'].values[0]}")
                 st.markdown(f":rainbow[Salario anual actual:] {df['salary'].values[0]}")
 
-                # Si la persona tiene un seniority máximo, no se muestra al modelo ni el selector de nuevo seniority.
+                # Si la persona tiene un seniority máximo, no se muestra al modelo ni
+                # el selector de nuevo seniority.
                 if seniority != "Senior":
                     new_seniority = st.selectbox("Nuevo seniority:", seniority_list)
 
@@ -151,8 +157,9 @@ def main():
                 st.markdown(f":red[Seniority:] {seniority}")
                 st.markdown(f":red[Teléfono:] {df['phone'].values[0]}")
 
-            # Si la persona tiene un seniority menor a Senior, se observa que puesto tiene y que seniority nuevo se
-            # seleccionó, con ello armamos el input del modelo.
+            # Si la persona tiene un seniority menor a Senior, se observa que puesto
+            # tiene y que seniority nuevo se seleccionó, con ello armamos el input
+            # del modelo.
             if seniority != "Senior":
                 input_model = np.array([0, 0, 0, 0])
                 if position == "Consultant":
@@ -168,17 +175,21 @@ def main():
                 new_salary = model.predict(input_model.reshape(1, -1))[0]
                 new_salary = np.round(new_salary, -2)
 
-                # Si el salario anterior es mayor al nuevo, se ofrece por defecto mejorarlo en 3000 dólares
-                old_salary = currency_to_float(df['salary'].values[0])
+                # Si el salario anterior es mayor al nuevo, se ofrece por defecto
+                # mejorarlo en 3000 dólares
+                old_salary = currency_to_float(df["salary"].values[0])
                 if old_salary > new_salary:
                     new_salary = old_salary + 3000
 
                 # Se muestra el resultado del modelo
-                st.markdown(f":rainbow[Nuevo salario anual:] {format_currency(new_salary)}")
+                st.markdown(
+                    f":rainbow[Nuevo salario anual:] {format_currency(new_salary)}"
+                )
 
         engine.dispose()
     else:
         st.error("Fallo la conexión con la base de datos.")
+
 
 if __name__ == "__main__":
     main()
