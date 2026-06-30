@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, roc_curve
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix, roc_curve
 
 
 def plot_confusion_matrix(y_real, y_pred, save_path=None):
@@ -37,7 +37,6 @@ def plot_roc_curve(y_real, y_pred, num_class=3, save_path=None):
 
     fig_plots = []
     for i in range(num_class):
-
         y_real_temp = (y_real == i).astype(int)
         y_pred_temp = y_pred[:, i].flatten()
 

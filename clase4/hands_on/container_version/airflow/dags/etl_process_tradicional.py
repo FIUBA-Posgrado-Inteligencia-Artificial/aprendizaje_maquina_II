@@ -1,23 +1,25 @@
 import datetime
 
 from airflow import DAG
-from airflow.providers.standard.operators.python import PythonVirtualenvOperator # It will be deprecated soon
+from airflow.providers.standard.operators.python import (
+    PythonVirtualenvOperator,  # It will be deprecated soon
+)
 from pendulum import today
 
 default_args = {
-    'depends_on_past': False,
-    'schedule_interval': None,
-    'retries': 1,
-    'retry_delay': datetime.timedelta(minutes=5),
-    'dagrun_timeout': datetime.timedelta(minutes=15)
+    "depends_on_past": False,
+    "schedule_interval": None,
+    "retries": 1,
+    "retry_delay": datetime.timedelta(minutes=5),
+    "dagrun_timeout": datetime.timedelta(minutes=15),
 }
 
 dag = DAG(
-    'etl_without_taskflow',
+    "etl_without_taskflow",
     default_args=default_args,
-    description='Proceso ETL de ejemplo sin TaskFlow',
+    description="Proceso ETL de ejemplo sin TaskFlow",
     start_date=today("UTC").subtract(days=2),
-    tags=['ETL']
+    tags=["ETL"],
 )
 
 
@@ -25,7 +27,7 @@ def obtain_original_data():
     """
     Carga los datos desde de la fuente
     """
-    from ucimlrepo import fetch_ucirepo
+    from ucimlrepo import fetch_ucirepo  # noqa: PLC0415
 
     # Obtenemos el dataset
     print("📥 Descargando dataset de UCIML...")
@@ -33,7 +35,7 @@ def obtain_original_data():
 
     print("🧹 Normalizando columna 'num'...")
     dataset.loc[dataset["num"] > 0, "num"] = 1
-    
+
     path = "./data.csv"
     dataset.to_csv(path, index=False)
     print(f"💾 Dataset guardado en: {path}")
@@ -46,7 +48,7 @@ def make_dummies_variables(path_input):
     """
     Convierte a las variables en Dummies
     """
-    import pandas as pd
+    import pandas as pd  # noqa: PLC0415
 
     print(f"📂 Leyendo archivo: {path_input}")
     dataset = pd.read_csv(path_input)
@@ -60,21 +62,22 @@ def make_dummies_variables(path_input):
         dataset[col] = dataset[col].astype(int)
 
     print("🏷️ Generando variables dummy...")
-    dataset_with_dummies = pd.get_dummies(dataset,
-                                            columns=["cp", "restecg", "slope", "ca", "thal"],
-                                            drop_first=True)
-    
+    dataset_with_dummies = pd.get_dummies(
+        dataset, columns=["cp", "restecg", "slope", "ca", "thal"], drop_first=True
+    )
+
     output_path = "./data_clean_dummies.csv"
     dataset_with_dummies.to_csv(output_path, index=False)
     print(f"💾 Dataset limpio guardado en: {output_path}")
-    
+
     # Enviamos dos mensajes entre nodo
-    # OBS: Recordad que no se mandan mucha información, solo mensajes de comunicación. Si querés pasar dataset
-    # entre nodos, es mejor guardar en algún lado y pasar el path o similar.
+    # OBS: Recordad que no se mandan mucha información, solo mensajes de comunicación.
+    # Si querés pasar dataset entre nodos, es mejor guardar en algún lado y pasar el
+    # path o similar.
     return {
         "path": output_path,
         "observations": dataset_with_dummies.shape[0],
-        "columns": dataset_with_dummies.shape[1]
+        "columns": dataset_with_dummies.shape[1],
     }
 
 
@@ -82,9 +85,10 @@ def split_dataset(shape_input_ast):
     """
     Genera el dataset y obtiene set de testeo y evaluación
     """
-    import ast
-    import pandas as pd
-    from sklearn.model_selection import train_test_split
+    import ast  # noqa: PLC0415
+
+    import pandas as pd  # noqa: PLC0415
+    from sklearn.model_selection import train_test_split  # noqa: PLC0415
 
     input_data = ast.literal_eval(shape_input_ast)
     path = input_data["path"]
@@ -92,101 +96,112 @@ def split_dataset(shape_input_ast):
     columns = input_data["columns"]
 
     df = pd.read_csv(path)
-    assert df.shape == (observations, columns), "⚠️ La forma del dataset no coincide con lo esperado."
+    assert df.shape == (observations, columns), (
+        "⚠️ La forma del dataset no coincide con lo esperado."
+    )
 
     print("🔀 Separando dataset en entrenamiento y prueba...")
-    X = df.drop(columns="num")
+    xx = df.drop(columns="num")
     y = df["num"]
-    
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y)
 
-    X_train_path = "./X_train.csv"
+    xx_train, xx_test, y_train, y_test = train_test_split(
+        xx, y, test_size=0.3, stratify=y
+    )
+
+    xx_train_path = "./X_train.csv"
     y_train_path = "./y_train.csv"
-    X_test_path = "./X_test.csv"
+    xx_test_path = "./X_test.csv"
     y_test_path = "./y_test.csv"
 
-    X_train.to_csv(X_train_path, index=False)
-    X_test.to_csv(X_test_path, index=False)
+    xx_train.to_csv(xx_train_path, index=False)
+    xx_test.to_csv(xx_test_path, index=False)
     y_train.to_csv(y_train_path, index=False)
     y_test.to_csv(y_test_path, index=False)
     print("✅ Datos de entrenamiento y prueba guardados.")
 
     return {
-            "X_train_file_path": X_train_path,
-            "y_train_file_path": y_train_path,
-            "X_test_file_path": X_test_path,
-            "y_test_file_path": y_test_path,
-        }
-    
+        "xx_train_file_path": xx_train_path,
+        "y_train_file_path": y_train_path,
+        "xx_test_file_path": xx_test_path,
+        "y_test_file_path": y_test_path,
+    }
+
 
 def normalize_data(file_dict_ast):
     """
     Estandarizamos los datos
     """
-    import ast
-    import pandas as pd
-    from sklearn.preprocessing import StandardScaler
+    import ast  # noqa: PLC0415
+
+    import pandas as pd  # noqa: PLC0415
+    from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
 
     input_data = ast.literal_eval(file_dict_ast)
-    X_train_path = input_data["X_train_file_path"]
-    X_test_path = input_data["X_test_file_path"]
+    xx_train_path = input_data["xx_train_file_path"]
+    xx_test_path = input_data["xx_test_file_path"]
     y_train_path = input_data["y_train_file_path"]
     y_test_path = input_data["y_test_file_path"]
 
     print("🔢 Leyendo datos para normalizar...")
-    X_train = pd.read_csv(X_train_path)
-    X_test = pd.read_csv(X_test_path)
+    xx_train = pd.read_csv(xx_train_path)
+    xx_test = pd.read_csv(xx_test_path)
 
     print("📏 Estandarizando variables numéricas...")
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    xx_train_scaled = scaler.fit_transform(xx_train)
+    xx_test_scaled = scaler.transform(xx_test)
 
-    X_train_norm_path = "./X_train_norm.csv"
-    X_test_norm_path = "./X_test_norm.csv"
+    xx_train_norm_path = "./X_train_norm.csv"
+    xx_test_norm_path = "./X_test_norm.csv"
 
-    pd.DataFrame(X_train_scaled, columns=X_train.columns).to_csv("./X_train.csv", index=False)
-    pd.DataFrame(X_test_scaled, columns=X_test.columns).to_csv("./X_test.csv", index=False)
+    pd.DataFrame(xx_train_scaled, columns=xx_train.columns).to_csv(
+        "./X_train.csv", index=False
+    )
+    pd.DataFrame(xx_test_scaled, columns=xx_test.columns).to_csv(
+        "./X_test.csv", index=False
+    )
 
     print("✅ Datos normalizados y guardados.")
     return {
-            "X_train_file_path": X_train_norm_path,
-            "y_train_file_path": y_train_path,
-            "X_test_file_path": X_test_norm_path,
-            "y_test_file_path": y_test_path,
-        }
+        "xx_train_file_path": xx_train_norm_path,
+        "y_train_file_path": y_train_path,
+        "xx_test_file_path": xx_test_norm_path,
+        "y_test_file_path": y_test_path,
+    }
 
 
 def read_train_data(file_dict_ast):
     """
     Leemos los datos de entrenamiento
     """
-    import ast
-    import pandas as pd
+    import ast  # noqa: PLC0415
+
+    import pandas as pd  # noqa: PLC0415
 
     input_data = ast.literal_eval(file_dict_ast)
-    X_train_path = input_data["X_train_file_path"]
+    xx_train_path = input_data["xx_train_file_path"]
     y_train_path = input_data["y_train_file_path"]
 
-    X_train = pd.read_csv(X_train_path)
+    xx_train = pd.read_csv(xx_train_path)
     y_train = pd.read_csv(y_train_path)
-    print(f"📚 Datos de entrenamiento: X={X_train.shape}, y={y_train.shape}")
+    print(f"📚 Datos de entrenamiento: X={xx_train.shape}, y={y_train.shape}")
 
 
 def read_test_data(file_dict_ast):
     """
     Leemos los datos de testeo
     """
-    import ast
-    import pandas as pd
+    import ast  # noqa: PLC0415
+
+    import pandas as pd  # noqa: PLC0415
 
     input_data = ast.literal_eval(file_dict_ast)
-    X_test_path = input_data["X_test_file_path"]
+    xx_test_path = input_data["xx_test_file_path"]
     y_test_path = input_data["y_test_file_path"]
 
-    X_test = pd.read_csv(X_test_path)
+    xx_test = pd.read_csv(xx_test_path)
     y_test = pd.read_csv(y_test_path)
-    print(f"🧪 Datos de testeo: X={X_test.shape}, y={y_test.shape}")
+    print(f"🧪 Datos de testeo: X={xx_test.shape}, y={y_test.shape}")
 
 
 obtain_original_data_operator = PythonVirtualenvOperator(
@@ -242,5 +257,10 @@ read_test_data_operator = PythonVirtualenvOperator(
     dag=dag,
 )
 
-obtain_original_data_operator >> make_dummies_variables_operator >> split_dataset_operator >> normalize_data_operator
+(
+    obtain_original_data_operator
+    >> make_dummies_variables_operator
+    >> split_dataset_operator
+    >> normalize_data_operator
+)
 normalize_data_operator >> [read_train_data_operator, read_test_data_operator]

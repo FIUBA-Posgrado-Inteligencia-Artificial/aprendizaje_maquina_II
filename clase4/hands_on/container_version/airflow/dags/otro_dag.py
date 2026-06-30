@@ -1,41 +1,40 @@
-from airflow.decorators import dag, task
 from datetime import datetime, timedelta
 
+from airflow.decorators import dag, task
+
 default_args = {
-    'retries': 2,
-    'retry_delay': timedelta(minutes=1),
+    "retries": 2,
+    "retry_delay": timedelta(minutes=1),
 }
+
 
 @dag(
     schedule="*/30 * * * *",
-    start_date=datetime(2026,1,1),
+    start_date=datetime(2026, 1, 1),
     catchup=False,
     tags=["clase4"],
     default_args=default_args,
-    params={
-        "test_size": 0.3,
-        "min_accuracy": 0.80,
-        "step_delay": 30
-    }
+    params={"test_size": 0.3, "min_accuracy": 0.80, "step_delay": 30},
 )
-def otro_dag():
+def otro_dag():  # noqa: PLR0915
 
     @task(task_id="el_primer_paso")
     def otro_task(delay):
-        import time
+        import time  # noqa: PLC0415
 
         print("hola, mundo, este es otro DAG")
         time.sleep(int(delay))
 
     @task.virtualenv(
-        task_id="descarga_dataset",
-        requirements=["ucimlrepo", "pandas", "boto3"])
+        task_id="descarga_dataset", requirements=["ucimlrepo", "pandas", "boto3"]
+    )
     def get_data(delay):
-        import io
-        import time
-        import uuid
-        import boto3
-        from ucimlrepo import fetch_ucirepo
+        import io  # noqa: PLC0415
+        import time  # noqa: PLC0415
+        import uuid  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
+        from ucimlrepo import fetch_ucirepo  # noqa: PLC0415
 
         bucket = "data"
 
@@ -60,13 +59,15 @@ def otro_dag():
         task_id="procesar_datos",
         multiple_outputs=True,
         python_version="3.10",
-        requirements=["pandas>=2.0", "boto3"])
+        requirements=["pandas>=2.0", "boto3"],
+    )
     def process_data(s3_path, delay):
-        import io
-        import time
-        import uuid
-        import boto3
-        import pandas as pd
+        import io  # noqa: PLC0415
+        import time  # noqa: PLC0415
+        import uuid  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
+        import pandas as pd  # noqa: PLC0415
 
         bucket = "data"
         s3 = boto3.client("s3")
@@ -82,9 +83,9 @@ def otro_dag():
         for col in ["cp", "restecg", "slope", "ca", "thal"]:
             df[col] = df[col].astype(int)
 
-        df_with_dummies = pd.get_dummies(df,
-                            columns=["cp", "restecg", "slope", "ca", "thal"],
-                            drop_first=True)
+        df_with_dummies = pd.get_dummies(
+            df, columns=["cp", "restecg", "slope", "ca", "thal"], drop_first=True
+        )
 
         out_key = f"processed/data_clean_dummies_{uuid.uuid4().hex}.csv"
         buf = io.StringIO()
@@ -98,24 +99,23 @@ def otro_dag():
         return {
             "path": out_path,
             "observations": df_with_dummies.shape[0],
-            "columns": df_with_dummies.shape[1]
+            "columns": df_with_dummies.shape[1],
         }
 
     @task.virtualenv(
         task_id="split_dataset",
-        requirements=["pandas",
-                      "scikit-learn",
-                      "boto3"],
+        requirements=["pandas", "scikit-learn", "boto3"],
         multiple_outputs=True,
-        system_site_packages=False
+        system_site_packages=False,
     )
     def split_dataset(file_path, obs, col, test_size, delay):
-        import io
-        import time
-        import uuid
-        import boto3
-        import pandas as pd
-        from sklearn.model_selection import train_test_split
+        import io  # noqa: PLC0415
+        import time  # noqa: PLC0415
+        import uuid  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
+        import pandas as pd  # noqa: PLC0415
+        from sklearn.model_selection import train_test_split  # noqa: PLC0415
 
         bucket = "data"
         s3 = boto3.client("s3")
@@ -125,19 +125,23 @@ def otro_dag():
         in_bucket, in_key = file_path.replace("s3://", "").split("/", 1)
         obj = s3.get_object(Bucket=in_bucket, Key=in_key)
         df = pd.read_csv(io.BytesIO(obj["Body"].read()))
-        assert df.shape == (obs, col), "⚠️ La forma del dataset no coincide con lo esperado."
+        assert df.shape == (obs, col), (
+            "⚠️ La forma del dataset no coincide con lo esperado."
+        )
 
         print("🔀 Separando dataset en entrenamiento y prueba...")
-        X = df.drop(columns="num")
+        xx = df.drop(columns="num")
         y = df["num"]
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, stratify=y)
+        xx_train, xx_test, y_train, y_test = train_test_split(
+            xx, y, test_size=test_size, stratify=y
+        )
 
         unique_id = uuid.uuid4().hex
         outputs = {
-            "X_train_file_path": (X_train, f"splits/X_train_{unique_id}.csv"),
+            "xx_train_file_path": (xx_train, f"splits/X_train_{unique_id}.csv"),
             "y_train_file_path": (y_train, f"splits/y_train_{unique_id}.csv"),
-            "X_test_file_path": (X_test, f"splits/X_test_{unique_id}.csv"),
+            "xx_test_file_path": (xx_test, f"splits/X_test_{unique_id}.csv"),
             "y_test_file_path": (y_test, f"splits/y_test_{unique_id}.csv"),
         }
 
@@ -153,22 +157,20 @@ def otro_dag():
 
         return paths
 
-
     @task.virtualenv(
         task_id="normalize_numerical_features",
-        requirements=["pandas>=2.3",
-                      "scikit-learn>=1.3.2",
-                      "boto3"],
+        requirements=["pandas>=2.3", "scikit-learn>=1.3.2", "boto3"],
         multiple_outputs=True,
-        system_site_packages=False
+        system_site_packages=False,
     )
-    def normalize_data(X_train_path, X_test_path, delay):
-        import io
-        import time
-        import uuid
-        import boto3
-        import pandas as pd
-        from sklearn.preprocessing import StandardScaler
+    def normalize_data(xx_train_path, xx_test_path, delay):
+        import io  # noqa: PLC0415
+        import time  # noqa: PLC0415
+        import uuid  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
+        import pandas as pd  # noqa: PLC0415
+        from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
 
         bucket = "data"
         s3 = boto3.client("s3")
@@ -179,21 +181,21 @@ def otro_dag():
             return pd.read_csv(io.BytesIO(obj["Body"].read()))
 
         print("🔢 Leyendo datos para normalizar...")
-        X_train = _read(X_train_path)
-        X_test = _read(X_test_path)
+        xx_train = _read(xx_train_path)
+        xx_test = _read(xx_test_path)
 
         print("📏 Estandarizando variables numéricas...")
         scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
+        xx_train_scaled = scaler.fit_transform(xx_train)
+        xx_test_scaled = scaler.transform(xx_test)
 
         unique_id = uuid.uuid4().hex
         out_train_key = f"normalized/X_train_norm_{unique_id}.csv"
         out_test_key = f"normalized/X_test_norm_{unique_id}.csv"
 
         for data, cols, key in [
-            (X_train_scaled, X_train.columns, out_train_key),
-            (X_test_scaled, X_test.columns, out_test_key),
+            (xx_train_scaled, xx_train.columns, out_train_key),
+            (xx_test_scaled, xx_test.columns, out_test_key),
         ]:
             buf = io.StringIO()
             pd.DataFrame(data, columns=cols).to_csv(buf, index=False)
@@ -202,8 +204,8 @@ def otro_dag():
         print("✅ Datos normalizados y guardados.")
         time.sleep(int(delay))
         return {
-            "X_train_file_path": f"s3://{bucket}/{out_train_key}",
-            "X_test_file_path": f"s3://{bucket}/{out_test_key}",
+            "xx_train_file_path": f"s3://{bucket}/{out_train_key}",
+            "xx_test_file_path": f"s3://{bucket}/{out_test_key}",
         }
 
     @task.virtualenv(
@@ -211,14 +213,15 @@ def otro_dag():
         requirements=["pandas", "scikit-learn", "joblib", "boto3"],
         system_site_packages=False,
     )
-    def train_model(X_train_path, y_train_path, delay):
-        import io
-        import time
-        import uuid
-        import boto3
-        import joblib
-        import pandas as pd
-        from sklearn.linear_model import LogisticRegression
+    def train_model(xx_train_path, y_train_path, delay):
+        import io  # noqa: PLC0415
+        import time  # noqa: PLC0415
+        import uuid  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
+        import joblib  # noqa: PLC0415
+        import pandas as pd  # noqa: PLC0415
+        from sklearn.linear_model import LogisticRegression  # noqa: PLC0415
 
         bucket = "data"
         s3 = boto3.client("s3")
@@ -228,11 +231,11 @@ def otro_dag():
             obj = s3.get_object(Bucket=b, Key=k)
             return pd.read_csv(io.BytesIO(obj["Body"].read()))
 
-        X_train = _read(X_train_path)
+        xx_train = _read(xx_train_path)
         y_train = _read(y_train_path)
 
         model = LogisticRegression()
-        model.fit(X_train, y_train)
+        model.fit(xx_train, y_train)
 
         key = f"models/model_{uuid.uuid4().hex}.pkl"
         buf = io.BytesIO()
@@ -247,14 +250,15 @@ def otro_dag():
         task_id="test_model",
         requirements=["pandas", "scikit-learn", "joblib", "boto3"],
         multiple_outputs=True,
-        system_site_packages=False
+        system_site_packages=False,
     )
-    def test_model(X_test_path, y_test_path, model_path, delay):
-        import io
-        import time
-        import boto3
-        import joblib
-        import pandas as pd
+    def test_model(xx_test_path, y_test_path, model_path, delay):
+        import io  # noqa: PLC0415
+        import time  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
+        import joblib  # noqa: PLC0415
+        import pandas as pd  # noqa: PLC0415
 
         s3 = boto3.client("s3")
 
@@ -267,10 +271,10 @@ def otro_dag():
         model_obj = s3.get_object(Bucket=b, Key=k)
         model = joblib.load(io.BytesIO(model_obj["Body"].read()))
 
-        X_test = _read_csv(X_test_path)
+        xx_test = _read_csv(xx_test_path)
         y_test = _read_csv(y_test_path)
 
-        accuracy = model.score(X_test, y_test)
+        accuracy = model.score(xx_test, y_test)
 
         print(f"✅ Accuracy del modelo en testeo: {accuracy:.4f}")
         time.sleep(int(delay))
@@ -283,13 +287,11 @@ def otro_dag():
             return "deploy_model"
         return "do_nothing"
 
-    @task.virtualenv(
-        task_id="deploy_model",
-        requirements=["boto3"]
-    )
+    @task.virtualenv(task_id="deploy_model", requirements=["boto3"])
     def deploy_model(model_path, delay):
-        import time
-        import boto3
+        import time  # noqa: PLC0415
+
+        import boto3  # noqa: PLC0415
 
         bucket = "data"
         prod_prefix = "production/"
@@ -311,24 +313,24 @@ def otro_dag():
         s3.copy_object(
             Bucket=bucket,
             Key=prod_key,
-            CopySource={"Bucket": src_bucket, "Key": src_key}
+            CopySource={"Bucket": src_bucket, "Key": src_key},
         )
         time.sleep(int(delay))
         print(f"🚀 Modelo desplegado en: s3://{bucket}/{prod_key}")
 
     @task(task_id="do_nothing")
     def do_nothing(delay):
-        import time
+        import time  # noqa: PLC0415
+
         print("🛑 El modelo no superó el umbral mínimo. No se hace nada.")
         time.sleep(int(delay))
 
     @task.virtualenv(
-        task_id="cleanup_files",
-        trigger_rule="all_done",
-        requirements=["boto3"]
+        task_id="cleanup_files", trigger_rule="all_done", requirements=["boto3"]
     )
     def cleanup_files(*paths):
-        import boto3
+        import boto3  # noqa: PLC0415
+
         s3 = boto3.client("s3")
         print("🧹 Limpiando objetos en S3...")
         for path in paths:
@@ -340,18 +342,34 @@ def otro_dag():
                 except Exception as e:
                     print(f"⚠️ Error eliminando {path}: {e}")
 
-
     delay = "{{ params.step_delay }}"
 
-    path = get_data(delay) # Cada vez que se llama una función decorada con @task, se genera un objeto Task
+    path = get_data(
+        delay
+    )  # Cada vez que se llama una función decorada con @task, se genera un objeto Task
     otro_task(delay) >> path
     data = process_data(path, delay)
 
     # Pasamos el test_size desde los params del DAG
-    files = split_dataset(data["path"], data["observations"], data["columns"], "{{ params.test_size }}", delay)
-    norm_files = normalize_data(files["X_train_file_path"], files["X_test_file_path"], delay)
-    training_artifact = train_model(norm_files["X_train_file_path"], files["y_train_file_path"], delay)
-    test_results = test_model(norm_files["X_test_file_path"], files["y_test_file_path"], training_artifact, delay)
+    files = split_dataset(
+        data["path"],
+        data["observations"],
+        data["columns"],
+        "{{ params.test_size }}",
+        delay,
+    )
+    norm_files = normalize_data(
+        files["xx_train_file_path"], files["xx_test_file_path"], delay
+    )
+    training_artifact = train_model(
+        norm_files["xx_train_file_path"], files["y_train_file_path"], delay
+    )
+    test_results = test_model(
+        norm_files["xx_test_file_path"],
+        files["y_test_file_path"],
+        training_artifact,
+        delay,
+    )
 
     # Lógica de Branching
     eval_step = check_accuracy(test_results["accuracy"], "{{ params.min_accuracy }}")
@@ -364,13 +382,17 @@ def otro_dag():
     limpieza = cleanup_files(
         path,
         data["path"],
-        files["X_train_file_path"], files["y_train_file_path"],
-        files["X_test_file_path"], files["y_test_file_path"],
-        norm_files["X_train_file_path"], norm_files["X_test_file_path"],
+        files["xx_train_file_path"],
+        files["y_train_file_path"],
+        files["xx_test_file_path"],
+        files["y_test_file_path"],
+        norm_files["xx_train_file_path"],
+        norm_files["xx_test_file_path"],
         training_artifact,
     )
 
     deploy >> limpieza
     do_not >> limpieza
+
 
 dag = otro_dag()
