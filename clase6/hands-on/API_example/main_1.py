@@ -1,4 +1,5 @@
 import random
+
 import fastapi
 
 app = fastapi.FastAPI()
@@ -17,6 +18,7 @@ class MLModel:
 
 # Create an instance of the placeholder model
 ml_model = MLModel()
+
 
 # Endpoint to make predictions
 @app.post("/predict/")

@@ -1,4 +1,5 @@
 import random
+
 import fastapi
 from pydantic import BaseModel
 
@@ -30,8 +31,11 @@ class MLModel:
 # Create an instance of the placeholder model
 ml_model = MLModel()
 
+
 # Endpoint to make predictions
 @app.post("/predict/")
 async def predict(features: InputFeatures) -> OutputPrediction:
-    prediction = ml_model.predict(features.size, features.height, features.weight, features.number_of_whiskers)
+    prediction = ml_model.predict(
+        features.size, features.height, features.weight, features.number_of_whiskers
+    )
     return prediction

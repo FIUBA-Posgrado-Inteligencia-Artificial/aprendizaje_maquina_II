@@ -1,14 +1,14 @@
 import os
-from metaflow import FlowSpec, step, S3
+
+from metaflow import S3, FlowSpec, step
 
 # Configuración de las credenciales de acceso a AWS S3 (minio)
-os.environ['AWS_ACCESS_KEY_ID'] = "minio"
-os.environ['AWS_SECRET_ACCESS_KEY'] = "minio123"
-os.environ['AWS_ENDPOINT_URL_S3'] = "http://localhost:9000"
+os.environ["AWS_ACCESS_KEY_ID"] = "minio"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "minio123"
+os.environ["AWS_ENDPOINT_URL_S3"] = "http://localhost:9000"
 
 
 class BatchProcessingModel(FlowSpec):
-
     @step
     def start(self):
         """
@@ -22,7 +22,7 @@ class BatchProcessingModel(FlowSpec):
         """
         Paso para cargar los datos de entrada de S3
         """
-        import pandas as pd
+        import pandas as pd  # noqa: PLC0415
 
         # Se utiliza el objeto S3 para acceder a los datos desde el bucket en S3.
         s3 = S3(s3root="s3://batch/")
@@ -35,7 +35,7 @@ class BatchProcessingModel(FlowSpec):
         """
         Paso para cargar el modelo previamente entrenado.
         """
-        from xgboost import XGBClassifier
+        from xgboost import XGBClassifier  # noqa: PLC0415
 
         # Se utiliza el objeto S3 para acceder al modelo desde el bucket en S3.
         s3 = S3(s3root="s3://batch/")
@@ -52,8 +52,9 @@ class BatchProcessingModel(FlowSpec):
         """
         Paso para realizar el procesamiento por lotes y obtener predicciones.
         """
-        import numpy as np
-        import hashlib
+        import hashlib  # noqa: PLC0415
+
+        import numpy as np  # noqa: PLC0415
 
         print("Obtaining predictions")
 
@@ -62,9 +63,9 @@ class BatchProcessingModel(FlowSpec):
 
         # Se recorren las tareas previas para obtener los datos y el modelo.
         for task in previous_tasks:
-            if hasattr(task, 'X_batch'):
+            if hasattr(task, "X_batch"):
                 data = task.X_batch
-            if hasattr(task, 'model'):
+            if hasattr(task, "model"):
                 model = task.model
 
         # Se obtienen las predicciones utilizando el modelo.
@@ -73,13 +74,17 @@ class BatchProcessingModel(FlowSpec):
         # Se define un diccionario de mapeo
         label_map = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
-        # Y obtenemos la salida del modelo en modo de string. Esto podríamos haberlo implementado directamente en
-        # la lógica del modelo
+        # Y obtenemos la salida del modelo en modo de string. Esto podríamos
+        # haberlo implementado directamente en la lógica del modelo
         labels = np.array([label_map[idx] for idx in out])
 
         # Se genera un hash para cada fila de datos.
-        data['key'] = data.apply(lambda row: ' '.join(map(str, [round(x, 2) for x in row])), axis=1)
-        data['hashed'] = data['key'].apply(lambda x: hashlib.sha256(x.encode()).hexdigest())
+        data["key"] = data.apply(
+            lambda row: " ".join(map(str, [round(x, 2) for x in row])), axis=1
+        )
+        data["hashed"] = data["key"].apply(
+            lambda x: hashlib.sha256(x.encode()).hexdigest()
+        )
 
         # Preparamos los datos para ser enviados a Redis
         dict_redis = {}
@@ -95,10 +100,12 @@ class BatchProcessingModel(FlowSpec):
         """
         Paso para ingestar los resultados en Valkey.
         """
-        import redis
+        import redis  # noqa: PLC0415
 
         print("Ingesting Redis")
-        r = redis.Redis(host='localhost', port=6379, password='password', decode_responses=True)
+        r = redis.Redis(
+            host="localhost", port=6379, password="password", decode_responses=True
+        )
 
         # Comenzamos un pipeline de Valkey
         pipeline = r.pipeline()
@@ -107,7 +114,8 @@ class BatchProcessingModel(FlowSpec):
         for key, value in self.redis_data.items():
             pipeline.set(key, value)
 
-        # Ahora ingestamos todos de una y dejamos que Valkey resuelva de la forma más eficiente
+        # Ahora ingestamos todos de una y dejamos que Valkey resuelva de la forma
+        # más eficiente
         pipeline.execute()
 
         self.next(self.end)

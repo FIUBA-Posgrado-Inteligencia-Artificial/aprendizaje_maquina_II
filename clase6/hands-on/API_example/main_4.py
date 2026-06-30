@@ -1,4 +1,5 @@
 import random
+
 import fastapi
 from pydantic import BaseModel, Field
 
@@ -73,7 +74,9 @@ class MLModel:
 
 class APIInfo(BaseModel):
     name: str = "ML Model API"
-    description: str = "A simple machine learning model API for predicting cats or dogs."
+    description: str = (
+        "A simple machine learning model API for predicting cats or dogs."
+    )
     version: str = "1.0"
 
 
@@ -89,9 +92,15 @@ async def get_api_info() -> APIInfo:
 
 # Endpoint to make predictions
 @app.post("/predict/")
-async def predict(features: InputFeatures, api_key: str = fastapi.Header(...)) -> OutputPrediction:
+async def predict(
+    features: InputFeatures, api_key: str = fastapi.Header(...)
+) -> OutputPrediction:
     if api_key != API_KEY:
-        raise fastapi.HTTPException(status_code=fastapi.status.HTTP_403_FORBIDDEN, detail="Invalid API Key")
+        raise fastapi.HTTPException(
+            status_code=fastapi.status.HTTP_403_FORBIDDEN, detail="Invalid API Key"
+        )
 
-    prediction = ml_model.predict(features.size, features.height, features.weight, features.number_of_whiskers)
+    prediction = ml_model.predict(
+        features.size, features.height, features.weight, features.number_of_whiskers
+    )
     return prediction
