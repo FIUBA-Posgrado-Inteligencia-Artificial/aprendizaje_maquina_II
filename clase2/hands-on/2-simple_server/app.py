@@ -1,15 +1,17 @@
 import os
 
-from flask import Flask
+import uvicorn
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
-app = Flask(__name__)
+app = FastAPI()
 
 
-@app.route("/")
+@app.get("/", response_class=HTMLResponse)
 def hello():
     return "Hola mundo!!!"
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "8000"))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=port)
