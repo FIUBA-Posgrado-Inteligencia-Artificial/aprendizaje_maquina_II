@@ -1,102 +1,114 @@
-# Kahoot — Clase 01: Introducción a MLOps y ciclo de vida de un proyecto de ML
-# preguntas para el Kahoot de apertura de la clase sincrónica
+# Preguntas de apertura de la clase sincrónica — Módulo 1
+# Plataforma: AhaSlides (la carpeta conserva el nombre "kahoot" por historia del repo)
+#
+# Criterios de redacción:
+#   - Opciones CORTAS: AhaSlides recorta el texto largo en pantalla.
+#     Objetivo: menos de 50 caracteres por opción.
+#   - Enunciados de una sola línea, sin subordinadas.
+#   - `explicacion` no se muestra durante el juego: es la bajada que hace
+#     el docente al revelar la respuesta.
+#   - `fuente` indica de qué pieza del módulo sale la pregunta. Sirve como
+#     diagnóstico: si falla masivamente, esa pieza no se consumió.
+#
+# Tipos usados (`tipo`):
+#   opcion_multiple   -> `opciones`, con una sola `correcta: true`
+#   emparejar         -> `pares`, cada uno con `izquierda` y `derecha`
+#   respuesta_escrita -> `respuestas_aceptadas`, lista de textos válidos
 
 modulo: 1
 titulo: "Introducción a MLOps y ciclo de vida de un proyecto de ML"
+plataforma: "AhaSlides"
 preguntas:
+
   - id: 1
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
+    tipo: emparejar
+    segundos: 60
+    fuente: "video 1 — ciclo de vida y roles"
+    enunciado: "Emparejá cada rol con aquello de lo que es responsable"
+    pares:
+      - izquierda: "Data Engineer"
+        derecha: "Los datos"
+      - izquierda: "Data Scientist"
+        derecha: "El modelo"
+      - izquierda: "ML Engineer"
+        derecha: "La producción"
+      - izquierda: "Data Analyst"
+        derecha: "El negocio"
+    explicacion: >-
+      Las fronteras entre roles cambian según la organización, y en equipos
+      chicos una persona cubre varios. Lo que importa es saber qué espera
+      quien recibe tu trabajo. En esta materia ejercemos el rol de ML Engineer.
+
   - id: 2
-    enunciado: ""
+    tipo: opcion_multiple
+    segundos: 30
+    fuente: "video 2 — pipelines y artifacts"
+    enunciado: "Guardás el modelo entrenado, pero no el escalador que ajustaste. ¿Qué pasa al predecir?"
     opciones:
-      - texto: ""
+      - texto: "Predice mal y no da ningún error"
+        correcta: true
+      - texto: "El modelo no carga"
         correcta: false
-      - texto: ""
+      - texto: "Nada: el escalador se recalcula igual"
         correcta: false
-      - texto: ""
+      - texto: "Baja la exactitud solo en entrenamiento"
         correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
+    explicacion: >-
+      El escalador aprendió la media y el desvío de los datos de entrenamiento:
+      es un objeto entrenado, igual que el modelo, y por lo tanto es un artifact
+      que viaja con él. Si se recalcula sobre los datos nuevos, el modelo recibe
+      otra escala y predice mal en silencio. Eso es training/serving skew.
+
   - id: 3
-    enunciado: ""
+    tipo: opcion_multiple
+    segundos: 30
+    fuente: "video 3 — MLOps y niveles de madurez"
+    enunciado: "¿Cuál es la diferencia principal entre MLOps nivel 0 y nivel 1?"
     opciones:
-      - texto: ""
+      - texto: "El pipeline de entrenamiento se automatiza"
+        correcta: true
+      - texto: "Cambia el lenguaje de programación"
         correcta: false
-      - texto: ""
+      - texto: "Los experimentos se vuelven manuales"
         correcta: false
-      - texto: ""
+      - texto: "No hay diferencia práctica"
         correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
+    explicacion: >-
+      En nivel 0 todo es manual y el entregable es un modelo. En nivel 1 el
+      entregable pasa a ser un pipeline reproducible que puede reentrenar solo.
+      El nivel 2 automatiza además el CI/CD del propio pipeline. Ojo: el nivel
+      más alto no es siempre el correcto — depende del contexto.
+
   - id: 4
-    enunciado: ""
+    tipo: opcion_multiple
+    segundos: 30
+    fuente: "video 4 — entornos de desarrollo y producción"
+    enunciado: "Corrés un notebook a mano cada martes y el negocio decide con ese resultado. ¿Está en producción?"
     opciones:
-      - texto: ""
+      - texto: "Sí: alguien depende de esa salida"
+        correcta: true
+      - texto: "No, porque no está dockerizado"
         correcta: false
-      - texto: ""
+      - texto: "No, porque no expone una API"
         correcta: false
-      - texto: ""
+      - texto: "Solo si corre en un servidor"
         correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
+    explicacion: >-
+      Producción no la define la tecnología ni dónde corre: la define la
+      consecuencia de que falle. Tratar como "experimento" algo de lo que el
+      negocio ya depende es de los errores más caros y más comunes.
+
   - id: 5
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 6
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 7
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 8
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
+    tipo: respuesta_escrita
+    segundos: 30
+    fuente: "lectura 1 — gestión de dependencias con uv"
+    enunciado: "¿Qué archivo generado por uv hay que commitear siempre al repositorio?"
+    respuestas_aceptadas:
+      - "uv.lock"
+      - "uv lock"
+      - "uvlock"
+    explicacion: >-
+      El pyproject.toml declara con rangos; uv.lock fija la versión exacta de
+      cada paquete, incluidas las transitivas. Es lo único que garantiza que la
+      instalación sea idéntica en cualquier máquina, así que se commitea. Al
+      revés que el .venv, que se regenera con uv sync y nunca se sube.
