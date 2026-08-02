@@ -24,6 +24,7 @@
 ## Antes de la clase (docente)
 
 - [ ] Revisar el **foro de dudas**: es lo que define dónde poner el foco del hands-on.
+- [ ] Tener a mano el enlace de registro del proveedor de object storage, para la tarea del cierre.
 - [ ] Verificar que el *assignment* de GitHub Classroom está publicado y que el template clona bien desde una cuenta limpia.
 - [ ] Tener a mano la URL del assignment para pegarla en el chat.
 - [ ] Probar el flujo completo una vez, en el sistema operativo menos familiar (habitualmente Windows).
@@ -192,7 +193,19 @@ Reservado a propósito. En esta clase **siempre** hay dos o tres personas trabad
 - Un entorno reproducible: cualquier integrante clona, corre `uv sync` y obtiene exactamente las mismas versiones.
 - El punto de partida real del curso — de acá en adelante, todo se construye sobre este repo.
 
-**Un pendiente declarado:** el dataset completo **no** está versionado, así que hoy el repositorio no alcanza para reproducir el modelo de punta a punta. Es una deuda consciente, y conviene decirlo en voz alta: la vamos a saldar cuando lleguemos al versionado de datos.
+**Un pendiente declarado:** el dataset completo **no** está versionado, así que hoy el repositorio no alcanza para reproducir el modelo de punta a punta. Es una deuda consciente, y conviene decirlo en voz alta: la vamos a saldar cuando lleguemos al versionado de datos, subiendo los datos a un almacenamiento de objetos en la nube y dejando en el repositorio solo la referencia.
+
+**Tarea de esta semana — crear la cuenta de almacenamiento (10 minutos, en casa):**
+
+Cada grupo tiene que crear **una** cuenta de object storage con capa gratuita. No se usa hoy ni la semana que viene: se pide ahora porque es un trámite que a veces se traba, y así hay margen para resolverlo.
+
+- El proveedor que usamos ofrece 10 GB gratis y no cobra por descargar datos, que es lo que necesitamos para un curso.
+- **Pide una tarjeta de crédito para activar el servicio**, aunque no cobre nada dentro de la capa gratuita. Si algún integrante no puede o no quiere darla, avisen en el foro: hay una alternativa que corre en la propia máquina y funciona igual, porque ambas hablan el mismo protocolo estándar.
+- **Guarden las credenciales donde el grupo pueda encontrarlas** — y no en el repositorio.
+
+> **Importante, y decirlo explícitamente:** por ahora **no suban nada al bucket**. La estructura la va a administrar la herramienta de versionado cuando lleguemos a ese módulo, y contenido cargado a mano antes solo genera trabajo de limpieza.
+
+Los pasos concretos de configuración vienen en su momento, con la guía correspondiente. Hoy alcanza con tener la cuenta creada.
 
 **Preview:** el notebook está en el repositorio, pero sigue siendo un notebook. El próximo paso es convertirlo en código que se pueda testear, reutilizar y ejecutar sin abrir Jupyter.
 

@@ -29,6 +29,9 @@
 - [x] `clase_sincrónica/guia.md` — secuencia y ejercicios definidos
 - [ ] **Revisar la guía contra el repositorio template real.** Está escrita contra un scaffold propuesto, porque el template y la GitHub Organization todavía no existen. Hay que verificar el árbol de archivos, los nombres de los módulos de `src/`, el comando del smoke test, si el template trae `uv.lock` generado, y la URL del assignment de Classroom. El detalle está en el bloque ⚠️ PENDIENTE al inicio de la guía.
 
+### Seguimiento entre módulos
+- [ ] Verificar antes del módulo de versionado de datos que **todos los grupos crearon su cuenta de object storage** (se asigna como tarea en este módulo). Los que no hayan podido por el requisito de tarjeta de crédito van a la alternativa local con MinIO.
+
 ### Estado de publicación en Moodle
 - [ ] Videos subidos y enlazados
 - [ ] Lecturas publicadas como páginas

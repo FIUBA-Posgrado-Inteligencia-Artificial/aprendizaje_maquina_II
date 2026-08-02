@@ -94,7 +94,9 @@ Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup de
 - Gestión moderna de dependencias con `uv`: instalación, entornos virtuales, lock files, semver *(se elige `uv` por ser la herramienta actual del stack; el concepto de lock file y semver se cubre en el video de pipelines)*
 - Buenas prácticas de programación aplicadas a ML: guía de referencia con ejemplos de código *(introducción práctica; se profundiza en Clase 2)*
 
-**Hands-on (clase sincrónica):** los alumnos crean su repo a partir del template de la cátedra vía GitHub Classroom y configuran su entorno local con `uv`.
+**Hands-on (clase sincrónica):** los alumnos crean su repo a partir del template de la cátedra vía GitHub Classroom y configuran su entorno local con `uv`. El dataset completo **no** se versiona: queda local, y solo se sube una muestra chica al repositorio.
+
+**Tarea asignada (fuera de la clase sincrónica):** cada grupo crea su cuenta de object storage, o define que va a usar la alternativa local. Se adelanta acá porque es un trámite que puede trabarse por el requisito de tarjeta de crédito, aunque el bucket recién se use varios módulos después (ver "Object storage" en la sección de stack).
 
 ### Clase 2 — De notebook a paquete Python
 
@@ -358,6 +360,15 @@ Como respaldo en caso de querer repos privados, se sugiere aplicar a **GitHub Ed
 Cloudflare R2 ofrece API compatible con S3, **10 GB de almacenamiento gratis** por cuenta, **1 millón de operaciones Clase A** y **10 millones de operaciones Clase B** mensuales, y **cero cargos por egress**, lo que lo vuelve ideal para enseñanza (los alumnos pueden bajar datasets repetidamente sin generar costos).
 
 Cada grupo crea su propia cuenta Cloudflare. Para grupos que no puedan o no quieran proveer tarjeta de crédito al activar R2, **MinIO** levantado por docker-compose es una alternativa local equivalente (la misma API S3 funciona contra ambos cambiando solo el endpoint, lo cual es en sí una lección sobre estándares).
+
+**Cuándo se crea la cuenta y cuándo se usa.** Son dos momentos distintos, y conviene separarlos:
+
+- **La cuenta se crea como tarea del Módulo 1**, fuera de la clase sincrónica. Es un trámite, no contenido: no debe consumir tiempo del hands-on de setup, que ya es el de mayor riesgo del curso. Pero se adelanta porque el requisito de tarjeta de crédito es un bloqueo administrativo que necesita margen — si un grupo no puede resolverlo, hay varias semanas para redirigirlo a MinIO sin frenar nada.
+- **El bucket se empieza a usar recién en el Módulo 4** (artifacts de MLflow, aunque MinIO local ya alcanza) **y sobre todo en el Módulo 6**, donde los datos suben como *remote* de DVC.
+
+Entre medio, los datos de cada grupo viven solo en su máquina, con una muestra chica versionada en el repositorio. Es una deuda deliberada: convivir con ella es lo que hace que el módulo de versionado de datos se entienda como solución a un problema real y no como una herramienta más.
+
+**Importante:** los alumnos **no** deben subir datos al bucket a mano antes del Módulo 6. La estructura del bucket la administra la herramienta de versionado, y un contenido cargado manualmente antes obliga a limpiarlo después.
 
 ### Corrección y demostraciones
 
