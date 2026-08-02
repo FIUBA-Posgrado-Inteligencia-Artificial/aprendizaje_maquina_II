@@ -1,7 +1,7 @@
 # Contrato de interfaz: qué recibimos y qué entregamos
 
 **Clase 01 — Introducción a MLOps y ciclo de vida de un proyecto de ML**
-**Duración estimada:** 18–20 min _(video largo — excepción deliberada al formato habitual de 8–15 min)_
+**Duración estimada:** 21–23 min _(video largo — excepción deliberada al formato habitual de 8–15 min)_
 
 ## De qué trata este video / Agenda (1 min)
 
