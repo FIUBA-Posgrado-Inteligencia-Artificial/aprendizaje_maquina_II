@@ -37,7 +37,13 @@ Adentro están casi todas las etapas: cargar, limpiar, transformar, entrenar, ev
 
 **El problema es que es un pipeline implícito.**
 
-[Layout: captura estilizada de un notebook con las celdas agrupadas por etapa y etiquetadas. La frase final aparece al último, en color de acento]
+[Layout: a la derecha, un notebook dibujado como una columna de rectángulos tipo `In [1]`, `In [2]`… **sin código legible** — interesa la forma, no el contenido. La forma más rápida de armarlo es una captura de un notebook real con el código desenfocado.
+
+Animación, en dos tiempos:
+1. Primero el notebook pelado: todas las celdas iguales, sin etiquetas ni colores.
+2. Después aparecen bandas de color agrupando celdas contiguas, cada una con su etapa al costado: celdas 1–3 *Ingesta y limpieza*, 4–6 *Feature engineering*, 7–8 *Entrenamiento*, 9 *Evaluación*.
+
+Ese segundo tiempo es el momento "ah, ya estaban ahí": el alumno reconoce su propio notebook. La frase final —"es un pipeline implícito"— entra al último, en color de acento, una vez que las etiquetas ya están puestas]
 
 ---
 
