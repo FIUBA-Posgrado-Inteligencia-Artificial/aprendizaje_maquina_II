@@ -244,9 +244,10 @@ metaflow.s3.*
 .metaflow
 poetry.lock
 
-# HTML generado a partir de las lecturas para publicar en Moodle.
-# Es un producto derivado: se regenera con scripts/lectura_a_moodle.py
+# Archivos generados para publicar en Moodle. Son productos derivados:
+# se regeneran con los scripts de scripts/.
 *.moodle.html
+*.moodle.xml
 
 # Las reglas de virtualenv de arriba incluyen `[Ss]cripts`, pensada para la
 # carpeta `Scripts/` que crean los entornos virtuales en Windows. De paso
