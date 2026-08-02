@@ -13,6 +13,10 @@
 > - Si el template trae o no `uv.lock` ya generado. Cambia el paso 2: con lock, `uv sync`; sin lock, `uv add` de las dependencias iniciales.
 > - La URL del assignment de Classroom y el nombre de la organización.
 >
+> **Requisitos que el template tiene que cumplir para que esta guía funcione:**
+> - `.gitignore` que excluya `data/raw/` pero **no** `data/sample/`, y que excluya `.venv/`.
+> - `data/raw/` y `data/sample/` existentes con `.gitkeep`, y un `data/README.md` con las secciones a completar (origen, cómo obtener los datos, restricciones de uso).
+>
 > El resto de la guía —tiempos, secuencia, puntos de atención— no depende del template y debería sobrevivir sin cambios.
 
 ---
@@ -81,7 +85,10 @@ Mostrar la estructura y decir en voz alta para qué sirve cada cosa. **La mayor�
 ```
 repo-del-grupo/
 ├── .github/workflows/ci.yml    # integración continua (vacío o mínimo por ahora)
-├── data/                       # los datos NO se versionan acá todavía
+├── data/
+│   ├── README.md               # de dónde salen los datos y cómo obtenerlos
+│   ├── raw/                    # dataset completo — IGNORADO por git
+│   └── sample/                 # muestra chica — SÍ se versiona
 ├── notebooks/                  # el notebook de la materia anterior
 ├── src/<paquete>/              # acá va a vivir el código refactorizado
 │   ├── __init__.py
@@ -100,17 +107,29 @@ repo-del-grupo/
 └── README.md
 ```
 
-Los dos puntos que sí importan hoy, y que conectan con los videos:
+Los tres puntos que sí importan hoy, y que conectan con los videos:
 
 - **`pyproject.toml` y `uv.lock` son piezas distintas**: uno declara, el otro resuelve. Es exactamente la distinción del video de pipelines.
 - **`src/` está vacío a propósito.** El contenido va a salir del notebook, y ese es el trabajo del módulo que viene.
+- **`data/raw/` está ignorado por git y `data/sample/` no.** Vale la pena detenerse acá treinta segundos, porque es contraintuitivo y va a generar preguntas. Ver el paso siguiente.
 
 #### 4. Traer el modelo al repositorio (15 min)
 
 1. Copiar el notebook de la materia anterior a `notebooks/`.
-2. Copiar el dataset a `data/`.
-3. Agregar con `uv add` las dependencias que el notebook necesita para correr (`pandas`, `scikit-learn`, lo que use cada uno).
-4. Verificar que el notebook corre en el entorno nuevo: **reiniciar el kernel y ejecutar todo de arriba abajo**.
+2. Copiar el dataset completo a `data/raw/`. **Eso no se sube**: está ignorado por git.
+3. Generar una **muestra** de unas pocas centenas de filas en `data/sample/`. Esa sí se versiona.
+4. Completar `data/README.md`: de dónde salieron los datos, cómo se obtienen de nuevo, y cualquier restricción de uso que tengan.
+5. Agregar con `uv add` las dependencias que el notebook necesita para correr (`pandas`, `scikit-learn`, lo que use cada uno).
+6. Verificar que el notebook corre en el entorno nuevo: **reiniciar el kernel y ejecutar todo de arriba abajo**.
+
+**Por qué el dataset no va al repositorio.** Es la pregunta que van a hacer, y conviene contestarla bien porque instala un tema del curso:
+
+- **Git no está hecho para datos.** Guarda cada versión completa de cada archivo binario. Un CSV que cambia tres veces son tres copias enteras en el repositorio.
+- **Y no hay vuelta atrás.** Todo lo que se commitea queda en el historial **para siempre**: borrar el archivo después no achica el repositorio, porque la copia sigue estando en la historia. Es una de las pocas decisiones de esta clase que no se deshace fácil.
+- **Los datos pueden tener restricciones** de privacidad o de licencia que un repositorio público no respeta.
+- Versionar datos en serio necesita otra herramienta, y **es un tema al que le vamos a dedicar un módulo entero más adelante**. Por ahora convivimos con la incomodidad a propósito: cuando llegue esa clase, van a entender exactamente qué problema resuelve.
+
+**Por qué sí va la muestra.** Con una muestra chica versionada, cualquiera puede clonar el repositorio y correr algo de punta a punta sin conseguir los datos completos. Es lo que va a permitir, más adelante, que los tests y la integración continua se ejecuten sin acceso a los datos reales.
 
 > **Este paso es el que más tiempo consume y el más valioso**, porque es donde aparecen los problemas reales: rutas absolutas a la carpeta de Descargas, dependencias que estaban en el entorno de conda y nadie declaró, y celdas que solo funcionaban en el orden en que se habían ejecutado ese día. Es la lectura de buenas prácticas encontrándose con la realidad.
 
@@ -121,20 +140,23 @@ Si un grupo no logra hacer correr el notebook completo, **no se frena la clase**
 ```bash
 git status          # mirar qué va a entrar ANTES de agregar
 git add .
-git commit -m "Agregar notebook y datos del modelo del grupo"
+git commit -m "Agregar notebook y muestra de datos del modelo del grupo"
 git push
 ```
+
+**Insistir en el `git status` antes del `git add .`.** Es el hábito que evita el problema, y es el momento de instalarlo: mirar qué se va a subir antes de subirlo.
 
 Antes de que hagan `push`, la verificación que importa:
 
 ```bash
-git ls-files | grep -E "uv.lock|.venv"
+git ls-files | grep -E "uv\.lock|\.venv|data/"
 ```
 
 - `uv.lock` **tiene** que aparecer.
 - Nada con `.venv/` puede aparecer.
+- De `data/`, solo `README.md` y lo que esté en `sample/`. Si aparece algo de `data/raw/`, el `.gitignore` no está funcionando.
 
-Si alguien commiteó el `.venv`, es el momento de arreglarlo —`git rm -r --cached .venv`— y de explicar por qué el `.gitignore` existe.
+Si alguien ya commiteó el `.venv` o el dataset completo, **es mucho mejor arreglarlo ahora que después**: mientras no se haya hecho `push`, alcanza con `git rm -r --cached <ruta>` y rehacer el commit. Es el momento perfecto para explicar por qué el `.gitignore` existe y por qué el historial de git no perdona.
 
 #### 6. Colchón (10 min)
 
@@ -152,7 +174,11 @@ Reservado a propósito. En esta clase **siempre** hay dos o tres personas trabad
 
 **El kernel del notebook apunta a Anaconda.** Se detecta con `import sys; print(sys.executable)`. Se resuelve levantando Jupyter desde el proyecto con `uv run jupyter lab`, o registrando el kernel.
 
-**Datos demasiado grandes para GitHub.** Si el dataset supera los 100 MB, GitHub rechaza el push. Por hoy: trabajar con una muestra y dejar el dataset completo afuera. Es la motivación perfecta para el versionado de datos, que llega más adelante — vale la pena nombrarlo cuando pase.
+**"¿Por qué no puedo subir el dataset?"** Es la pregunta garantizada de la clase. La respuesta corta: git guarda cada versión completa y no olvida nunca. La respuesta útil: hay una herramienta para esto y le dedicamos un módulo entero más adelante. Conviene que la pregunta aparezca — es el mejor gancho para ese tema.
+
+**Alguien commiteó el dataset completo igual.** Si todavía no hizo `push`, `git rm -r --cached data/raw` y rehacer el commit. Si ya lo pusheó y el archivo es grande, lo más práctico es rehacer el repositorio desde el template: reescribir historia con un grupo entero mirando no es buen uso del tiempo de clase.
+
+**GitHub rechaza el push por tamaño.** El límite por archivo son 100 MB. Si aparece, es que el dataset se coló: revisar el `.gitignore` y el paso anterior.
 
 **Un grupo sin modelo propio.** Si nadie del grupo trae un notebook utilizable, que elijan un dataset público simple y un modelo básico. No es lo ideal, pero es preferible a que el grupo no arranque.
 
@@ -162,9 +188,11 @@ Reservado a propósito. En esta clase **siempre** hay dos o tres personas trabad
 
 **Qué entregó esta clase al pipeline:**
 
-- Un repositorio versionado, compartido por el grupo, con el modelo y los datos adentro.
+- Un repositorio versionado, compartido por el grupo, con el notebook y una muestra de los datos.
 - Un entorno reproducible: cualquier integrante clona, corre `uv sync` y obtiene exactamente las mismas versiones.
 - El punto de partida real del curso — de acá en adelante, todo se construye sobre este repo.
+
+**Un pendiente declarado:** el dataset completo **no** está versionado, así que hoy el repositorio no alcanza para reproducir el modelo de punta a punta. Es una deuda consciente, y conviene decirlo en voz alta: la vamos a saldar cuando lleguemos al versionado de datos.
 
 **Preview:** el notebook está en el repositorio, pero sigue siendo un notebook. El próximo paso es convertirlo en código que se pueda testear, reutilizar y ejecutar sin abrir Jupyter.
 
