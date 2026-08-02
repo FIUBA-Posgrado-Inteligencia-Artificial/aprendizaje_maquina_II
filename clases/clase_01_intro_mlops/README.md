@@ -23,7 +23,7 @@ Al terminar el módulo, el alumno tiene que poder:
 - [x] `videos/v05_contrato_interfaz/guion.md` — 21–23 min
 
 ### Videos — teleprompter y slides
-> Tomar como referencia `v01`, que es el único completo.
+> Las marcas `[CD]` de cada teleprompter están sincronizadas una a una con las diapositivas.
 
 - [x] `v01_ciclo_vida_ml` — 24 diapositivas
 - [x] `v02_pipelines_artifacts` — 36 diapositivas
