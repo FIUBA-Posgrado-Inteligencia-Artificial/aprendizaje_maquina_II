@@ -111,9 +111,9 @@ Refactorización sistemática de un notebook experimental hacia un paquete Pytho
 **Materiales de lectura (Moodle):**
 
 - Manejo de configuración con Hydra/OmegaConf: guía de instalación y uso básico *(herramienta específica del stack; el concepto de configuración externalizada se cubre en el video de estructura de proyecto)*
-- Logging estructurado, type hints y docstrings en Python: guía de referencia con ejemplos *(convenciones que cambian con versiones del lenguaje y herramientas)*
-- Pre-commit hooks y linting con `ruff`: configuración paso a paso *(tooling que evoluciona; `ruff` reemplazó a `flake8`/`black`/`isort` pero el concepto de linting es estable)*
-- Primer workflow de GitHub Actions: lint + tests en cada push *(implementación concreta de CI; el concepto se cubre en el video)*
+- Logging estructurado, type hints y docstrings en Python: guía de referencia con ejemplos *(convenciones que cambian con versiones del lenguaje y herramientas)*. Incluye **por qué los type hints sin un chequeador son solo documentación**: es el argumento que motiva la herramienta de la lectura siguiente
+- Pre-commit hooks, linting con `ruff` y chequeo de tipos con `ty`: configuración paso a paso *(tooling que evoluciona; `ruff` reemplazó a `flake8`/`black`/`isort` y `ty` es el chequeador de tipos de la misma familia — comparten configuración en `pyproject.toml` y corren como el mismo tipo de hook. El concepto de análisis estático es estable; las herramientas no. `ty` está en versionado 0.x: conviene fijar la versión y revisar la guía entre ediciones)*
+- Primer workflow de GitHub Actions: lint + chequeo de tipos + tests en cada push *(implementación concreta de CI; el concepto se cubre en el video)*
 
 **Hands-on (clase sincrónica):** los alumnos toman su notebook real de la materia anterior y lo refactorizan a un paquete con la estructura del template.
 
@@ -327,6 +327,7 @@ La evaluación se centra en el **proceso, no en la performance del modelo**. La 
 | Gestión de dependencias | `uv` o `poetry` | |
 | Refactor / configs | Hydra, OmegaConf | |
 | Linting / formato | `ruff`, `pre-commit` | |
+| Chequeo de tipos | `ty` | de Astral, igual que `ruff` y `uv`; en versionado 0.x, fijar versión |
 | Containerización | Docker, Docker Compose | |
 | Tracking + Registry | MLflow | |
 | Storage de artifacts | MinIO (local) / Cloudflare R2 (cloud) | API S3-compatible |
