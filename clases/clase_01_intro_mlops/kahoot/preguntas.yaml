@@ -99,14 +99,19 @@ preguntas:
       negocio ya depende es de los errores más caros y más comunes.
 
   - id: 5
-    tipo: respuesta_escrita
+    tipo: opcion_multiple
     segundos: 30
     fuente: "lectura 1 — gestión de dependencias con uv"
     enunciado: "¿Qué archivo generado por uv hay que commitear siempre al repositorio?"
-    respuestas_aceptadas:
-      - "uv.lock"
-      - "uv lock"
-      - "uvlock"
+    opciones:
+      - texto: "uv.lock"
+        correcta: true
+      - texto: ".venv/"
+        correcta: false
+      - texto: "El entorno completo, comprimido"
+        correcta: false
+      - texto: "Ninguno: uv los regenera solo"
+        correcta: false
     explicacion: >-
       El pyproject.toml declara con rangos; uv.lock fija la versión exacta de
       cada paquete, incluidas las transitivas. Es lo único que garantiza que la
