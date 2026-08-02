@@ -76,7 +76,15 @@ Ese segundo tiempo es el momento "ah, ya estaban ahí": el alumno reconoce su pr
 > Una secuencia de etapas donde la salida de una es la entrada de la siguiente,
 > cada una con una responsabilidad única, ejecutable de punta a punta de forma automática.
 
-[Layout: definición grande y centrada, sin bullets. Debajo, un diagrama simple de cuatro cajas encadenadas por flechas]
+[Layout: la definición grande y centrada, sin bullets. Debajo, el **diagrama base** del video.
+
+**Diagrama base — armarlo una sola vez, se reutiliza cinco veces:**
+- Cuatro rectángulos iguales, en fila horizontal, misma altura y separación.
+- Etiquetas **genéricas** (`Etapa A`, `B`, `C`, `D`): las etapas reales llegan recién en la diapositiva 9, y ponerlas acá le compite a la definición.
+- Flechas entre cajas consecutivas. Son lo único que tiene que leerse con claridad, porque son la definición hecha dibujo: *la salida de una es la entrada de la siguiente*.
+- Sin colores de énfasis: es el estado neutro, del que parten todas las variaciones.
+
+**Dónde reaparece:** duplicado en dos carriles (diapositivas 8 a 10), con la etapa compartida resaltada (13), con las primeras etapas en gris (14), y con los artifacts cayendo de cada etapa hacia una capa de almacenamiento (18). Conviene que sea un objeto reutilizable y no cinco dibujos distintos: la repetición visual es lo que hace que el alumno siga la misma idea a lo largo del video]
 
 ---
 
