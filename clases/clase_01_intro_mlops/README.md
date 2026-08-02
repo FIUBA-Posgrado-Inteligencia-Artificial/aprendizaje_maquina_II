@@ -25,11 +25,12 @@ Al terminar el módulo, el alumno tiene que poder:
 ### Videos — teleprompter y slides
 > Tomar como referencia `v01`, que es el único completo.
 
-- [x] `v01_ciclo_vida_ml` — teleprompter y slides
-- [ ] `v02_pipelines_artifacts` — **falta teleprompter y slides**
-- [ ] `v03_mlops_niveles` — **falta teleprompter y slides**
-- [ ] `v04_entornos` — **falta teleprompter y slides**
-- [ ] `v05_contrato_interfaz` — **falta teleprompter y slides**
+- [x] `v01_ciclo_vida_ml` — 24 diapositivas
+- [x] `v02_pipelines_artifacts` — 36 diapositivas
+- [x] `v03_mlops_niveles` — 34 diapositivas
+- [x] `v04_entornos` — 27 diapositivas
+- [x] `v05_contrato_interfaz` — 37 diapositivas
+- [ ] Diapositivas **diseñadas** a partir de estos guiones de slides (hoy son texto y notas de layout)
 
 ### Videos — grabación
 - [ ] v01 grabado y editado
