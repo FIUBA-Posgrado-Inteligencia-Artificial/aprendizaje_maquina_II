@@ -4,6 +4,7 @@
 > **Nota de cátedra (no se publica en Moodle).**
 > Esta guía acompaña al video de pipelines y artifacts, donde se explican los conceptos de *lock file* y versionado semántico. Acá van la herramienta y los comandos concretos.
 > Verificado contra **uv 0.12.1** (julio 2026). Si se actualiza uv entre ediciones, revisar sobre todo la sección "Crear el proyecto": `uv init` cambió su comportamiento por defecto en versiones recientes y hoy genera un proyecto empaquetado con layout `src/`.
+> **Punto de partida asumido: Anaconda.** La guía está escrita para alumnos que vienen usando conda en las materias anteriores, no pip. Si en alguna edición eso cambia, hay que revisar la sección "Por qué cambiamos de herramienta", la tabla de equivalencias, la de notebooks y los errores frecuentes.
 > Para publicar: `uv run scripts/lectura_a_moodle.py clases/clase_01_intro_mlops/lecturas/lectura_01_uv_dependencias.md`
 <!-- /interno -->
 
@@ -15,18 +16,51 @@ Trabajá con la guía abierta y la terminal al lado: todos los comandos están p
 
 ## Por qué cambiamos de herramienta
 
-Lo más probable es que hasta ahora hayas instalado tus librerías con `pip install`, y que si tuviste que compartir un proyecto hayas escrito un `requirements.txt` a mano. Eso funciona para trabajar solo, pero deja dos agujeros:
+Si venís de las materias anteriores, lo más probable es que hayas trabajado con **Anaconda**: creaste entornos con `conda create`, instalaste librerías con `conda install` y abriste los notebooks desde Anaconda Navigator o con `jupyter notebook`.
 
-- **No queda registro de las versiones exactas.** Si el archivo dice `scikit-learn`, cada persona recibe la que esté publicada el día que instala.
-- **Las dependencias transitivas quedan sueltas.** `scikit-learn` instala `numpy`, `scipy` y `joblib` por debajo, y nadie las escribió en ninguna lista.
+Anaconda hace bien varias cosas. Trae entornos aislados —que es exactamente la idea correcta— y resuelve un problema genuinamente difícil: instalar paquetes que no son solo Python, como bibliotecas de álgebra compiladas o soporte de GPU.
 
-**uv** resuelve las dos cosas. Es un gestor de proyectos y dependencias de Python escrito en Rust, que reemplaza en una sola herramienta a `pip`, `venv`, `pip-tools`, `pipx` y `pyenv`. Además es notablemente rápido: instalaciones que con `pip` tardan minutos, acá tardan segundos.
+Pero para lo que necesitamos en esta materia tiene tres limitaciones.
 
-Lo elegimos porque es la herramienta actual del ecosistema, pero **lo importante no es la herramienta: son los conceptos**. El entorno virtual, el archivo de declaración y el *lock file* existen en cualquier gestor moderno.
+**1. El entorno vive fuera del proyecto.** Los entornos de conda se guardan en un directorio central de la instalación de Anaconda, no al lado de tu código. Nada dentro de tu repositorio dice cuál de todos esos entornos le corresponde: esa información vive en la cabeza de quien lo creó.
+
+**2. `environment.yml` no es un lock file.** Es el archivo que se suele compartir, y casi siempre se escribe a mano, con las librerías principales y sin versiones. Es una declaración de intenciones, no una descripción exacta del entorno. Se puede exportar el detalle completo con `conda env export`, pero esa exportación incluye identificadores de compilación propios de tu sistema operativo y en general no funciona en una máquina distinta.
+
+**3. Mezclar `conda install` y `pip install` rompe el entorno.** Es la causa número uno de entornos de Anaconda que "dejaron de andar": conda no lleva registro de lo que instaló pip, así que puede pisarlo en la siguiente instalación.
+
+**uv** resuelve las tres. Es un gestor de proyectos y dependencias de Python escrito en Rust, que reemplaza en una sola herramienta a `pip`, `venv`, `virtualenv`, `pip-tools`, `pipx` y `pyenv`. El entorno vive **dentro** del proyecto, genera un lock file de verdad, y no hay dos instaladores compitiendo. Además es notablemente rápido: instalaciones que tardaban minutos, acá tardan segundos.
+
+**¿Anaconda deja de servir?** No. Sigue siendo la mejor opción cuando necesitás paquetes que no son de Python, y podés seguir usándola en otras materias sin ningún problema: **las dos herramientas conviven en la misma computadora.** Para el proyecto de esta materia vamos a usar uv.
+
+Y lo importante: **no es la herramienta, son los conceptos.** El entorno aislado ya lo conocés de conda; lo que sumamos es la declaración versionada y el *lock file*, que existen en cualquier gestor moderno.
+
+---
+
+## De conda a uv: la traducción rápida
+
+Antes de entrar en detalle, la tabla que probablemente más vas a usar. Casi todo lo que sabés hacer tiene un equivalente directo:
+
+| En conda hacías | Acá hacés |
+|---|---|
+| `conda create -n mienv python=3.11` | `uv init mi-proyecto --python 3.11` |
+| `conda activate mienv` | nada: se usa `uv run <comando>` |
+| `conda install pandas` | `uv add pandas` |
+| `pip install pytest` dentro del entorno | `uv add --dev pytest` |
+| `conda remove pandas` | `uv remove pandas` |
+| `conda list` | `uv tree` |
+| `conda env export > environment.yml` | nada: `uv.lock` se escribe solo |
+| `conda env create -f environment.yml` | `uv sync` |
+| `conda env list` | no hace falta: hay un `.venv` por proyecto |
+
+Las dos filas con "nada" son las que más cuesta incorporar, y son las dos mejores noticias: **no vas a tener que acordarte de activar el entorno, ni de exportar el archivo de dependencias.**
 
 ---
 
 ## Instalación
+
+> **Si ya tenés Anaconda instalada** —que es lo más probable— uv convive con ella sin conflicto. Dos recomendaciones para evitarte confusiones:
+> - Instalá uv con **el entorno de conda desactivado** (`conda deactivate` hasta que no veas `(base)` en el prompt). uv se instala a nivel del sistema, no adentro de un entorno.
+> - Acostumbrate a correr `conda deactivate` antes de trabajar en el proyecto del curso. Un entorno de conda activo no rompe nada, pero hace difícil saber qué Python está corriendo.
 
 ### macOS y Linux
 
@@ -76,6 +110,8 @@ Antes de los comandos, cuatro nombres que van a aparecer todo el tiempo:
 | `uv.lock` | El resultado de **resolver** esa declaración: versión exacta de cada paquete, incluidas las transitivas, con sus hashes | **Sí** |
 | `.venv/` | El entorno virtual: la carpeta donde uv instala realmente los paquetes | **No** |
 | `.python-version` | Qué versión de Python usa el proyecto | **Sí** |
+
+El `.venv/` es el equivalente de tu entorno de conda, con una diferencia que importa: **está adentro del proyecto**, no en un directorio central. Cada proyecto trae el suyo, y no hay que acordarse de cuál corresponde a cuál.
 
 La regla a recordar: **se versiona lo que describe el entorno, nunca el entorno en sí.** El `.venv/` se puede regenerar en cualquier momento a partir del lock; por eso no se sube.
 
@@ -231,7 +267,7 @@ Es igual, pero **falla si el lock no está actualizado** respecto de `pyproject.
 
 ## Ejecutar código
 
-Acá viene el cambio de costumbre más grande: **no hace falta activar el entorno virtual.**
+Acá viene el cambio de costumbre más grande viniendo de conda: **no hace falta activar nada.** No hay `uv activate`, y no es un olvido de la herramienta: no existe porque no hace falta.
 
 ```bash
 uv run python entrenar.py
@@ -250,7 +286,7 @@ source .venv/bin/activate      # macOS / Linux
 
 Pero la forma recomendada es `uv run`, porque garantiza que lo que corre es lo que dice el lock.
 
-> **Si ves este mensaje:** `warning: VIRTUAL_ENV=... does not match the project environment path .venv and will be ignored`, significa que tenés activado el entorno virtual de *otro* proyecto. No rompe nada —uv usa el correcto igual— pero conviene desactivarlo con `deactivate`.
+> **Si ves este mensaje:** `warning: VIRTUAL_ENV=... does not match the project environment path .venv and will be ignored`, significa que tenés activado el entorno de *otro* proyecto, o el de conda. No rompe nada —uv usa el correcto igual— pero conviene salir del otro con `deactivate` o `conda deactivate` según cuál sea.
 
 ---
 
@@ -270,28 +306,67 @@ Fijar la versión de Python del proyecto es parte de la reproducibilidad: el mis
 
 ## Trabajar con notebooks
 
-Como venís de trabajar en notebooks, hay dos formas de conectarlos con el proyecto.
+Hasta ahora abrías los notebooks desde Anaconda Navigator, o con `jupyter notebook` desde el entorno de conda. Eso hay que ajustarlo, porque el notebook tiene que ejecutar con **el entorno del proyecto** y no con el de Anaconda: si no, vas a estar probando con versiones distintas de las que usa el resto de tu pipeline.
 
-**Opción A — el kernel del proyecto (recomendada).** Agregás el kernel como dependencia de desarrollo y después elegís el intérprete `.venv` desde tu editor o desde Jupyter:
+**Opción A — levantar Jupyter desde el proyecto (la más simple).**
 
 ```bash
-uv add --dev ipykernel
+uv add --dev jupyterlab ipykernel
 uv run jupyter lab
 ```
 
-**Opción B — sin instalar nada permanente.** Para una prueba rápida, `--with` agrega una librería solo para esa ejecución:
+Todo lo que abras desde ahí ya usa el entorno del proyecto. No hay nada más que configurar.
+
+**Opción B — registrar el kernel, para verlo desde el Jupyter de siempre.** Si preferís seguir abriendo Jupyter como venías haciendo (desde Navigator, o desde el entorno de conda), registrá el entorno del proyecto como un kernel más:
+
+```bash
+uv add --dev ipykernel
+uv run python -m ipykernel install --user \
+    --name mi-proyecto-mlops \
+    --display-name "Python (mi-proyecto-mlops)"
+```
+
+Después, en el menú de kernels del notebook vas a poder elegir **Python (mi-proyecto-mlops)**. Esto es lo que hace que un notebook abierto desde Anaconda ejecute con las librerías de tu proyecto.
+
+**Para una prueba rápida**, sin instalar nada de forma permanente, `--with` agrega una librería solo para esa ejecución:
 
 ```bash
 uv run --with jupyter jupyter lab
 ```
 
-La opción A es la que corresponde para el proyecto del curso: así el notebook usa exactamente las mismas versiones que el resto del pipeline.
+> **Cómo verificar que estás en el kernel correcto.** Ejecutá esto en una celda: si la ruta apunta al `.venv` de tu proyecto, estás bien; si apunta a algo con `anaconda3` o `miniconda3` en el medio, el notebook está usando el entorno viejo.
+>
+> ```python
+> import sys; print(sys.executable)
+> ```
 
 ---
 
 ## Migrar un proyecto que ya tenías
 
-Si ya tenías un `requirements.txt`:
+### Desde un entorno de conda
+
+uv no lee `environment.yml`, así que el camino es averiguar **qué pediste vos** —no las cientos de dependencias que conda arrastró detrás— y volver a declararlo. Para eso sirve `--from-history`:
+
+```bash
+conda activate mi-entorno-viejo
+conda env export --from-history
+```
+
+Ese comando lista solo los paquetes que instalaste explícitamente, que en general son un puñado. Con esa lista en la mano:
+
+```bash
+conda deactivate
+uv init mi-proyecto-mlops
+cd mi-proyecto-mlops
+uv add pandas scikit-learn matplotlib   # lo que haya aparecido arriba
+```
+
+Dejá que uv resuelva el resto: no hace falta que copies las dependencias transitivas, justamente porque de eso se encarga el lock.
+
+> Si el entorno viejo tenía paquetes instalados con `pip` además de con `conda`, revisá también `pip list` dentro de ese entorno: `--from-history` solo muestra lo que se instaló con conda.
+
+### Desde un `requirements.txt`
 
 ```bash
 uv init --bare               # crea solo el pyproject.toml, sin tocar tu código
@@ -331,7 +406,11 @@ Ese archivo pasa a ser un **producto derivado** del lock: se regenera, no se edi
 
 **No subir `uv.lock`.** Es el error opuesto y es peor, porque anula todo el beneficio: sin el lock, cada persona resuelve las versiones por su cuenta. **El lock se commitea siempre.**
 
-**Usar `pip install` dentro del `.venv`.** Instala el paquete pero no lo registra en ningún lado, así que el entorno deja de coincidir con el lock y el próximo `uv sync` lo va a borrar. Si necesitás algo, `uv add`.
+**Usar `pip install` o `conda install` dentro del proyecto.** Instalan el paquete pero no lo registran en ningún lado, así que el entorno deja de coincidir con el lock y el próximo `uv sync` lo va a borrar. Es la misma receta de desastre que mezclar conda y pip en un mismo entorno, y la regla es igual de simple: **dentro del proyecto del curso, todo se instala con `uv add`.**
+
+**Trabajar con el entorno de conda activado.** Si ves `(base)` en el prompt, uv va a avisarte y va a usar igual el entorno correcto, así que no se rompe nada — pero vas a perder tiempo tratando de entender qué Python está corriendo. `conda deactivate` antes de empezar.
+
+**Que el notebook siga apuntando al entorno de Anaconda.** Es el error más difícil de detectar, porque todo *parece* funcionar: el notebook corre, pero con otras versiones que tu pipeline. Verificá con `import sys; print(sys.executable)`.
 
 **Editar `pyproject.toml` a mano y no regenerar el lock.** Es válido editarlo, pero después hay que correr `uv lock` (o `uv sync`) para que el lock refleje el cambio.
 
@@ -344,6 +423,7 @@ Ese archivo pasa a ser un **producto derivado** del lock: se regenera, no se edi
 Llegá con esto resuelto, así aprovechamos el tiempo para avanzar sobre tu proyecto:
 
 - [ ] uv instalado y `uv --version` responde
+- [ ] `conda deactivate` corrido: no ves `(base)` en el prompt
 - [ ] Un proyecto creado con `uv init`
 - [ ] Al menos una dependencia agregada con `uv add`
 - [ ] `uv.lock` existe y está commiteado
@@ -361,3 +441,4 @@ Si algo de esto no te sale, dejalo planteado en el **foro de dudas** antes de la
 - Referencia de comandos: <https://docs.astral.sh/uv/reference/cli/>
 - Especificación de versionado semántico: <https://semver.org/lang/es/>
 - Especificadores de versión de Python (PEP 440): <https://peps.python.org/pep-0440/>
+- Si venís de conda, la comparación oficial: <https://docs.astral.sh/uv/pip/compatibility/>
