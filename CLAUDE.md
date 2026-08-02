@@ -82,7 +82,9 @@ Se nombra **lo que hace** la herramienta, no la marca.
 
 **Excepción:** cuando el nombre *es* el contenido del video. En un video sobre gestión de dependencias, `pyproject.toml`, `requirements.txt` o `pip` pueden quedar, porque son estándares del ecosistema y son el tema en sí. La prueba a aplicar: *si mañana cambiamos esta herramienta, ¿hay que regrabar?* Si la respuesta es sí y el tema no lo exige, sacarla.
 
-**Dónde sí van los nombres propios:** en las **lecturas de Moodle**, en la **clase sincrónica** y en la sección **Notas de producción** del guion (material interno, no se lee en cámara). Todo eso se actualiza sin regrabar.
+**Dónde sí van los nombres propios:** en las **lecturas de Moodle**, en la **guía de la clase sincrónica** y en la sección **Notas de producción** del guion (material interno, no se lee en cámara). Todo eso se actualiza sin regrabar.
+
+⚠️ **Esta regla aplica solo a los guiones de video.** En las lecturas y en la clase sincrónica, ser vago con las herramientas no protege de nada y le quita utilidad al material: ahí van `uv`, `ruff`, `DVC`, `Cloudflare R2`, con sus comandos, sus URLs y sus límites de plan. Si el stack cambia, se edita el archivo y listo.
 
 ### Estructura del `guion.md`
 
