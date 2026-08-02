@@ -50,7 +50,7 @@ Docker se mantiene como tecnología fundamental del curso, pero se reposiciona c
 
 Cada clase se divide en cuatro componentes complementarios:
 
-- **Videos teóricos pregrabados (asincrónico):** segmentos cortos de 8 a 15 minutos cada uno que cubren los conceptos estables de la clase. El alumno los consume a su propio ritmo antes de la clase sincrónica.
+- **Videos teóricos pregrabados (asincrónico):** segmentos cortos, de 8 a 15 minutos cada uno como referencia —algunos pueden ser más largos cuando el tema no admite división—, que cubren los conceptos estables de la clase. El alumno los consume a su propio ritmo antes de la clase sincrónica.
 - **Materiales de lectura (Moodle, asincrónico):** guías prácticas sobre tooling específico del stack. Se separan de los videos porque son contenidos que cambian con el tiempo (herramientas, versiones, configuraciones concretas) y pueden actualizarse sin regrabar.
 - **Actividades transversales (Moodle):** un evaluativo de 10 preguntas de opción múltiple por módulo (intentos ilimitados, requiere >8/10 para aprobar la materia), un foro de dudas previo a cada clase sincrónica, y un glosario colaborativo que los alumnos construyen a lo largo del curso.
 - **Clase sincrónica online (~1.5 horas):** abre con un Kahoot sobre el contenido teórico y del aula (ver actividades transversales) y luego se dedica íntegramente a hands-on guiado sobre el proyecto de cada grupo. El docente llega habiendo revisado el foro y aprovecha el tiempo para desbloquear problemas en tiempo real.
@@ -87,7 +87,7 @@ Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup de
 - Pipelines de ML: componentes y artifacts
 - MLOps: definición, niveles 0/1/2 de madurez y ventajas de cada nivel
 - Entorno de desarrollo vs entorno productivo: propiedades y diferencias
-- Contrato de interfaz entre AMq → MLOps1 → Serving (el flujo del posgrado)
+- Contrato de interfaz entre AMq → MLOps1 → Serving (el flujo del posgrado), incluyendo **portabilidad del modelo entre tecnologías**: qué pasa cuando quien consume el modelo no corre la misma tecnología con la que se entrenó (entrenamos en Python, el servicio está en Java). Las cuatro estrategias — misma tecnología, formato de intercambio (ONNX/PMML), el servicio como frontera, y la predicción en lote como forma de esquivar el problema — y por qué el riesgo real no está en el modelo sino en el preprocesamiento, que es lo que no viaja solo
 
 **Materiales de lectura (Moodle):**
 
@@ -163,7 +163,7 @@ Tracking de experimentos y versionado de modelos como pilares de reproducibilida
 - Tracking en profundidad: parámetros, métricas, artifacts
 - Comparación de runs y reproducibilidad vía tracking riguroso
 - Model Registry: versionado de modelos, stages (Staging / Production), aliases
-- Empaquetado de modelos en formato MLflow
+- Empaquetado de modelos en formato MLflow *(incluye que un registry puede almacenar más de una representación del mismo modelo — el formato nativo y uno de intercambio — y que elegir cuál se publica es parte del contrato con quien lo consume; ver Clase 1)*
 
 **Materiales de lectura (Moodle):**
 
@@ -181,6 +181,7 @@ Testing formal aplicado al pipeline completo.
 - Tests de código en proyectos de ML: organización, fixtures, parametrización
 - Validación de datos: schemas, expectativas y contratos entre etapas del pipeline
 - Tests de regresión de modelo
+- Contratos entre *implementaciones*: cuando el modelo se exporta o se reimplementa en otra tecnología, verificar la equivalencia con un *golden dataset* y una tolerancia numérica explícita — el test de paridad. Es la contracara práctica del video de portabilidad de la Clase 1
 - ***Behavioral testing*** de modelos: tests de perturbación, invarianza, expectativa direccional, calibración, confianza y rangos
 
 **Materiales de lectura (Moodle):**
