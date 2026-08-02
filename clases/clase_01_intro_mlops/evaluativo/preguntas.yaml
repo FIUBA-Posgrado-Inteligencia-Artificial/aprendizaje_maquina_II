@@ -1,126 +1,216 @@
-# Evaluativo — Clase 01: Introducción a MLOps y ciclo de vida de un proyecto de ML
-# 10 preguntas, se requiere >8/10 para aprobar la materia
+# Evaluativo — Módulo 1: Introducción a MLOps y ciclo de vida de un proyecto de ML
+# 10 preguntas de opción múltiple, una sola opción correcta cada una.
+# Intentos ilimitados. Se requiere >8/10 en todos los evaluativos para aprobar.
+#
+# Criterios de redacción:
+#   - Sin límite de caracteres: acá conviene ser preciso antes que breve.
+#   - Como se exige 9 o 10 sobre 10, cada pregunta tiene que ser respondible
+#     sin ambigüedad a partir del material del módulo. Ante la duda entre dos
+#     opciones defendibles, reescribir la pregunta.
+#   - Los distractores son errores reales que se cometen, no relleno.
+#   - Como los intentos son ilimitados, `explicacion` enseña: se muestra al
+#     corregir y es la última oportunidad de que el concepto quede.
+#   - `fuente` indica de qué pieza del módulo sale la pregunta.
 
 modulo: 1
 titulo: "Introducción a MLOps y ciclo de vida de un proyecto de ML"
 preguntas:
-  - id: 1
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 2
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 3
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 4
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 5
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 6
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 7
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 8
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 9
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
-  - id: 10
-    enunciado: ""
-    opciones:
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-      - texto: ""
-        correcta: false
-    explicacion: ""
+
+- id: 1
+  fuente: "video 1 — ciclo de vida y roles"
+  enunciado: >-
+    Un Data Scientist termina de entrenar un modelo que cumple con las métricas acordadas
+    y lo entrega. ¿De quién es la responsabilidad de convertirlo en un proceso reproducible,
+    versionado y monitoreable en producción?
+  opciones:
+  - texto: "Del Data Engineer"
+    correcta: false
+  - texto: "Del ML Engineer"
+    correcta: true
+  - texto: "Del Data Analyst"
+    correcta: false
+  - texto: "De nadie: si las métricas están bien, el modelo ya está listo para usarse"
+    correcta: false
+  explicacion: >-
+    El ML Engineer toma el modelo que entregó el Data Scientist y lo convierte en algo
+    reproducible, versionado, testeado y monitoreable. El Data Engineer se ocupa de los datos
+    y el Data Analyst de la mirada de negocio. Las fronteras entre roles varían según la
+    organización, pero la última opción es el error conceptual que esta materia viene a corregir:
+    un modelo con buenas métricas todavía no es un producto.
+
+- id: 2
+  fuente: "video 2 — pipelines y artifacts"
+  enunciado: "¿Cuál de estas afirmaciones describe mejor qué es un artifact en un pipeline de ML?"
+  opciones:
+  - texto: "Cualquier objeto persistido que produce una etapa y que otra etapa, o una persona, consume después"
+    correcta: true
+  - texto: "El modelo entrenado, y solamente el modelo entrenado"
+    correcta: false
+  - texto: "Cualquier variable que quede en memoria cuando termina de correr el pipeline"
+    correcta: false
+  - texto: "El archivo donde se declaran los parámetros del pipeline"
+    correcta: false
+  explicacion: >-
+    La palabra clave es persistido: vive en disco o en un bucket, no en la memoria del proceso.
+    Son artifacts el dataset procesado, los objetos de transformación ajustados, el modelo, las
+    métricas, los reportes y las predicciones. De ahí la regla práctica: si no está persistido
+    y versionado, no existe.
+
+- id: 3
+  fuente: "video 2 — pipelines y artifacts"
+  enunciado: >-
+    El pipeline de entrenamiento y el de inferencia comparten una etapa, y esa etapa compartida
+    es la fuente más común de fallas de modelos en producción. ¿Cuál es?
+  opciones:
+  - texto: "La ingesta de los datos desde su fuente"
+    correcta: false
+  - texto: "La evaluación del modelo sobre datos que no vio"
+    correcta: false
+  - texto: "La transformación de los datos crudos en features"
+    correcta: true
+  - texto: "El registro del modelo con sus métricas"
+    correcta: false
+  explicacion: >-
+    Si las transformaciones no son literalmente las mismas en entrenamiento y en inferencia,
+    el modelo recibe datos en una escala o un formato distinto del que aprendió, y predice mal
+    sin que nada falle ni aparezca ningún error. Eso se llama training/serving skew. Por eso el
+    preprocesador ajustado es un artifact que viaja junto con el modelo.
+
+- id: 4
+  fuente: "video 2 y lectura 1 — reproducibilidad y dependencias"
+  enunciado: "¿Cuál es la diferencia entre `pyproject.toml` y `uv.lock`?"
+  opciones:
+  - texto: "`pyproject.toml` se usa en desarrollo y `uv.lock` en producción"
+    correcta: false
+  - texto: "`pyproject.toml` declara qué se necesita, normalmente con rangos; `uv.lock` fija la versión exacta de cada paquete, incluidas las dependencias transitivas"
+    correcta: true
+  - texto: "Son equivalentes: alcanza con versionar cualquiera de los dos"
+    correcta: false
+  - texto: "`uv.lock` declara las dependencias y `pyproject.toml` las resuelve"
+    correcta: false
+  explicacion: >-
+    Son dos operaciones distintas: declarar y resolver. La declaración es flexible a propósito;
+    el lock es el resultado de resolverla en un momento dado, e incluye las dependencias que
+    nadie escribió explícitamente. Los dos se commitean, y el lock es lo único que garantiza
+    que la instalación sea idéntica en cualquier máquina.
+
+- id: 5
+  fuente: "video 2 y lectura 1 — versionado semántico"
+  enunciado: >-
+    Una librería que venías usando pasa de la versión 1.4.2 a la 2.0.0.
+    Según el versionado semántico, ¿qué implica ese cambio?
+  opciones:
+  - texto: "Son solo correcciones de errores, sin cambios de interfaz"
+    correcta: false
+  - texto: "Hay funcionalidad nueva, pero todo lo anterior sigue funcionando igual"
+    correcta: false
+  - texto: "Nada en particular: la numeración de versiones es arbitraria"
+    correcta: false
+  - texto: "Hay cambios incompatibles: algo que funcionaba puede dejar de funcionar"
+    correcta: true
+  explicacion: >-
+    En MAJOR.MINOR.PATCH, el salto de MAJOR anuncia cambios incompatibles; MINOR agrega
+    funcionalidad compatible y PATCH corrige errores. Ahora bien, el versionado semántico es
+    una convención y no una garantía: depende de que quien publica la librería la respete, y
+    hasta una corrección legítima puede mover tus métricas. El rango declara la intención;
+    el lock file es lo que hace reproducible la corrida.
+
+- id: 6
+  fuente: "video 3 — MLOps y niveles de madurez"
+  enunciado: "¿Qué distingue al nivel 2 de madurez de MLOps respecto del nivel 1?"
+  opciones:
+  - texto: "Se automatizan la integración y la entrega continuas del propio pipeline, no solo su ejecución"
+    correcta: true
+  - texto: "Se automatiza por primera vez el entrenamiento del modelo"
+    correcta: false
+  - texto: "Se deja de versionar el código para ganar velocidad"
+    correcta: false
+  - texto: "Se elimina el monitoreo, porque el pipeline ya es confiable"
+    correcta: false
+  explicacion: >-
+    En nivel 1 el pipeline de entrenamiento ya corre automáticamente, pero desplegar un cambio
+    en el propio pipeline sigue siendo manual. El nivel 2 automatiza eso: un cambio en un
+    componente dispara pruebas y despliegue. Se justifica cuando hay varios pipelines en
+    producción; el nivel más alto no es siempre el correcto.
+
+- id: 7
+  fuente: "video 3 — MLOps y niveles de madurez"
+  enunciado: >-
+    MLOps hereda de DevOps la integración continua y la entrega continua.
+    ¿Qué práctica agrega que no tiene equivalente en el software tradicional?
+  opciones:
+  - texto: "Las pruebas automatizadas antes de desplegar"
+    correcta: false
+  - texto: "El control de versiones del código"
+    correcta: false
+  - texto: "El entrenamiento continuo: reentrenar y publicar el modelo automáticamente con datos frescos"
+    correcta: true
+  - texto: "El despliegue automático a producción"
+    correcta: false
+  explicacion: >-
+    Las otras tres ya existían en DevOps. El entrenamiento continuo es una propiedad exclusiva
+    de los sistemas de ML, y existe por una razón concreta: un servicio de software que nadie
+    toca hace lo mismo el año que viene, pero un modelo que nadie toca empeora, porque el mundo
+    del que aprendió cambia.
+
+- id: 8
+  fuente: "video 4 — entornos de desarrollo y producción"
+  enunciado: >-
+    Todos los martes ejecutás a mano un notebook, y con el resultado el área comercial decide
+    a qué clientes contactar esa semana. ¿Ese notebook está en producción?
+  opciones:
+  - texto: "No, porque no está containerizado"
+    correcta: false
+  - texto: "No, porque no expone una API que otros sistemas puedan consumir"
+    correcta: false
+  - texto: "No, porque se ejecuta manualmente y no de forma automática"
+    correcta: false
+  - texto: "Sí: hay decisiones reales que dependen de esa salida"
+    correcta: true
+  explicacion: >-
+    Producción no la define la tecnología, ni dónde corre, ni cuán automatizado esté: la define
+    la consecuencia de que falle. Tratar como experimento algo de lo que el negocio ya depende
+    es uno de los errores más caros y más frecuentes, porque nadie le aplica los cuidados que
+    necesita.
+
+- id: 9
+  fuente: "video 5 — contrato de interfaz"
+  enunciado: >-
+    Tu modelo se entrena en Python, pero lo va a consumir una aplicación escrita en otro
+    lenguaje. ¿Cuál es el riesgo principal de esa situación?
+  opciones:
+  - texto: "Que el modelo entrenado ocupe demasiado espacio en disco"
+    correcta: false
+  - texto: "Que el preprocesamiento se reimplemente del otro lado y calcule features apenas distintas"
+    correcta: true
+  - texto: "Que el modelo no se pueda volver a entrenar"
+    correcta: false
+  - texto: "Que se pierdan las métricas obtenidas durante la evaluación"
+    correcta: false
+  explicacion: >-
+    El modelo es la mitad fácil: hay formatos de intercambio y librerías multi-lenguaje que lo
+    resuelven. Lo que casi nunca viaja bien es el preprocesamiento, y basta una diferencia
+    mínima —el orden de las columnas, el manejo de nulos, el redondeo, una categoría nueva—
+    para que el modelo reciba algo distinto de lo que aprendió. Nada de eso levanta un error.
+    Se controla con un test de paridad: un conjunto congelado de casos que ambas
+    implementaciones procesan, comparando con una tolerancia acordada de antemano.
+
+- id: 10
+  fuente: "lectura 2 — buenas prácticas de programación"
+  enunciado: "¿Cuál de estas prácticas contribuye realmente a que un notebook sea reproducible?"
+  opciones:
+  - texto: "Guardar el notebook con todas las salidas visibles, para dejar registro de los resultados"
+    correcta: false
+  - texto: "Trabajar siempre en la misma computadora, para que el entorno no cambie"
+    correcta: false
+  - texto: "Reiniciar el kernel y ejecutar todas las celdas de arriba abajo, verificando que llega al final sin errores"
+    correcta: true
+  - texto: "Usar rutas absolutas a los archivos, para que nunca se pierdan"
+    correcta: false
+  explicacion: >-
+    Al ejecutar celdas en cualquier orden, el estado en memoria deja de corresponderse con el
+    código escrito: el notebook anda, pero nadie puede reproducir ese resultado. Reiniciar y
+    correr todo es la única verificación real. Las otras tres opciones son prácticas que
+    parecen prolijas y empeoran el problema: las salidas guardadas dan una falsa sensación de
+    resultado, depender de una sola computadora es exactamente lo contrario de reproducir, y
+    las rutas absolutas garantizan que el código no corra en ningún otro lado.
