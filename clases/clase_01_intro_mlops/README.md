@@ -26,7 +26,8 @@
 - [ ] Kahoot publicado
 
 ### Clase sincrónica
-- [ ] `clase_sincrónica/guia.md` — secuencia y ejercicios definidos
+- [x] `clase_sincrónica/guia.md` — secuencia y ejercicios definidos
+- [ ] **Revisar la guía contra el repositorio template real.** Está escrita contra un scaffold propuesto, porque el template y la GitHub Organization todavía no existen. Hay que verificar el árbol de archivos, los nombres de los módulos de `src/`, el comando del smoke test, si el template trae `uv.lock` generado, y la URL del assignment de Classroom. El detalle está en el bloque ⚠️ PENDIENTE al inicio de la guía.
 
 ### Estado de publicación en Moodle
 - [ ] Videos subidos y enlazados

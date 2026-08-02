@@ -490,7 +490,7 @@ El template que reciben los alumnos vía GitHub Classroom es un **repositorio se
 ## Próximos pasos
 
 1. Validación de la propuesta con coordinación.
-2. Preparación del repositorio template con el scaffold inicial.
+2. Preparación del repositorio template con el scaffold inicial. **Bloquea material ya escrito:** la guía de la clase sincrónica del Módulo 1 está redactada contra un scaffold propuesto y hay que revisarla cuando el template exista (ver el bloque ⚠️ PENDIENTE al inicio de `clases/clase_01_intro_mlops/clase_sincrónica/guia.md`).
 3. Creación de la GitHub Organization de la cátedra y configuración del Classroom.
 4. Aplicación a GitHub Education como respaldo.
 5. Reescritura de `CriteriosAprobacion.md` y del `README.md` del repo principal acorde al nuevo programa.
