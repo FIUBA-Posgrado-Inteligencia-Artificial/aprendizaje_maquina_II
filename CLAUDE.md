@@ -113,3 +113,26 @@ Español rioplatense, dirigido al alumno en **ustedes** ("vienen trabajando", "q
 
 - Verificar en `propuesta_amii_2026.md` qué temas tiene asignados **ese** video, y cuáles están asignados a las lecturas o a otros videos, para no pisarlos ni dejar huecos.
 - No dar por sabido lo que se introduce después. En el Módulo 1 el alumno viene de un notebook: no conoce `pyproject.toml`, ni la estructura `src`, ni el stack. Entrar siempre desde lo que ya sabe.
+
+---
+
+## Preguntas: apertura de la clase sincrónica y evaluativo
+
+Son dos actividades distintas, con restricciones distintas.
+
+### Apertura de la clase sincrónica — AhaSlides
+
+Se juega en **AhaSlides**, no en Kahoot. La carpeta se sigue llamando `kahoot/` por historia del repo; el nombre del directorio no importa, el contenido sí.
+
+Dos límites duros que hay que respetar al escribir:
+
+- **Máximo 5 preguntas.** Es el tope del plan gratuito, que es el que usamos. No proponer sets más largos: si sobra material, va al evaluativo.
+- **Texto corto o se recorta en pantalla.** Regla de trabajo: **≤ 50 caracteres por opción** y enunciados de una sola línea, sin subordinadas. Conviene verificar los largos antes de dar por cerrado el archivo — es fácil pasarse sin darse cuenta.
+
+Con 5 preguntas no entra todo el módulo, así que el criterio es **una por pieza** (video o lectura), priorizando los conceptos centrales. Cada pregunta lleva un campo `fuente` con la pieza de la que sale: si falla masivamente, indica qué material no se consumió, y la guía de la clase sincrónica usa eso para decidir dónde poner el foco.
+
+AhaSlides admite más que opción múltiple —emparejar, respuesta escrita, ordenar—; usar variedad hace la apertura más entretenida y algunos conceptos entran mejor. El esquema YAML de cada tipo está documentado en el encabezado de `clases/clase_01_intro_mlops/kahoot/preguntas.yaml`.
+
+### Evaluativo — Moodle
+
+**10 preguntas de opción múltiple**, intentos ilimitados, se requiere >8/10 para aprobar la materia. No tiene límite de caracteres ni de cantidad de tipos, así que acá entra lo que no cupo en la apertura, y las opciones pueden ser más largas y más precisas.
