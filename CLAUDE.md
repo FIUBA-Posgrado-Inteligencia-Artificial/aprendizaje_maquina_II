@@ -6,14 +6,14 @@ Material de la materia **Operaciones de Aprendizaje Automático I** (CEIA — FI
 
 El repositorio está en transición entre dos ediciones:
 
-- **`clases/`** — programa nuevo de 8 clases, en desarrollo. Es donde se trabaja.
+- **`clases/`** — programa nuevo de 8 módulos, en desarrollo. Es donde se trabaja.
 - **`clase1/` … `clase7/`, `old/`** — edición anterior. Material de consulta, no se edita salvo pedido explícito.
-- **`propuesta_amii_2026.md`** — fuente de verdad del programa nuevo: qué videos, lecturas, hands-on y evaluativos lleva cada clase, y el stack técnico. **Consultarlo antes de escribir material nuevo**, para saber qué le toca cubrir a cada pieza y qué está asignado a otra.
+- **`propuesta_amii_2026.md`** — fuente de verdad del programa nuevo: qué videos, lecturas, hands-on y evaluativos lleva cada módulo, y el stack técnico. **Consultarlo antes de escribir material nuevo**, para saber qué le toca cubrir a cada pieza y qué está asignado a otra.
 - **`README.md`** — todavía describe el programa anterior.
 
 El hilo conductor del curso es *"de notebook a pipeline reproducible de entrenamiento y predicción en lote"*, y el formato es **flipped classroom**: videos pregrabados + lecturas en Moodle + clase sincrónica de hands-on.
 
-### Estructura de una clase
+### Estructura de un módulo
 
 ```
 clases/clase_NN_tema/
@@ -28,7 +28,25 @@ clases/clase_NN_tema/
 └── kahoot/preguntas.yaml     # apertura de la clase sincrónica
 ```
 
-Muchos archivos son todavía plantillas vacías. Al completar uno, seguir la estructura del equivalente ya escrito en otra clase en vez de inventar un formato nuevo.
+Muchos archivos son todavía plantillas vacías. Al completar uno, seguir la estructura del equivalente ya escrito en otro módulo en vez de inventar un formato nuevo.
+
+---
+
+## Nomenclatura: módulo, no clase
+
+La unidad del curso se llama **módulo**. En todo texto que lea el alumno se escribe "Módulo 1", "Módulo 2", nunca "Clase 1". Es el término que usa Moodle, y el que ya aparece en los `preguntas.yaml` (`modulo: 1`).
+
+| ❌ | ✅ |
+|---|---|
+| "material de lectura de la Clase 01" | "material de lectura del Módulo 1" |
+| "lo vas a necesitar en la clase 4" | "lo vas a necesitar en el Módulo 4" |
+
+**La palabra "clase" queda reservada para la clase sincrónica**, que es el encuentro en vivo: "antes de la clase sincrónica", "el hands-on de la clase". Ahí sí corresponde.
+
+Dos aclaraciones:
+
+- **Los nombres de directorios y archivos no cambian.** `clases/clase_01_intro_mlops/` se mantiene: la convención es sobre el texto, no sobre las rutas.
+- **En los guiones de video sigue mandando la regla de más abajo:** no se nombra la unidad en absoluto, ni como clase ni como módulo. "Más adelante en el curso" vale también para "Módulo 4".
 
 ---
 
@@ -38,7 +56,7 @@ Los videos son **pregrabados**. Todo lo que escribamos en un guion tiene que sob
 
 ### 1. No ubicar los temas en el plan de estudios
 
-Los temas que se ven después se anuncian como **"más adelante en el curso"** o **"más adelante en el posgrado"**, sin decir en qué clase ni en qué materia caen.
+Los temas que se ven después se anuncian como **"más adelante en el curso"** o **"más adelante en el posgrado"**, sin decir en qué módulo ni en qué materia caen.
 
 | ❌ | ✅ |
 |---|---|
@@ -48,7 +66,7 @@ Los temas que se ven después se anuncian como **"más adelante en el curso"** o
 
 Mantener el **anclaje temático** (la orquestación, el versionado de datos, el serving online) para que el alumno igual ubique el tema.
 
-Esto vale **también para el resto del posgrado**, y ahí con más razón: el plan de otras materias es aún menos previsible que el orden de nuestras clases — pueden cambiar de nombre, de contenido, de posición o dejar de existir, y nos enteramos tarde. Nunca nombrar otra materia ni afirmar que un tema es "de la que sigue". Única excepción: el video dedicado al contrato de interfaz entre materias, donde el flujo del posgrado *es* el contenido.
+Esto vale **también para el resto del posgrado**, y ahí con más razón: el plan de otras materias es aún menos previsible que el orden de nuestros módulos — pueden cambiar de nombre, de contenido, de posición o dejar de existir, y nos enteramos tarde. Nunca nombrar otra materia ni afirmar que un tema es "de la que sigue". Única excepción: el video dedicado al contrato de interfaz entre materias, donde el flujo del posgrado *es* el contenido.
 
 ### 2. Ser agnóstico a las herramientas
 
@@ -70,7 +88,7 @@ Se nombra **lo que hace** la herramienta, no la marca.
 
 Tomar como referencia [`clases/clase_01_intro_mlops/videos/v01_ciclo_vida_ml/guion.md`](clases/clase_01_intro_mlops/videos/v01_ciclo_vida_ml/guion.md):
 
-1. Título, clase y duración estimada.
+1. Título, módulo y duración estimada.
 2. **De qué trata este video / Agenda (1 min)** — tres bullets con lo que se va a ver.
 3. **Introducción (1–2 min)** — el gancho: por qué le importa al alumno, conectado con el pipeline que está construyendo.
 4. **Desarrollo** — 2 o 3 puntos, cada uno con su duración estimada.
@@ -92,4 +110,4 @@ Español rioplatense, dirigido al alumno en **ustedes** ("vienen trabajando", "q
 ### Al escribir un video nuevo
 
 - Verificar en `propuesta_amii_2026.md` qué temas tiene asignados **ese** video, y cuáles están asignados a las lecturas o a otros videos, para no pisarlos ni dejar huecos.
-- No dar por sabido lo que se introduce después. En la clase 1 el alumno viene de un notebook: no conoce `pyproject.toml`, ni la estructura `src`, ni el stack. Entrar siempre desde lo que ya sabe.
+- No dar por sabido lo que se introduce después. En el Módulo 1 el alumno viene de un notebook: no conoce `pyproject.toml`, ni la estructura `src`, ni el stack. Entrar siempre desde lo que ya sabe.

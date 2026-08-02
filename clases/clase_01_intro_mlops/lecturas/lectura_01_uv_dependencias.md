@@ -7,7 +7,7 @@
 > Para publicar: `uv run scripts/lectura_a_moodle.py clases/clase_01_intro_mlops/lecturas/lectura_01_uv_dependencias.md`
 <!-- /interno -->
 
-Esta guía es material de lectura de la **Clase 01**. Al terminarla vas a poder crear el proyecto del curso, instalarle dependencias y dejarlo en un estado que cualquier otra persona pueda reproducir exactamente.
+Esta guía es material de lectura del **Módulo 1**. Al terminarla vas a poder crear el proyecto del curso, instalarle dependencias y dejarlo en un estado que cualquier otra persona pueda reproducir exactamente.
 
 Trabajá con la guía abierta y la terminal al lado: todos los comandos están pensados para que los ejecutes vos.
 
