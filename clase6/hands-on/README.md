@@ -8,7 +8,7 @@ Uvicorn.
 1. Inicia el servicio de FastAPI con Uvicorn (puede usar cualquiera de los main):
 
 ```Bash
-uvicorn main_1:app --host 0.0.0.0 --port 80
+uvicorn main_1:app --host 0.0.0.0 --port 80 --reload
 ```
 
 2. El servicio estará disponible en http://127.0.0.1:8000.
