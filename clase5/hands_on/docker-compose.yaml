@@ -2,7 +2,7 @@ services:
 
   s3:
     restart: always
-    image: minio/minio:latest
+    image: quay.io/minio/minio:latest
     container_name: minio
     ports:
       - "${MINIO_PORT:-9000}:9000"
@@ -22,7 +22,7 @@ services:
       retries: 3
 
   create_s3_buckets:
-    image: minio/mc:latest
+    image: quay.io/minio/mc:latest
     container_name: minio_create_bucket
     depends_on:
       - s3

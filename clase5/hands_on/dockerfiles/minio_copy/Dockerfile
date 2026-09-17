@@ -1,4 +1,4 @@
-FROM minio/mc:latest
+FROM quay.io/minio/mc:latest
 
 COPY iris.csv /iris.csv
 COPY iris_y.csv /iris_y.csv
