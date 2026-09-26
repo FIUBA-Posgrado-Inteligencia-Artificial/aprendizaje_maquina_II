@@ -54,7 +54,7 @@ services:
       exit 0;
       '
   valkey:
-    image: valkey/valkey:latest
+    image: valkey/valkey:8.1-bookworm
     restart: always
     ports:
       - "${VALKEY_PORT:-6379}:6379"

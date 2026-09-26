@@ -1,4 +1,4 @@
-FROM postgres:latest
+FROM postgres:18.6
 
 # The official recommendation for creating multiple databases is as follows:
 # If you would like to do additional initialization in an image derived from this one, add one or more
