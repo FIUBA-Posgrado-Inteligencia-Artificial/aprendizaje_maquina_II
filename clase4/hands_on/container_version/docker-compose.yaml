@@ -290,7 +290,7 @@ services:
 
   s3:
     restart: always
-    image: quay.io/minio/minio:latest
+    image: coollabsio/minio:RELEASE.2025-04-22T22-12-26Z
     container_name: minio
     ports:
       - "${MINIO_PORT:-9000}:9000"
@@ -310,7 +310,7 @@ services:
       retries: 3
 
   create_s3_buckets:
-    image: quay.io/minio/mc:latest
+    image: coollabsio/minio:RELEASE.2025-04-22T22-12-26Z
     container_name: minio_create_bucket
     depends_on:
       - s3
