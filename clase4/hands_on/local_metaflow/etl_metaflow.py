@@ -4,8 +4,8 @@ from ucimlrepo import fetch_ucirepo
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-class ETLFlow(FlowSpec):
 
+class ETLFlow(FlowSpec):
     @step
     def start(self):
         # MetaFlow necesita si o si un nodo de start y uno de end.
@@ -48,10 +48,12 @@ class ETLFlow(FlowSpec):
         print("🔄 Convertiendo columnas categóricas a enteros...")
         for col in ["cp", "restecg", "slope", "ca", "thal"]:
             df[col] = df[col].astype(int)
-        
+
         print("🏷️ Generando variables dummy...")
-        df = pd.get_dummies(df, columns=["cp", "restecg", "slope", "ca", "thal"], drop_first=True)
-        
+        df = pd.get_dummies(
+            df, columns=["cp", "restecg", "slope", "ca", "thal"], drop_first=True
+        )
+
         self.clean_data_path = "./data_clean_dummies.csv"
         df.to_csv(self.clean_data_path, index=False)
         self.shape = df.shape
@@ -63,19 +65,23 @@ class ETLFlow(FlowSpec):
         Genera el dataset y obtiene set de testeo y evaluación
         """
         df = pd.read_csv(self.clean_data_path)
-        assert df.shape == self.shape, "⚠️ La forma del dataset no coincide con lo esperado."
-        
+        assert df.shape == self.shape, (
+            "⚠️ La forma del dataset no coincide con lo esperado."
+        )
+
         print("🔀 Separando dataset en entrenamiento y prueba...")
         X = df.drop(columns=["num"])
         y = df["num"]
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y)
-        
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.3, stratify=y
+        )
+
         self.X_train_path = "./X_train.csv"
         self.X_test_path = "./X_test.csv"
         self.y_train_path = "./y_train.csv"
         self.y_test_path = "./y_test.csv"
-        
+
         X_train.to_csv(self.X_train_path, index=False)
         X_test.to_csv(self.X_test_path, index=False)
         y_train.to_csv(self.y_train_path, index=False)
@@ -102,8 +108,12 @@ class ETLFlow(FlowSpec):
         self.X_train_norm_path = "./X_train_norm.csv"
         self.X_test_norm_path = "./X_test_norm.csv"
 
-        pd.DataFrame(X_train_scaled, columns=X_train.columns).to_csv(self.X_train_norm_path, index=False)
-        pd.DataFrame(X_test_scaled, columns=X_test.columns).to_csv(self.X_test_norm_path, index=False)
+        pd.DataFrame(X_train_scaled, columns=X_train.columns).to_csv(
+            self.X_train_norm_path, index=False
+        )
+        pd.DataFrame(X_test_scaled, columns=X_test.columns).to_csv(
+            self.X_test_norm_path, index=False
+        )
         print("✅ Datos normalizados y guardados.")
 
         self.next(self.read_train, self.read_test)
@@ -136,6 +146,7 @@ class ETLFlow(FlowSpec):
     @step
     def end(self):
         print("✅ Proceso ETL completo con MetaFlow.")
+
 
 if __name__ == "__main__":
     ETLFlow()
