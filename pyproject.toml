@@ -78,7 +78,8 @@ line-length = 88
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "UP", "PL"]
-ignore = []
+# N806: X, X_train, X_test son la convencion de nombres en ML, no un error
+ignore = ["N806"]
 
 [tool.ruff.format]
 quote-style = "double"

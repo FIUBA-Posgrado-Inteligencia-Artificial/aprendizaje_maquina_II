@@ -1,8 +1,8 @@
-from metaflow import FlowSpec, step
 import pandas as pd
-from ucimlrepo import fetch_ucirepo
+from metaflow import FlowSpec, step
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from ucimlrepo import fetch_ucirepo
 
 
 class ETLFlow(FlowSpec):
@@ -140,7 +140,8 @@ class ETLFlow(FlowSpec):
 
     @step
     def join(self, _):
-        # Este paso es necesario para unir la bifurcacion, porque a MetaFlow no le gusta llegar al end si unirse
+        # Este paso es necesario para unir la bifurcacion, porque a MetaFlow
+        # no le gusta llegar al end sin unirse
         self.next(self.end)
 
     @step
