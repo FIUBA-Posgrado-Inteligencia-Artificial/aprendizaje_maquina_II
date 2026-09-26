@@ -1,5 +1,5 @@
-uvicorn
-requests
-fastapi
-pydantic
-typing-extensions
+uvicorn==0.54.0
+requests==2.34.2
+fastapi==0.136.3
+pydantic==2.13.5
+typing-extensions==4.16.0
