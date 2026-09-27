@@ -5,7 +5,7 @@
 Al terminar el módulo, el alumno tiene que poder:
 
 1. Ubicar las etapas del ciclo de vida de un proyecto de ML y quién es responsable de cada una.
-2. Explicar qué es un pipeline, qué es un artifact y por qué las transformaciones ajustadas viajan con el modelo.
+2. Explicar qué es un pipeline, qué es un artefacto y por qué las transformaciones ajustadas viajan con el modelo.
 3. Reconocer en qué nivel de madurez de MLOps está un equipo, y qué gana al subir de nivel.
 4. Distinguir entorno de desarrollo de entorno productivo, y saber que producción se define por la consecuencia de una falla.
 5. Entender qué se entrega junto con un modelo para que otro equipo pueda usarlo, incluso con otra tecnología.

@@ -2,7 +2,7 @@
 
 <!-- interno -->
 > **Nota de cátedra (no se publica en Moodle).**
-> Esta guía acompaña al video de pipelines y artifacts, donde se explican los conceptos de *lock file* y versionado semántico. Acá van la herramienta y los comandos concretos.
+> Esta guía acompaña al video de pipelines y artefactos, donde se explican los conceptos de *lock file* y versionado semántico. Acá van la herramienta y los comandos concretos.
 > Verificado contra **uv 0.12.1** (julio 2026). Si se actualiza uv entre ediciones, revisar sobre todo la sección "Crear el proyecto": `uv init` cambió su comportamiento por defecto en versiones recientes y hoy genera un proyecto empaquetado con layout `src/`.
 > **Punto de partida asumido: Anaconda.** La guía está escrita para alumnos que vienen usando conda en las materias anteriores, no pip. Si en alguna edición eso cambia, hay que revisar la sección "Por qué cambiamos de herramienta", la tabla de equivalencias, la de notebooks y los errores frecuentes.
 > Para publicar: `uv run scripts/lectura_a_moodle.py clases/clase_01_intro_mlops/lecturas/lectura_01_uv_dependencias.md`

@@ -19,10 +19,10 @@ Nomenclatura:
 
 [CD]
 
-[SONREÍR] ¡Hola de nuevo! Hoy vamos a hablar de pipelines y de artifacts, que son las dos palabras que más van a escuchar de acá en adelante.
+[SONREÍR] ¡Hola de nuevo! Hoy vamos a hablar de pipelines y de artefactos, que son las dos palabras que más van a escuchar de acá en adelante.
 [CD] Pero antes, el mapa de por dónde vamos.
 [C] Primero: qué es un pipeline de Machine Learning. Vamos a hacer el camino desde el notebook que ya tienen, hasta una secuencia de etapas encadenadas y repetibles.
-[C] Después: componentes y artifacts. Qué hace cada etapa... y qué deja como producto.
+[C] Después: componentes y artefactos. Qué hace cada etapa... y qué deja como producto.
 [C] Y para cerrar, la reproducibilidad: por qué un pipeline que no se puede repetir, en el fondo, no sirve.
 [CD] Bueno. En el video anterior vimos el ciclo de vida completo, y quién es responsable de cada etapa. Ahora bajemos un nivel: ¿cómo se ve todo eso en la práctica? ¿En el código?
 Piensen un segundo en el notebook con el que vienen trabajando.
@@ -55,31 +55,31 @@ Piensen un segundo en el notebook con el que vienen trabajando.
 [C] Tres. Cargar el modelo desde donde quedó registrado.
 [C] Cuatro. Predecir.
 [C] Y cinco. Entregar esas predicciones a quien las tenga que usar.
+[CD] Y esta es la idea central de este bloque. Son dos pipelines distintos... que comparten etapas.
+[PAUSA CORTA] Y esa etapa compartida —la transformación de features— es el punto donde más fallan los sistemas de Machine Learning en producción.
 [CD] Ahora bien, ese pipeline de inferencia se puede materializar de formas muy distintas, según cuándo y con qué urgencia se necesitan las predicciones.
 [C] Puede ser en lote, o batch: corre cada tanto —una vez por día, digamos— sobre un montón de registros, y deja las predicciones escritas en una tabla o en un archivo. El que las necesita, las va a buscar ahí.
 [C] Puede ser online, o a demanda: el modelo queda detrás de un servicio que responde de a un caso por vez, en milisegundos, cuando alguien le pregunta.
 [C] O puede ser streaming: las predicciones se van generando a medida que llegan los eventos, en un flujo continuo.
+[PAUSA CORTA] Cambia la forma de entrega, pero no el modelo ni las transformaciones. El problema de la etapa compartida existe igual en las tres: el modelo necesita recibir los datos transformados de la misma manera con la que aprendió. Lo llame un proceso que corre de noche, o lo llame una API.
 [CD] Y acá lo importante: cuál de las tres corresponde [ÉNFASIS] no lo decide la tecnología. Lo decide el problema.
 [C] Un scoring de riesgo crediticio que se revisa todas las noches vive perfecto en batch.
 [C] Pero una detección de fraude que tiene que frenar una transacción [ÉNFASIS] antes de aprobarla... no.
 [C] En esta materia vamos a trabajar el caso batch, porque es el que nos deja recorrer el ciclo completo de MLOps sin meternos con toda la infraestructura de un servicio en vivo. El serving online tiene su propia complejidad, y lo van a ver más adelante en el posgrado. Pero quédense con que la modalidad [ÉNFASIS] es una decisión de diseño. No es la única forma de hacer inferencia.
-[CD] Y ahora sí, la idea central de este bloque. Son dos pipelines distintos... que comparten etapas.
-[PAUSA CORTA] Y esa etapa compartida —la transformación de features— es el punto donde más fallan los sistemas de Machine Learning en producción.
-Y fíjense que el problema existe igual en las tres modalidades: el modelo necesita recibir los datos transformados de la misma manera con la que aprendió. Lo llame un proceso que corre de noche, o lo llame una API.
-[CD] Antes de seguir, un dato que vale la pena. Un pipeline bien cortado en etapas les da algo que el notebook no les da nunca: poder reejecutar solamente la parte que cambió.
-Si ajustaron un hiperparámetro, no necesitan volver a bajar y limpiar cuarenta gigas de datos. Retoman desde el artifact de la etapa anterior.
 [PAUSA] Todo esto lo vamos a implementar de verdad más adelante en el curso, cuando lleguemos a la orquestación. Por ahora quédense con el concepto.
 [CD] Bien. Si el pipeline es la secuencia... el componente es cada etapa individual.
 [CD] Y un componente se define por su contrato, no por su código.
-[C] Tiene entradas: los artifacts que consume.
+[C] Tiene entradas: los artefactos que consume.
 [C] Tiene parámetros: la configuración que lo gobierna. Hiperparámetros, umbrales, rutas. Fuera del código, no escritos a mano en el medio.
 [C] Tiene código: la transformación en sí.
-[C] Y tiene salidas: los artifacts que produce.
+[C] Y tiene salidas: los artefactos que produce.
 [PAUSA CORTA] Que el contrato esté explícito es justamente lo que hace que el componente sea reemplazable. Pueden cambiar por completo cómo entrenan adentro de esa etapa, y mientras siga recibiendo el mismo dataset y devolviendo un modelo con la misma interfaz... el resto del pipeline ni se entera.
 [CD] Y ahora sí, el concepto central de todo el video.
-Un artifact es cualquier objeto [ÉNFASIS] persistido que una etapa del pipeline produce, y que otra etapa —o una persona— va a consumir después.
+Un artefacto —en inglés, artifact, que es como lo van a encontrar en las herramientas— es cualquier objeto [ÉNFASIS] persistido que una etapa del pipeline produce, y que otra etapa —o una persona— va a consumir después.
 [PAUSA CORTA] La palabra importante ahí es persistido. Vive en disco, o en un bucket. No en la memoria del proceso.
-[CD] ¿Y cuáles son los artifacts típicos de un pipeline de Machine Learning?
+[CD] ¿Y por qué tanta insistencia con que esté persistido? Porque eso le da al pipeline algo que el notebook no les da nunca: poder reejecutar solamente la parte que cambió.
+Si ajustaron un hiperparámetro, no necesitan volver a bajar y limpiar cuarenta gigas de datos. Retoman desde el artefacto que dejó la etapa anterior.
+[CD] ¿Y cuáles son los artefactos típicos de un pipeline de Machine Learning?
 [C] El dataset crudo, tal como se ingestó.
 [C] El dataset procesado, listo para entrenar.
 [C] Los objetos de transformación ajustados: el escalador, el codificador de categóricas, el imputador.
@@ -97,11 +97,11 @@ Cuando ajustan un escalador sobre el conjunto de entrenamiento, ese objeto [ÉNF
 [C] Y va a predecir mal.
 [PAUSA] [ÉNFASIS] Y no falla nada. No aparece ningún error en pantalla. El sistema sigue devolviendo predicciones, y nadie se entera.
 [C] Eso tiene nombre: se llama training/serving skew, y es una de las causas más comunes de modelos que andan perfecto en el notebook... y pésimo en producción.
-[CD] Así que la conclusión, y quiero que esta les quede: el preprocesador ajustado es tan artifact como el modelo. Y viaja con él.
-[CD] Ahora, un artifact solo no alcanza. Necesita metadata.
+[CD] Así que la conclusión, y quiero que esta les quede: el preprocesador ajustado es tan artefacto como el modelo. Y viaja con él.
+[CD] Ahora, un artefacto solo no alcanza. Necesita metadata.
 Qué versión del código lo generó, qué datos de entrada usó, con qué parámetros, cuándo, y quién lo corrió.
 [PAUSA CORTA] Esa cadena de "de dónde vino cada cosa" se llama linaje. Y es lo que les va a permitir, seis meses después, agarrar el modelo que está en producción y responder con qué datos exactos fue entrenado.
-Registrar todo eso a mano no escala, obviamente. Por eso existen dos familias de herramientas que vamos a incorporar más adelante: los sistemas de tracking de experimentos y registro de modelos, que guardan cada corrida con sus parámetros, sus métricas y sus artifacts; y los sistemas de versionado de datos, que le dan a un dataset el mismo tratamiento que el control de versiones le da al código.
+Registrar todo eso a mano no escala, obviamente. Por eso existen dos familias de herramientas que vamos a incorporar más adelante: los sistemas de tracking de experimentos y registro de modelos, que guardan cada corrida con sus parámetros, sus métricas y sus artefactos; y los sistemas de versionado de datos, que le dan a un dataset el mismo tratamiento que el control de versiones le da al código.
 [CD] Y de acá sale una regla práctica que vale la pena llevarse: [ÉNFASIS] si no está persistido y versionado, no existe.
 Un resultado que vive en la memoria del kernel de un notebook no es un resultado del que se pueda depender.
 [CD] Vamos al último bloque.
@@ -125,8 +125,9 @@ Lo más probable es que hayan instalado lo que necesitaban con un pip install, a
 [C] Lo genera la herramienta de gestión de dependencias. No se escribe a mano.
 [PAUSA CORTA] [C] Y lo más importante de todo: [ÉNFASIS] el lock file se commitea al repositorio. Es lo único que garantiza que la instalación de hoy en su máquina, la de mañana en integración continua, y la del mes que viene en producción... sean idénticas.
 [CD] Porque sin lock file, el escenario es siempre el mismo.
-Mismo código. Mismo commit. Pero entre una instalación y otra salió una versión nueva de una librería que ni sabían que estaban usando... y el resultado numérico cambió.
-[PAUSA CORTA] "En mi máquina andaba" casi siempre es un problema de entorno no fijado.
+Mismo código. Mismo commit.
+[C] Pero entre una instalación y otra salió una versión nueva de una librería que ni sabían que estaban usando... y el resultado numérico cambió.
+[PAUSA CORTA] [C] "En mi máquina andaba" casi siempre es un problema de entorno no fijado.
 [CD] Ahora, para poder leer esos rangos hay que entender el versionado semántico. O semver.
 Una versión tiene tres números: MAYOR, MENOR y PARCHE. Y cada uno comunica algo distinto.
 [C] El parche: de uno punto cuatro punto dos, a uno punto cuatro punto tres. Corrección de errores, sin cambios de interfaz. Actualizar debería ser seguro.
@@ -138,12 +139,12 @@ Una versión tiene tres números: MAYOR, MENOR y PARCHE. Y cada uno comunica alg
 [CD] Y un último detalle que completa el cuadro. Fijar el entorno no alcanza si el código tiene aleatoriedad sin controlar.
 La división de los datos, la inicialización de los pesos, el submuestreo de un random forest... todo eso necesita una semilla fija y explícita.
 [C] La semilla es un parámetro más del pipeline. Va con los demás, arriba y con nombre.
-[CD] Y para cerrar el círculo con el bloque anterior: el lock file es, él mismo, un artifact del pipeline. Es el artifact que describe el entorno en el que todos los demás fueron producidos.
+[CD] Y para cerrar el círculo con el bloque anterior: el lock file es, él mismo, un artefacto del pipeline. Es el artefacto que describe el entorno en el que todos los demás fueron producidos.
 [CD] Bueno, en este video pasamos del mapa general al objeto concreto que van a construir: el pipeline.
 [PAUSA] Y para cerrar, cinco ideas.
 [C] Uno. Un pipeline es una secuencia explícita de etapas con responsabilidad única, ejecutable de forma automática. El notebook ya es uno... pero implícito.
 [C] Dos. Hay dos pipelines: el de entrenamiento y el de inferencia. Y comparten las transformaciones de features. La inferencia puede ser en lote, online o streaming: la modalidad la decide el problema.
-[C] Tres. Un artifact es todo lo que una etapa persiste para que otra lo consuma. Si no está persistido y versionado, no existe.
+[C] Tres. Un artefacto es todo lo que una etapa persiste para que otra lo consuma. Si no está persistido y versionado, no existe.
 [C] Cuatro. El preprocesador ajustado viaja con el modelo. No hacerlo es la vía directa al training/serving skew.
 [C] Y cinco. La reproducibilidad se apoya en tres patas: código, datos y entorno. El lock file es el que fija el entorno.
 [PAUSA] En la clase sincrónica van a crear el repositorio del curso y a configurar su entorno de trabajo. Ahí van a generar su primer lock file, y lo van a commitear. Y en la lectura del aula está el paso a paso con la herramienta concreta que usamos este año.

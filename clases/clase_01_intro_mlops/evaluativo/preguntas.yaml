@@ -105,7 +105,7 @@ preguntas:
 # ───────────────────────────── video_2 (7) ─────────────────────────────
 
   - id: 5
-    enunciado: "¿Cuál de estas afirmaciones describe mejor qué es un artifact en un pipeline de ML?"
+    enunciado: "¿Cuál de estas afirmaciones describe mejor qué es un artefacto en un pipeline de ML?"
     opciones:
       - texto: "Cualquier objeto persistido que produce una etapa y que otra etapa, o una persona, consume después"
         correcta: true
@@ -117,7 +117,7 @@ preguntas:
         correcta: false
     explicacion: >-
       La palabra clave es persistido: vive en disco o en un bucket, no en la memoria del proceso.
-      Son artifacts el dataset procesado, los objetos de transformación ajustados, el modelo, las
+      Son artefactos el dataset procesado, los objetos de transformación ajustados, el modelo, las
       métricas, los reportes y las predicciones. De ahí la regla práctica: si no está persistido
       y versionado, no existe.
 
@@ -138,7 +138,7 @@ preguntas:
       Si las transformaciones no son literalmente las mismas en entrenamiento y en inferencia,
       el modelo recibe datos en una escala o un formato distinto del que aprendió, y predice mal
       sin que nada falle ni aparezca ningún error. Eso se llama training/serving skew. Por eso el
-      preprocesador ajustado es un artifact que viaja junto con el modelo.
+      preprocesador ajustado es un artefacto que viaja junto con el modelo.
 
   - id: 7
     enunciado: >-
@@ -214,10 +214,10 @@ preguntas:
 
   - id: 11
     enunciado: >-
-      Cuando el pipeline está bien dividido en etapas con sus artifacts persistidos,
+      Cuando el pipeline está bien dividido en etapas con sus artefactos persistidos,
       ¿qué ventaja concreta se obtiene que un notebook no ofrece?
     opciones:
-      - texto: "Se puede reejecutar solo la etapa que cambió, retomando desde el artifact de la etapa anterior"
+      - texto: "Se puede reejecutar solo la etapa que cambió, retomando desde el artefacto de la etapa anterior"
         correcta: true
       - texto: "El modelo alcanza mejores métricas en el conjunto de prueba"
         correcta: false

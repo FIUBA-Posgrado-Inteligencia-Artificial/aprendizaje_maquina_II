@@ -288,7 +288,7 @@ El objetivo es lograr el **entrenamiento continuo**, automatizando el pipeline.
 - **Validación de datos** — ¿cambió el esquema? ¿se movieron las propiedades estadísticas?
 - **Validación del modelo** — comparar contra **el que está en producción** y decidir si lo reemplaza
 - **Repositorio centralizado de features** — una sola definición, para entrenar y para predecir
-- **Gestión de metadata** — qué versión corrió, cuándo, con qué parámetros, dónde quedaron los artifacts
+- **Gestión de metadata** — qué versión corrió, cuándo, con qué parámetros, dónde quedaron los artefactos
 
 [Layout: las cuatro piezas se enchufan al diagrama del pipeline]
 

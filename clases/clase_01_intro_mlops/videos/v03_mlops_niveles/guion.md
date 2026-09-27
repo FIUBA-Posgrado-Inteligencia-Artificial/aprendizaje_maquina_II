@@ -114,7 +114,7 @@ Sus características:
 - **Código modularizado en componentes** reutilizables, componibles y potencialmente compartibles entre pipelines.
 - **Entrega continua de modelos:** el pipeline produce un modelo y lo publica sin intervención manual.
 - **Se despliega el pipeline de entrenamiento completo**, que corre de forma recurrente — no un modelo.
-- **La salida es un artefacto de inferencia que ya contiene los pasos de preprocesamiento**, exactamente como vimos al hablar de artifacts: las transformaciones ajustadas viajan con el modelo.
+- **La salida es un artefacto de inferencia que ya contiene los pasos de preprocesamiento**, exactamente como vimos al hablar de artefactos: las transformaciones ajustadas viajan con el modelo.
 
 **[Slide: los componentes nuevos que aparecen en el Nivel 1]**
 
@@ -126,7 +126,7 @@ Para que todo eso funcione aparecen cuatro componentes que en el nivel 0 no exis
 
 **Repositorio centralizado de features.** Un lugar único donde las features están definidas y desde donde se sirven, tanto para entrenar como para predecir. Al haber una sola definición, se elimina de raíz la posibilidad de que entrenamiento y predicción calculen distinto.
 
-**Gestión de metadata.** Un registro de cada ejecución: qué versión del pipeline y de cada componente corrió, cuándo, con qué parámetros, dónde quedaron los artifacts y qué métricas dieron. Es el linaje del que ya hablamos, hecho sistema.
+**Gestión de metadata.** Un registro de cada ejecución: qué versión del pipeline y de cada componente corrió, cuándo, con qué parámetros, dónde quedaron los artefactos y qué métricas dieron. Es el linaje del que ya hablamos, hecho sistema.
 
 **[Slide: los disparadores del pipeline]**
 
@@ -218,5 +218,5 @@ En la próxima clase empezamos por el primer escalón concreto hacia el nivel 1:
 - **Pantalla:** slides. Para el Punto 2, usar **un mismo diagrama base de etapas que se va llenando de automatización** al pasar de nivel a nivel, en lugar de tres diagramas independientes: así se ve una progresión y no tres cosas distintas. El diagrama del nivel 2 es el único que necesita mostrar dos ciclos anidados (el del pipeline y el del modelo).
 - **Animaciones:** en el nivel 0, marcar con un ícono de intervención manual cada transición entre etapas; al pasar al nivel 1, que esos íconos desaparezcan del ciclo de entrenamiento y quede uno solo sobre el despliegue del pipeline; en el nivel 2, que también desaparezca ese. La progresión visual explica la diferencia entre niveles sin una palabra. Las cuatro preguntas de diagnóstico aparecen de a una, con aire para que el alumno las piense.
 - **Referencias:** Google Cloud, *MLOps: Continuous delivery and automation pipelines in machine learning* — <https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning> (fuente principal); D. Sculley et al., *Hidden Technical Debt in Machine Learning Systems* (NeurIPS 2015) para la deuda técnica y el código del modelo como fracción pequeña del sistema; Chip Huyen, _Designing Machine Learning Systems_ (O'Reilly) para la degradación del modelo en producción.
-- **Continuidad:** retoma el artifact y el artefacto de inferencia del video de pipelines, y el *training/serving skew* del video de contrato de interfaz — el nivel 0 lo produce estructuralmente, por la desconexión entre quien entrena y quien despliega. Prepara el refactor del notebook, el registro de experimentos, la validación de datos, el versionado y la orquestación, sin nombrar herramientas ni ubicarlos por número de clase. El material previo de la cátedra usaba esta misma clasificación; se mantuvo la caracterización para no romper continuidad.
+- **Continuidad:** retoma el concepto de artefacto y el artefacto de inferencia del video de pipelines, y el *training/serving skew* del video de contrato de interfaz — el nivel 0 lo produce estructuralmente, por la desconexión entre quien entrena y quien despliega. Prepara el refactor del notebook, el registro de experimentos, la validación de datos, el versionado y la orquestación, sin nombrar herramientas ni ubicarlos por número de clase. El material previo de la cátedra usaba esta misma clasificación; se mantuvo la caracterización para no romper continuidad.
 - **Criterio de agnosticismo:** el video no nombra ninguna herramienta. CI, CD y CT se usan como conceptos, que es lo que son; "repositorio centralizado de features" se prefiere a la marca del componente. Si al armar las slides se agregan logos por nivel, se pierde el criterio: mejor dejar que cada tecnología aparezca en su clase.

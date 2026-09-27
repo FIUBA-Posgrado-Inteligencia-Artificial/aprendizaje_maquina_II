@@ -42,7 +42,7 @@ preguntas:
   - id: 2
     tipo: opcion_multiple
     segundos: 30
-    fuente: "video 2 — pipelines y artifacts"
+    fuente: "video 2 — pipelines y artefactos"
     enunciado: "Guardás el modelo entrenado, pero no el escalador que ajustaste. ¿Qué pasa al predecir?"
     opciones:
       - texto: "Predice mal y no da ningún error"
@@ -55,7 +55,7 @@ preguntas:
         correcta: false
     explicacion: >-
       El escalador aprendió la media y el desvío de los datos de entrenamiento:
-      es un objeto entrenado, igual que el modelo, y por lo tanto es un artifact
+      es un objeto entrenado, igual que el modelo, y por lo tanto es un artefacto
       que viaja con él. Si se recalcula sobre los datos nuevos, el modelo recibe
       otra escala y predice mal en silencio. Eso es training/serving skew.
 

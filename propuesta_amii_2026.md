@@ -84,7 +84,7 @@ Introducción al rol de MLOps en el ciclo de vida de un sistema de ML y setup de
 **Videos teóricos:**
 
 - Ciclo de vida de un proyecto de ML y roles (Data Engineer, Data Scientist, Data Analyst, ML Engineer)
-- Pipelines de ML: componentes y artifacts
+- Pipelines de ML: componentes y artefactos
 - MLOps: definición, niveles 0/1/2 de madurez y ventajas de cada nivel
 - Entorno de desarrollo vs entorno productivo: propiedades y diferencias
 - Contrato de interfaz entre AMq → MLOps1 → Serving (el flujo del posgrado), incluyendo **portabilidad del modelo entre tecnologías**: qué pasa cuando quien consume el modelo no corre la misma tecnología con la que se entrenó (entrenamos en Python, el servicio está en Java). Las cuatro estrategias — misma tecnología, formato de intercambio (ONNX/PMML), el servicio como frontera, y la predicción en lote como forma de esquivar el problema — y por qué el riesgo real no está en el modelo sino en el preprocesamiento, que es lo que no viaja solo

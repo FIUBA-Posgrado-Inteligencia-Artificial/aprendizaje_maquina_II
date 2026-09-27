@@ -146,6 +146,6 @@ Cuando el test de paridad existe, la discusión entre los equipos deja de ser un
 [C] Cuatro. Si el consumidor corre otra tecnología hay cuatro estrategias: misma tecnología, formato de intercambio, el servicio como frontera, o predicción en lote. En esta materia usamos la última.
 [C] Y cinco. El modelo es la mitad fácil. El riesgo está en el preprocesamiento duplicado, y se controla con un test de paridad sobre un conjunto congelado de casos.
 [CD] Y con esto cerramos la primera clase.
-Ya tienen el mapa completo: [C] el ciclo de vida y los roles, [C] el pipeline y sus artifacts, [C] los niveles de madurez, [C] la diferencia entre desarrollo y producción, [C] y qué significa entregar un modelo.
+Ya tienen el mapa completo: [C] el ciclo de vida y los roles, [C] el pipeline y sus artefactos, [C] los niveles de madurez, [C] la diferencia entre desarrollo y producción, [C] y qué significa entregar un modelo.
 [PAUSA] De acá en adelante, empezamos a construir.
 [CD] [SONREÍR / SALUDO FINAL] ¡Muchas gracias, y nos vemos en la próxima clase!

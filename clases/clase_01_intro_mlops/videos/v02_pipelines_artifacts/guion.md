@@ -1,4 +1,4 @@
-# Pipelines de ML: componentes y artifacts
+# Pipelines de ML: componentes y artefactos
 
 **Clase 01 — Introducción a MLOps y ciclo de vida de un proyecto de ML**
 **Duración estimada:** 18–20 min _(video largo — excepción deliberada al formato habitual de 8–15 min)_
@@ -7,7 +7,7 @@
 
 En este video vamos a ver la unidad de trabajo que van a construir durante toda la materia:
 - **Qué es un pipeline de ML:** el paso del notebook a una secuencia de etapas encadenadas y repetibles.
-- **Componentes y artifacts:** qué hace cada etapa y qué deja como producto persistido.
+- **Componentes y artefactos:** qué hace cada etapa y qué deja como producto persistido.
 - **Reproducibilidad:** por qué un pipeline que no se puede repetir no sirve — código, datos y entorno.
 
 **[Slide: De qué trata este video]**
@@ -67,6 +67,10 @@ En la práctica no hay un solo pipeline, hay al menos dos: uno que **produce** e
 4. **Predicción.**
 5. **Entrega de las predicciones** a quien las tenga que consumir.
 
+**[Slide: la idea central — la etapa compartida]**
+
+**La clave: son dos pipelines distintos que comparten etapas.** Esa etapa compartida — la transformación de features — es el punto donde más fallan los sistemas de ML en producción, y es exactamente el problema que resuelven los artefactos.
+
 **[Slide: modalidades de inferencia — batch, online, streaming]**
 
 Ahora, ese pipeline de inferencia se puede materializar de formas muy distintas según cuándo y con qué urgencia se necesitan las predicciones:
@@ -75,39 +79,41 @@ Ahora, ese pipeline de inferencia se puede materializar de formas muy distintas 
 - **Online (*on demand*):** el modelo queda expuesto detrás de un servicio que responde de a un caso por vez, en milisegundos, cuando alguien lo consulta.
 - **Streaming:** las predicciones se generan a medida que llegan eventos en un flujo continuo.
 
+Cambia la forma de entrega, pero no el modelo ni las transformaciones: el problema de la etapa compartida existe igual en las tres. El modelo necesita recibir los datos transformados de la misma manera con la que aprendió, lo llame un job nocturno o una API.
+
 **Cuál corresponde no lo decide la tecnología, lo decide el problema.** Un scoring de riesgo crediticio que se revisa todas las noches vive perfecto en batch; una detección de fraude que tiene que frenar una transacción antes de aprobarla, no.
 
 **En esta materia vamos a trabajar el caso batch** — es el que nos permite recorrer el ciclo completo de MLOps sin meternos con infraestructura de servicios. El serving online tiene su propia complejidad y lo van a ver más adelante en el posgrado; lo que produzcamos acá, un modelo versionado y listo para usar, es justamente el punto de partida de ese trabajo. Pero quédense con que **la modalidad es una decisión de diseño**, no la única forma de hacer inferencia.
-
-**La clave: son dos pipelines distintos que comparten etapas.** Esa etapa compartida — la transformación de features — es el punto donde más fallan los sistemas de ML en producción, y es exactamente el problema que resuelven los artifacts. Y notemos que el problema existe igual en las tres modalidades: el modelo necesita recibir los datos transformados de la misma manera con la que aprendió, lo llame un job nocturno o una API.
-
-**Un dato importante:** un pipeline bien cortado en etapas les da algo que el notebook no les da nunca — poder reejecutar solo la parte que cambió. Si ajustan un hiperparámetro, no necesitan volver a descargar y limpiar cuarenta gigas de datos. Retoman desde el artifact de la etapa anterior.
 
 Todo esto lo vamos a implementar de verdad más adelante en el curso, cuando lleguemos a la orquestación. Por ahora quédense con el concepto.
 
 ---
 
-### Punto 2: Componentes y artifacts (3–4 min)
+### Punto 2: Componentes y artefactos (3–4 min)
 
 Si el pipeline es la secuencia, el **componente** es cada etapa individual. Y un componente se define por su contrato, no por su código.
 
 **[Slide: anatomía de un componente — entradas, parámetros, código, salidas]**
 
 Un componente tiene:
-- **Entradas:** los artifacts que consume.
+- **Entradas:** los artefactos que consume.
 - **Parámetros:** la configuración que lo gobierna (hiperparámetros, umbrales, rutas). Fuera del código, no hardcodeados.
 - **Código:** la transformación en sí.
-- **Salidas:** los artifacts que produce.
+- **Salidas:** los artefactos que produce.
 
 Que el contrato esté explícito es lo que hace que el componente sea reemplazable. Pueden cambiar por completo cómo entrenan adentro de la etapa de entrenamiento, y mientras siga recibiendo el mismo dataset y devolviendo un modelo con la misma interfaz, el resto del pipeline no se entera.
 
 Ahora, el concepto central de este video.
 
-**[Slide: qué es un artifact]**
+**[Slide: qué es un artefacto]**
 
-Un **artifact** es cualquier objeto persistido que una etapa del pipeline produce y que otra etapa —o una persona— va a consumir después. La palabra importante es **persistido**: vive en disco o en un bucket, no en la memoria del proceso.
+Un **artefacto** —en inglés, *artifact*, que es como lo van a encontrar en las herramientas— es cualquier objeto persistido que una etapa del pipeline produce y que otra etapa —o una persona— va a consumir después. La palabra importante es **persistido**: vive en disco o en un bucket, no en la memoria del proceso.
 
-Los artifacts típicos de un pipeline de ML:
+**[Slide: reejecutar solo lo que cambió]**
+
+¿Por qué tanta insistencia con que esté persistido? Porque eso le da al pipeline algo que el notebook no les da nunca: poder reejecutar solo la parte que cambió. Si ajustan un hiperparámetro, no necesitan volver a descargar y limpiar cuarenta gigas de datos. Retoman desde el artefacto que dejó la etapa anterior.
+
+Los artefactos típicos de un pipeline de ML:
 
 - El **dataset crudo** tal como se ingestó.
 - El **dataset procesado**, listo para entrenar.
@@ -123,13 +129,13 @@ Detengámonos en el tercero, porque es el que más cuesta ver. Cuando ajustan un
 
 Si guardan solo el modelo y descartan el scaler, cuando llegue el momento de predecir van a tener que volver a ajustar uno sobre los datos nuevos. Y la media de los datos nuevos no es la media del entrenamiento. El modelo va a recibir números que no corresponden a la escala con la que aprendió, y va a predecir mal — sin que nada falle, sin ningún error en pantalla. Eso se llama **training/serving skew**, y es una de las causas más comunes de modelos que funcionan perfecto en el notebook y pésimo en producción.
 
-La conclusión: **el preprocesador ajustado es tan artifact como el modelo, y viaja con él.**
+La conclusión: **el preprocesador ajustado es tan artefacto como el modelo, y viaja con él.**
 
-**[Slide: artifacts + metadata = linaje]**
+**[Slide: artefactos + metadata = linaje]**
 
-Un artifact solo no alcanza. Necesita **metadata**: qué versión del código lo generó, qué datos de entrada usó, con qué parámetros, cuándo, y quién lo corrió. Esa cadena de "de dónde vino cada cosa" se llama **linaje** o *lineage*, y es lo que permite, seis meses después, agarrar el modelo que está en producción y responder con qué datos exactos fue entrenado.
+Un artefacto solo no alcanza. Necesita **metadata**: qué versión del código lo generó, qué datos de entrada usó, con qué parámetros, cuándo, y quién lo corrió. Esa cadena de "de dónde vino cada cosa" se llama **linaje** o *lineage*, y es lo que permite, seis meses después, agarrar el modelo que está en producción y responder con qué datos exactos fue entrenado.
 
-Registrar todo eso a mano no escala, y por eso existen dos familias de herramientas que vamos a incorporar más adelante: los **sistemas de tracking de experimentos y registro de modelos**, que guardan cada corrida con sus parámetros, sus métricas y sus artifacts, y los **sistemas de versionado de datos**, que le dan a un dataset el mismo tratamiento que el control de versiones le da al código.
+Registrar todo eso a mano no escala, y por eso existen dos familias de herramientas que vamos a incorporar más adelante: los **sistemas de tracking de experimentos y registro de modelos**, que guardan cada corrida con sus parámetros, sus métricas y sus artefactos, y los **sistemas de versionado de datos**, que le dan a un dataset el mismo tratamiento que el control de versiones le da al código.
 
 **Regla práctica para llevarse: si no está persistido y versionado, no existe.** Un resultado que vive en la memoria del kernel de un notebook no es un resultado del que se pueda depender.
 
@@ -145,7 +151,7 @@ Un pipeline vale exactamente lo que vale su capacidad de repetirse. Y para que u
 - **Los datos:** un dataset que se sobreescribe rompe la reproducibilidad aunque el código esté perfectamente versionado. Lo vamos a atacar más adelante, cuando veamos versionado de datos.
 - **El entorno:** las versiones exactas de Python y de cada librería instalada. Esta es la pata que más se olvida, y de la que vamos a hablar ahora.
 
-**[Slide: ¿cómo instalamos hoy? — pip install y requirements.txt]**
+**[Slide: ¿cómo lo vienen resolviendo? — pip install y requirements.txt]**
 
 Pensemos cómo vienen resolviendo esto hasta ahora. Lo más probable es que hayan instalado lo que necesitaban con un `pip install` a medida que les hacía falta, y que si tuvieron que compartir el proyecto con alguien, hayan escrito un `requirements.txt` a mano con la lista de librerías.
 
@@ -179,7 +185,7 @@ Por eso una restricción como `>=1.4,<2.0` es una declaración razonable: acepta
 
 **Un último detalle que completa el cuadro:** fijar el entorno no alcanza si el código tiene aleatoriedad sin controlar. Los splits de datos, la inicialización de pesos, el subsampling de un random forest — todo eso necesita una semilla fija y explícita, tratada como un parámetro más del pipeline.
 
-Y para cerrar el círculo con el punto anterior: el lock file es, él mismo, un artifact del pipeline. Es el artifact que describe el entorno en el que todos los demás fueron producidos.
+Y para cerrar el círculo con el punto anterior: el lock file es, él mismo, un artefacto del pipeline. Es el artefacto que describe el entorno en el que todos los demás fueron producidos.
 
 ---
 
@@ -190,7 +196,7 @@ En este video pasamos del mapa general al objeto concreto que van a construir: e
 Las ideas clave para llevarse:
 1. Un **pipeline** es una secuencia explícita de etapas con responsabilidad única, ejecutable de forma automática. El notebook ya es un pipeline — pero implícito.
 2. Hay al menos **dos pipelines**: el de entrenamiento y el de inferencia, y comparten las transformaciones de features. La inferencia puede ser **batch, online o streaming** — la modalidad la decide el problema; en esta materia trabajamos batch.
-3. Un **artifact** es todo lo que una etapa persiste para que otra lo consuma: datos procesados, transformadores ajustados, modelo, métricas, predicciones. Si no está persistido y versionado, no existe.
+3. Un **artefacto** es todo lo que una etapa persiste para que otra lo consuma: datos procesados, transformadores ajustados, modelo, métricas, predicciones. Si no está persistido y versionado, no existe.
 4. El **preprocesador ajustado viaja con el modelo**. No hacerlo es la vía directa al *training/serving skew*.
 5. La reproducibilidad se apoya en tres patas: **código, datos y entorno**. El **lock file** es lo que fija el entorno; **semver** es la convención que permite leer los rangos declarados.
 
@@ -200,8 +206,8 @@ En la clase sincrónica van a crear el repositorio del curso y a configurar su e
 
 ## Notas de producción
 
-- **Duración:** ~2500 palabras, unos 19 minutos hablados. **Se decidió dejarlo largo:** el tema no se parte bien y los tres puntos se sostienen entre sí. Si en alguna edición hiciera falta acortarlo, el corte natural es en dos videos —pipelines y artifacts (Puntos 1 y 2) por un lado, reproducibilidad (Punto 3) por otro— porque el Punto 3 abre con planteo propio y solo retoma que el lock file también es un artifact. Al grabar, cuidar el ritmo y marcar bien las transiciones entre puntos, que es lo que sostiene la atención en un video de esta duración.
-- **Pantalla:** slides. En el Punto 2 conviene mostrar un fragmento de código real (el `fit` del scaler y el `pickle.dump` faltante) para que el training/serving skew se vea, no solo se explique. En el Punto 3, arrancar mostrando un `requirements.txt` escrito a mano (el punto de partida del alumno) y recién después el par `pyproject.toml` con rangos / extracto de `uv.lock` con versiones exactas y hashes, para que el contraste declarar-resolver se vea en pantalla.
-- **Animaciones:** el diagrama de etapas se construye de a una; al llegar a features, resaltar en ambos pipelines simultáneamente la etapa compartida. En la diapositiva de modalidades, mostrar las tres ramas saliendo del mismo pipeline de inferencia (mismo modelo, mismas transformaciones, distinta forma de entrega) y atenuar online y streaming al indicar que en esta materia trabajamos batch — sin borrarlas, para que se lean como caminos válidos que se recorren en otro momento y no como opciones descartadas. Para los artifacts, mostrarlos apareciendo como "salidas" que caen de cada etapa a una capa de almacenamiento debajo del diagrama. La diapositiva de semver puede animar los tres números incrementándose por separado.
-- **Referencias:** Chip Huyen, _Designing Machine Learning Systems_ (O'Reilly) — cap. 4 y 6 para feature engineering y training/serving skew; Google Cloud, *MLOps: Continuous delivery and automation pipelines in machine learning* para la anatomía del pipeline y los artifacts; [semver.org](https://semver.org) para la especificación de versionado semántico; documentación de `uv` sobre `uv.lock`.
+- **Duración:** ~2500 palabras, unos 19 minutos hablados. **Se decidió dejarlo largo:** el tema no se parte bien y los tres puntos se sostienen entre sí. Si en alguna edición hiciera falta acortarlo, el corte natural es en dos videos —pipelines y artefactos (Puntos 1 y 2) por un lado, reproducibilidad (Punto 3) por otro— porque el Punto 3 abre con planteo propio y solo retoma que el lock file también es un artefacto. Al grabar, cuidar el ritmo y marcar bien las transiciones entre puntos, que es lo que sostiene la atención en un video de esta duración.
+- **Pantalla:** slides. En el Punto 2 conviene mostrar un fragmento de código real (el `fit` del escalador y el `joblib.dump` que guarda solo el modelo) para que el training/serving skew se vea, no solo se explique. En el Punto 3, arrancar mostrando un `requirements.txt` escrito a mano (el punto de partida del alumno) y recién después el par `pyproject.toml` con rangos / extracto del lock con versiones exactas y hashes, para que el contraste declarar-resolver se vea en pantalla. El lock se muestra en formato `requirements.txt` con hashes (estándar de pip) y no como `uv.lock`, para no atar el video a una herramienta. El código exacto y el detalle click a click de estas diapositivas (19, 22, 26, 27 y 29) están en `slides/slides.md`.
+- **Animaciones:** el diagrama de etapas se construye de a una; al llegar a features, resaltar en ambos pipelines simultáneamente la etapa compartida. En la diapositiva de modalidades, mostrar las tres ramas saliendo del mismo pipeline de inferencia (mismo modelo, mismas transformaciones, distinta forma de entrega) y atenuar online y streaming al indicar que en esta materia trabajamos batch — sin borrarlas, para que se lean como caminos válidos que se recorren en otro momento y no como opciones descartadas. Para los artefactos, mostrarlos apareciendo como "salidas" que caen de cada etapa a una capa de almacenamiento debajo del diagrama. La diapositiva de semver puede animar los tres números incrementándose por separado.
+- **Referencias:** Chip Huyen, _Designing Machine Learning Systems_ (O'Reilly) — cap. 4 y 6 para feature engineering y training/serving skew; Google Cloud, *MLOps: Continuous delivery and automation pipelines in machine learning* para la anatomía del pipeline y los artefactos; [semver.org](https://semver.org) para la especificación de versionado semántico; documentación de `uv` sobre `uv.lock`.
 - **Continuidad:** este video prepara el vocabulario del tracking de experimentos (MLflow), el versionado de datos (DVC) y la orquestación (Dagster). **El guion es deliberadamente agnóstico a las herramientas:** los adelantos van como "más adelante en el curso" —sin número de clase— y las herramientas se nombran por lo que hacen, no por su marca. Los nombres concretos del stack viven en las lecturas de Moodle y en la clase sincrónica, que se actualizan sin regrabar. Sostener este criterio si se editan las slides.

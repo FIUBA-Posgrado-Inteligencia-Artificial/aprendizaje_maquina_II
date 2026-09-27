@@ -92,12 +92,12 @@ El objetivo de este nivel es lograr el entrenamiento continuo. Y la forma de log
 [C] Código modularizado en componentes reutilizables, componibles, y hasta compartibles entre pipelines.
 [C] Entrega continua de modelos: el pipeline produce un modelo y lo publica sin intervención manual.
 [C] Se despliega el pipeline de entrenamiento completo, que corre de forma recurrente. No un modelo.
-[C] Y la salida es un artefacto de inferencia que ya contiene los pasos de preprocesamiento. Exactamente como vimos al hablar de artifacts: las transformaciones ajustadas viajan con el modelo.
+[C] Y la salida es un artefacto de inferencia que ya contiene los pasos de preprocesamiento. Exactamente como vimos al hablar de artefactos: las transformaciones ajustadas viajan con el modelo.
 [CD] Para que todo eso funcione, aparecen cuatro componentes que en el nivel cero no existían.
 [C] Validación de datos. Antes de entrenar, se chequea que los datos sean los esperados: que el esquema no haya cambiado, y que las propiedades estadísticas no se hayan movido de forma significativa. Si algo no da, el pipeline se detiene, en vez de entrenar sobre basura.
 [C] Validación del modelo. Después de entrenar, no alcanza con mirar las métricas: hay que compararlas contra las del modelo que está actualmente en producción, y decidir si el nuevo lo reemplaza. [ÉNFASIS] Un modelo nuevo no es automáticamente mejor.
 [C] Repositorio centralizado de features. Un lugar único donde las features están definidas y desde donde se sirven, tanto para entrenar como para predecir. Al haber una sola definición, se elimina de raíz la posibilidad de que entrenamiento y predicción calculen distinto.
-[C] Y gestión de metadata. Un registro de cada ejecución: qué versión del pipeline y de cada componente corrió, cuándo, con qué parámetros, dónde quedaron los artifacts y qué métricas dieron. Es el linaje del que ya hablamos, hecho sistema.
+[C] Y gestión de metadata. Un registro de cada ejecución: qué versión del pipeline y de cada componente corrió, cuándo, con qué parámetros, dónde quedaron los artefactos y qué métricas dieron. Es el linaje del que ya hablamos, hecho sistema.
 [CD] Y aparece algo que en el nivel cero ni tenía sentido preguntarse: ¿qué hace que el pipeline arranque?
 [C] Puede ser a demanda: alguien lo ejecuta manualmente.
 [C] Por calendario: todos los días, todas las semanas.

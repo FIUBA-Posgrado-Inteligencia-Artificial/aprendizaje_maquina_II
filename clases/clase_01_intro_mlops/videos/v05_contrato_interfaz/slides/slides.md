@@ -476,7 +476,7 @@ Así no quedan dos implementaciones que mantener sincronizadas.
 Ya tienen el mapa completo:
 
 - El ciclo de vida y los roles
-- El pipeline y sus artifacts
+- El pipeline y sus artefactos
 - Los niveles de madurez
 - Desarrollo y producción
 - Qué significa entregar un modelo
