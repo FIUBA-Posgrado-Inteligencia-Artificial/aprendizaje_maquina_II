@@ -504,10 +504,10 @@ El lock se muestra en formato `requirements.txt` con hashes y no como `uv.lock`:
 
 ## Diapositiva 30 — Sin lock file
 
-**🤷 "En mi máquina andaba"**
+**Sin lock file**
 
 ```
-  💻 Tu máquina — marzo          💻 CI — septiembre
+  💻 marzo                     💻 diciembre     
   ┌─────────────────────────┐    ┌─────────────────────────┐
   │ commit a3f9             │    │ commit a3f9             │
   │ $ pip install -r req... │    │ $ pip install -r req... │
@@ -521,7 +521,7 @@ El lock se muestra en formato `requirements.txt` con hashes y no como `uv.lock`:
 
 1. **[CD] "Mismo código. Mismo commit":** las dos máquinas, solo con las líneas idénticas (commit e instalación), en gris neutro.
 2. **[C] "…salió una versión nueva… y el resultado numérico cambió":** aparecen en rojo la versión de `numpy` y la métrica. Es lo único que tiene que saltar a la vista.
-3. **[C] remate:** arriba, en un recuadro, "🤷 En mi máquina andaba".
+3. **[C] remate:** aparece superpuesto un recuadro rojo con "😅 En mi máquina andaba".
 
 Detalles que conectan con el resto:
 - El commit `a3f9` es el mismo del modelo en la tarjeta de linaje de la 22.
@@ -532,13 +532,20 @@ Detalles que conectan con el resto:
 
 ## Diapositiva 31 — Versionado semántico
 
-**MAJOR . MINOR . PATCH**
+**Versionado semántico**
 
-- **PATCH** `1.4.2` → `1.4.3` — corrección de errores. Actualizar debería ser seguro.
-- **MINOR** `1.4.2` → `1.5.0` — funcionalidad nueva, compatible hacia atrás.
-- **MAJOR** `1.4.2` → `2.0.0` — **cambios incompatibles.**
+`numpy 1.26.4 → 2.0.1`
 
-[Layout: los tres números grandes, y cada uno se incrementa por separado al explicarlo]
+**2 . 0 . 1**
+MAJOR · MINOR · PATCH
+
+- **PATCH** `2.0.1` → `2.0.2` — Corrección de errores. Actualizar debería ser seguro.
+- **MINOR** `2.0.1` → `2.1.0` — Funcionalidad nueva, compatible hacia atrás.
+- **MAJOR** `2.0.1` → `3.0.0` — **Cambios incompatibles.**
+
+[Layout: diapositiva nueva. El ejemplo es el `2.0.1` de numpy, para seguir con el mismo caso de la 30. Cada parte tiene su color (MAJOR rosa, MINOR verde, PATCH celeste), el mismo en el dígito, en su nombre y en su fila.
+
+Orden de aparición: [CD] la línea de numpy — [C] el número con MAJOR / MINOR / PATCH — [C] [C] [C] las filas de a una]
 
 ---
 
@@ -558,25 +565,68 @@ Acepta correcciones y funcionalidad nueva. Frena antes del cambio incompatible.
 
 ---
 
-## Diapositiva 33 — El detalle que falta
-
-**Fijar el entorno no alcanza si el código tiene azar sin controlar**
-
-La división de los datos, la inicialización, el submuestreo de un ensamble.
-
-> La semilla es **un parámetro más del pipeline**: va fija y explícita, con los demás.
-
-[Layout: lista corta]
-
----
-
-## Diapositiva 34 — El círculo se cierra
+## Diapositiva 33 — El círculo se cierra
 
 **El lock file también es un artefacto**
 
 Es el artefacto que describe **el entorno en el que todos los demás fueron producidos.**
 
-[Layout: volver al diagrama de artefactos de la diapositiva 18, agregando el lock file como una pieza más]
+[Layout: diapositiva nueva y limpia — no reusar el diagrama completo de la 18, que ya está lleno y no tiene lugar.
+
+```
+                     🔒  lock file
+     ┌─────────────────────────────────────────┐
+     │   🗄     ▦     🔧     📦     🏆     📊   │
+     └─────────────────────────────────────────┘
+```
+
+- Al centro, en fila y sin textos, los seis íconos de artefactos de la 18: el alumno ya sabe qué es cada uno.
+- Arriba, el candado del lock file, más grande, con un recuadro o corchete que encierra la fila: el entorno los abarca a todos.
+- Abajo, la frase "Es el artefacto que describe el entorno en el que todos los demás fueron producidos."]
+
+---
+
+## Diapositiva 34 — El detalle que falta
+
+**Falta una cosa: el azar**
+
+Sin semilla:
+
+```python
+train_test_split(X, y)
+```
+
+corrida 1 → 0.874 · corrida 2 → 0.869 ✗
+
+Con semilla:
+
+```python
+train_test_split(X, y, random_state=42)
+```
+
+corrida 1 → 0.874 · corrida 2 → 0.874 ✓
+
+> La semilla es **un parámetro más del pipeline**.
+
+[Layout: tres bloques, con aire.
+
+```
+      Sin semilla                          Con semilla
+  ┌──────────────────────────┐   ┌──────────────────────────────────────────┐
+  │ train_test_split(X, y)   │   │ train_test_split(X, y, random_state=42)  │
+  └──────────────────────────┘   └──────────────────────────────────────────┘
+      corrida 1 → 0.874                     corrida 1 → 0.874
+      corrida 2 → 0.869  ✗                  corrida 2 → 0.874  ✓
+
+              La semilla es un parámetro más del pipeline.
+```
+
+- Código en una sola línea por lado: la única diferencia entre los dos recuadros es `random_state=42`, que es lo que el ojo tiene que encontrar.
+- Los dos recuadros con la misma altura y alineados arriba.
+- Resultados sin la palabra "accuracy", alineados debajo de cada recuadro; ✗ en rojo, ✓ en verde.
+- Dónde aparece el azar (división, inicialización, submuestreo) y "fija, arriba y con nombre" van solo en la narración, no en pantalla.
+
+Orden de aparición: [CD] título y columna izquierda — [C] columna derecha y frase final]
 
 ---
 

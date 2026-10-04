@@ -128,18 +128,19 @@ Lo más probable es que hayan instalado lo que necesitaban con un pip install, a
 Mismo código. Mismo commit.
 [C] Pero entre una instalación y otra salió una versión nueva de una librería que ni sabían que estaban usando... y el resultado numérico cambió.
 [PAUSA CORTA] [C] "En mi máquina andaba" casi siempre es un problema de entorno no fijado.
-[CD] Ahora, para poder leer esos rangos hay que entender el versionado semántico. O semver.
-Una versión tiene tres números: MAYOR, MENOR y PARCHE. Y cada uno comunica algo distinto.
-[C] El parche: de uno punto cuatro punto dos, a uno punto cuatro punto tres. Corrección de errores, sin cambios de interfaz. Actualizar debería ser seguro.
-[C] El menor: de uno punto cuatro punto dos, a uno punto cinco punto cero. Funcionalidad nueva, compatible hacia atrás. Lo que ya usaban sigue funcionando.
-[C] Y el mayor: de uno punto cuatro punto dos, a dos punto cero punto cero. [ÉNFASIS] Cambios incompatibles. Algo que funcionaba puede dejar de funcionar.
+[CD] Fíjense en el salto de numpy de recién: de uno punto veintiséis... a dos punto cero. No cambió un número cualquiera. [ÉNFASIS] Cambió el primero.
+[PAUSA CORTA] Y eso tiene un significado preciso, que además es lo que necesitan para leer los rangos que vimos en la declaración. Se llama versionado semántico. O semver.
+[C] Una versión tiene tres números: MAYOR, MENOR y PARCHE. Y cada uno comunica algo distinto.
+[C] El parche: de dos punto cero punto uno, a dos punto cero punto dos. Corrección de errores, sin cambios de interfaz. Actualizar debería ser seguro.
+[C] El menor: de dos punto cero punto uno, a dos punto uno punto cero. Funcionalidad nueva, compatible hacia atrás. Lo que ya usaban sigue funcionando.
+[C] Y el mayor: de dos punto cero punto uno, a tres punto cero punto cero. [ÉNFASIS] Cambios incompatibles. Algo que funcionaba puede dejar de funcionar. Como el numpy de recién.
 [CD] Por eso una restricción como "mayor o igual a uno punto cuatro, menor a dos punto cero" es una declaración razonable: acepta correcciones y funcionalidad nueva, pero frena justo antes del cambio incompatible.
 [C] Pero acá está el punto que quiero que quede: [ÉNFASIS] semver es una convención sobre la que confiamos. No es una garantía. Depende de que quien publica la librería la respete. Y aun respetándola, una corrección de bug perfectamente legítima puede cambiarles el tercer decimal de sus métricas.
 [C] Así que: el rango declara la intención. El lock file es el que hace la corrida reproducible.
+[CD] Y para cerrar el círculo con el bloque anterior: el lock file es, él mismo, un artefacto del pipeline. Es el artefacto que describe el entorno en el que todos los demás fueron producidos.
 [CD] Y un último detalle que completa el cuadro. Fijar el entorno no alcanza si el código tiene aleatoriedad sin controlar.
 La división de los datos, la inicialización de los pesos, el submuestreo de un random forest... todo eso necesita una semilla fija y explícita.
 [C] La semilla es un parámetro más del pipeline. Va con los demás, arriba y con nombre.
-[CD] Y para cerrar el círculo con el bloque anterior: el lock file es, él mismo, un artefacto del pipeline. Es el artefacto que describe el entorno en el que todos los demás fueron producidos.
 [CD] Bueno, en este video pasamos del mapa general al objeto concreto que van a construir: el pipeline.
 [PAUSA] Y para cerrar, cinco ideas.
 [C] Uno. Un pipeline es una secuencia explícita de etapas con responsabilidad única, ejecutable de forma automática. El notebook ya es uno... pero implícito.

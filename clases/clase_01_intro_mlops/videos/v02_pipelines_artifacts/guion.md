@@ -173,19 +173,19 @@ Sin lock file, el escenario clásico: el código es el mismo, el commit es el mi
 
 **[Slide: versionado semántico]**
 
-Para leer esos rangos hay que entender el **versionado semántico** o *semver*. Una versión tiene tres números — `MAJOR.MINOR.PATCH`, por ejemplo `1.4.2` — y cada uno comunica algo distinto:
+Fíjense en el salto de numpy del ejemplo: de 1.26 a 2.0. No cambió un número cualquiera, cambió el primero, y eso tiene un significado preciso — que además es lo que hace falta para leer los rangos de la declaración. Se llama **versionado semántico** o *semver*. Una versión tiene tres números — `MAJOR.MINOR.PATCH`, por ejemplo el `2.0.1` de numpy — y cada uno comunica algo distinto:
 
-- **PATCH** (`1.4.2` → `1.4.3`): corrección de bugs, sin cambios de interfaz. Actualizar debería ser seguro.
-- **MINOR** (`1.4.2` → `1.5.0`): funcionalidad nueva, compatible hacia atrás. Lo que ya usaban sigue funcionando.
-- **MAJOR** (`1.4.2` → `2.0.0`): cambios incompatibles. Algo que funcionaba puede dejar de funcionar.
+- **PATCH** (`2.0.1` → `2.0.2`): corrección de bugs, sin cambios de interfaz. Actualizar debería ser seguro.
+- **MINOR** (`2.0.1` → `2.1.0`): funcionalidad nueva, compatible hacia atrás. Lo que ya usaban sigue funcionando.
+- **MAJOR** (`2.0.1` → `3.0.0`): cambios incompatibles. Algo que funcionaba puede dejar de funcionar — como el numpy del ejemplo.
 
 Por eso una restricción como `>=1.4,<2.0` es una declaración razonable: acepta correcciones y funcionalidad nueva, pero frena antes del cambio incompatible.
 
 **Y acá está el punto que quiero que quede:** semver es una convención sobre la que confiamos, no una garantía. Depende de que quien publica la librería la respete, y una corrección de bug perfectamente legítima puede cambiar el tercer decimal de sus métricas. El rango declara la intención; el **lock file** es el que hace la corrida reproducible.
 
-**Un último detalle que completa el cuadro:** fijar el entorno no alcanza si el código tiene aleatoriedad sin controlar. Los splits de datos, la inicialización de pesos, el subsampling de un random forest — todo eso necesita una semilla fija y explícita, tratada como un parámetro más del pipeline.
-
 Y para cerrar el círculo con el punto anterior: el lock file es, él mismo, un artefacto del pipeline. Es el artefacto que describe el entorno en el que todos los demás fueron producidos.
+
+**Un último detalle que completa el cuadro:** fijar el entorno no alcanza si el código tiene aleatoriedad sin controlar. Los splits de datos, la inicialización de pesos, el subsampling de un random forest — todo eso necesita una semilla fija y explícita, tratada como un parámetro más del pipeline.
 
 ---
 
